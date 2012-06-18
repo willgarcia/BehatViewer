@@ -1,1 +1,0 @@
-{"base_url":"\/behat\/app_dev.php","routes":{"behatviewer.historyentry":{"tokens":[["variable","\/","\\d+","id"],["text","\/history"]],"defaults":[]},"behatviewer.screenshot":{"tokens":[["variable","\/","[^\/]+?","id"],["text","\/feature\/screenshot"]],"defaults":[]}}}

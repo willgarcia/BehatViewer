@@ -5,6 +5,7 @@ use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     \Symfony\Component\Console\Input\InputInterface,
     \Symfony\Component\Console\Output\OutputInterface,
     \Symfony\Component\Console\Input\InputArgument,
+    \Symfony\Component\Console\Input\InputOption,
     \jubianchi\BehatViewerBundle\Entity;
 
 /**
@@ -22,7 +23,8 @@ class DefinitionsCommand extends ContainerAwareCommand
             ->setDescription('Reload project\'s definitions')
             ->setDefinition(
                 array(
-                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to reload')
+                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to reload'),
+                    new InputOption('clean', 'c', InputOption::VALUE_NONE, 'Removes all step definitions')
                 )
             );
     }
@@ -51,6 +53,21 @@ class DefinitionsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if($input->getOption('clean')) {
+            $this->manager = $this->getDoctrine()->getEntityManager();
+            $this->connection = $this->manager->getConnection();
+            $this->platform = $this->connection->getDatabasePlatform();
+
+            $this->connection->executeUpdate(
+                $this->platform->getTruncateTableSQL(
+                    $this->manager->getClassMetadata('BehatViewerBundle:Definition')->getTableName(),
+                    true
+                )
+            );
+
+            return;
+        }
+
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Project');
         $project = $repository->findOneById(1);
 

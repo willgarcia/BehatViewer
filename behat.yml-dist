@@ -1,0 +1,30 @@
+default:
+    paths:
+        features: "src/jubianchi/BehatViewerBundle/Features"
+        bootstrap: "src/jubianchi/BehatViewerBundle/Features/Context"
+
+    context:
+        parameters:
+            javascript_session: sahi
+
+    formatter:
+        classes:
+            "jubianchi\BehatViewerBundle\Formatter\BehatViewerFormatter": viewer
+
+        name: pretty,viewer
+        parameters:
+            viewer_output_path: .
+            screen_id: 99
+
+    extensions:
+        symfony2_extension.phar:
+            kernel:
+                bootstrap: "app/bootstrap.php"
+
+        mink_extension.phar:
+            mink_loader: "mink.phar"
+            base_url: 'http://%hostname%/app_test.php'
+            sahi: ~
+            goutte: ~
+            javascript_session: "sahi"
+            browser_name: chromeBg

@@ -46,7 +46,7 @@
             <h4 class="alert-heading">No definitions</h4>
 
             <p>No step definition found. To load definitions from your context library, please run <code>app/console
-                behat-viewer:definitions {% if project.name %}{{ project.name }}{% else %}foo-bar{% endif %}</code>.</p>
+                behat-viewer:definitions {% if project.slug %}{{ project.slug }}{% else %}foo-bar{% endif %}</code>.</p>
         </div>
         {% endif %}
     </div>

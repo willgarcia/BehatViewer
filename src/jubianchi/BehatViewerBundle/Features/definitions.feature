@@ -1,6 +1,6 @@
 Feature: Definitions
 
-    @reset
+    @reset @javascript
     Scenario: Single project and no definition
         Given I load the "single-project.sql" fixture
           And I am on "/definitions"

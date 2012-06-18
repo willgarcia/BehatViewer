@@ -10,16 +10,16 @@ Feature: All pages
           And I should see "Before using Behat Viewer, you should configure your project."
 
           Examples:
-            | url                 | status |
-            | /                   | 200    |
-            | /history            | 200    |
-            | /stats              | 200    |
-            | /definitions        | 200    |
-            | /config             | 200    |
-            | /feature/foo        | 200    |
-            | /feature/foo/source | 200    |
-            | /thumb              | 200    |
-            | /list               | 200    |
+            | url                   | status |
+            | /                     | 200    |
+            | /history              | 200    |
+            | /stats                | 200    |
+            | /definitions          | 200    |
+            | /config               | 200    |
+            | /feature/5/foo        | 200    |
+            | /feature/5/foo/source | 200    |
+            | /thumb                | 200    |
+            | /list                 | 200    |
 
     @reset
     Scenario Outline: With data
@@ -31,14 +31,14 @@ Feature: All pages
           And I should not see "Before using Behat Viewer, you should configure your project."
 
           Examples:
-            | url                 | status |
-            | /                   | 200    |
-            | /history            | 200    |
-            | /stats              | 200    |
-            | /definitions        | 200    |
-            | /config             | 200    |
-            | /feature/foo        | 404    |
-            | /feature/foo/source | 404    |
-            | /tag/bar            | 404    |
-            | /thumb              | 200    |
-            | /list               | 200    |
+            | url                   | status |
+            | /                     | 200    |
+            | /history              | 200    |
+            | /stats                | 200    |
+            | /definitions          | 200    |
+            | /config               | 200    |
+            | /feature/5/foo        | 404    |
+            | /feature/5/foo/source | 404    |
+            | /tag/bar              | 404    |
+            | /thumb                | 200    |
+            | /list                 | 200    |
