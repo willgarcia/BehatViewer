@@ -38,4 +38,29 @@ class BuildRepository extends EntityRepository
 
         return array();
     }
+
+    public function removeWeekBuilds() {
+        $sql = '
+                SELECT id
+                FROM behatviewer_build b1
+                WHERE b1.id=(
+                    SELECT id
+                    FROM behatviewer_build b2
+                    WHERE WEEK(b1.date) = WEEK(b2.date)
+                    ORDER BY b2.date DESC
+                    LIMIT 1
+                )
+        ';
+
+        $stmt = $this->getEntityManager()
+            ->getConnection()
+            ->prepare($sql);
+        $stmt->execute();
+
+        $limit = $this->createQueryBuilder('b')
+            ->delete()
+            ->where('b.id NOT IN(' . implode(',', $stmt->fetchAll(\PDO::FETCH_COLUMN)) . ')')
+            ->getQuery()
+            ->execute();
+    }
 }

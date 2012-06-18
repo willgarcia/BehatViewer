@@ -4,6 +4,7 @@ namespace jubianchi\BehatViewerBundle\Command;
 use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     \Symfony\Component\Console\Input\InputInterface,
     \Symfony\Component\Console\Output\OutputInterface,
+    \Symfony\Component\Console\Input\InputOption,
     \Symfony\Component\Console\Input\InputArgument;
 
 /**
@@ -21,7 +22,8 @@ class BuildCommand extends ContainerAwareCommand
             ->setDescription('Builds a project\'s report file')
             ->setDefinition(
                 array(
-                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to build')
+                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to build'),
+                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes outdated builds')
                 )
             );
     }
@@ -34,6 +36,13 @@ class BuildCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        if($input->getOption('clean')) {
+            $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Build');
+            $repository->removeWeekBuilds();
+
+            return;
+        }
+
         $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Project');
         $project = $repository->findOneById(1);
 

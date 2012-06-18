@@ -24,7 +24,7 @@ class DefinitionsCommand extends ContainerAwareCommand
             ->setDefinition(
                 array(
                     new InputArgument('project', InputArgument::OPTIONAL, 'The project to reload'),
-                    new InputOption('clean', 'c', InputOption::VALUE_NONE, 'Removes all step definitions')
+                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes all step definitions')
                 )
             );
     }
