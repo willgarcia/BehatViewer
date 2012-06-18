@@ -1,0 +1,152 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="row-fluid">
+    <h1 class="page-header">
+        Stats for {{ project.name }}
+    </h1>
+
+    {% if builds|count > 0 %}
+    <section class="row-fluid">
+        <h2>Completion</h2>
+
+        <div class="span5">
+            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container"
+                   data-graph-type="area" data-graph-yaxis-1-title-text="%" data-graph-color-1="#EE5F5B"
+                   data-graph-color-2="#5EB95E">
+                <caption>Build completion</caption>
+                <thead>
+                <tr>
+                    <th>Build</th>
+                    <th data-graph-stack-group="percent">Error</th>
+                    <th data-graph-stack-group="percent">Completion</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for build in builds %}
+                {% set total = build.getStepsHavingStatusCount() %}
+                {% set errors = build.getStepsHavingStatusCount('failed') + build.getStepsHavingStatusCount('skipped') + build.getStepsHavingStatusCount('pending') + build.getStepsHavingStatusCount('undefined') %}
+                <tr>
+                    <td>#{{ build.id }} {{ build.date|date("Y-m-d") }}</td>
+                    <td>{{ ((errors / total) * 100)|round(0) }}%</td>
+                    <td>{{ ((build.getStepsHavingStatusCount('passed') / total) * 100)|round(0) }}%</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="span6 highchart-container"></div>
+    </section>
+
+    <section class="row-fluid">
+        <h2>Errors</h2>
+
+        <div class="span5">
+            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container"
+                   data-graph-type="area" data-graph-yaxis-1-title-text="Errors" data-graph-color-1="#EE5F5B"
+                   data-graph-color-2="#5BC0DE" data-graph-color-3="#5BC0DE" data-graph-color-4="#C09853">
+                <caption>Number of errors</caption>
+                <thead>
+                <tr>
+                    <th>Build</th>
+                    <th data-graph-stack-group="percent">Failed</th>
+                    <th data-graph-stack-group="percent">Skipped</th>
+                    <th data-graph-stack-group="percent">Pending</th>
+                    <th data-graph-stack-group="percent">Undefined</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for build in builds %}
+                {% set total = build.getStepsHavingStatusCount() %}
+                <tr>
+                    <td>#{{ build.id }} {{ build.date|date("Y-m-d") }}</td>
+                    <td>{{ build.getStepsHavingStatusCount('failed') }}</td>
+                    <td>{{ build.getStepsHavingStatusCount('skipped') }}</td>
+                    <td>{{ build.getStepsHavingStatusCount('pending') }}</td>
+                    <td>{{ build.getStepsHavingStatusCount('undefined') }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="span6 highchart-container"></div>
+    </section>
+
+    <section class="row-fluid">
+        <h2>Features &amp; Scenarios</h2>
+
+        <div class="span5">
+            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container"
+                   data-graph-type="line" data-graph-yaxis-1-title-text="Features / Scenarios">
+                <caption>Number of features &amp; scenarios</caption>
+                <thead>
+                <tr>
+                    <th>Build</th>
+                    <th>Features</th>
+                    <th>Scenarios</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for build in builds %}
+                {% set total = build.getStepsHavingStatusCount() %}
+                <tr>
+                    <td>#{{ build.id }} {{ build.date|date("Y-m-d") }}</td>
+                    <td>{{ build.getFeatures()|count }}</td>
+                    <td>{{ build.getScenarios()|count }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="span6 highchart-container"></div>
+    </section>
+
+    <section class="row-fluid">
+        <h2>Steps</h2>
+
+        <div class="span5">
+            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container"
+                   data-graph-type="line" data-graph-yaxis-1-title-text="Steps">
+                <caption>Number of steps</caption>
+                <thead>
+                <tr>
+                    <th>Build</th>
+                    <th>Steps</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for build in builds %}
+                {% set total = build.getStepsHavingStatusCount() %}
+                <tr>
+                    <td>#{{ build.id }} {{ build.date|date("Y-m-d") }}</td>
+                    <td>{{ build.getStepsHavingStatusCount() }}</td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="span6 highchart-container"></div>
+    </section>
+    {% else %}
+    <div class="alert alert-info">
+        <h4 class="alert-heading">No build</h4>
+
+        <p>This project has not been built yet. To build it, please run <code>app/console
+            behat-viewer:build {{ project.slug }}</code>.</p>
+    </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/highchart.js') }}"></script>
+<script src="{{ asset('bundles/behatviewer/js/jquery.highchartTable.js') }}"></script>
+<script>
+    $('table.highchart').highchartTable();
+</script>
+    {% endblock %}

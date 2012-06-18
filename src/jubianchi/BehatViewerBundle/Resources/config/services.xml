@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+
+<container xmlns="http://symfony.com/schema/dic/services"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://symfony.com/schema/dic/services http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <parameters>
+        <parameter key="behat_viewer.twig.extension.class">jubianchi\BehatViewerBundle\Extension\Twig\BehatViewerTwigExtension</parameter>
+        <parameter key="behat_viewer.analyzer.class">jubianchi\BehatViewerBundle\Analyzer\BehatViewerAnalyzer</parameter>
+        <parameter key="behat_viewer.collector.class">jubianchi\BehatViewerBundle\DataCollector\BehatViewerDataCollector</parameter>
+        <parameter key="behat_viewer.session.class">jubianchi\BehatViewerBundle\Session\BehatViewerSession</parameter>
+        <parameter key="behat_viewer.markdown_parser.class">jubianchi\BehatViewerBundle\Markdown\MarkdownParser</parameter>
+
+        <parameter key="behat_viewer.db.table_prefix_subscriber.class">jubianchi\BehatViewerBundle\Extension\Doctrine\BehatViewerTablePrefix</parameter>
+        <parameter key="behat_viewer.db.table_prefix">behatviewer_</parameter>
+    </parameters>
+
+    <services>
+        <service id="behat_viewer.twig.extension" class="%behat_viewer.twig.extension.class%">
+            <tag name="twig.extension"/>
+        </service>
+
+        <service id="behat_viewer.db.table_prefix_subscriber" class="%behat_viewer.db.table_prefix_subscriber.class%">
+            <argument>%behat_viewer.db.table_prefix%</argument>
+            <tag name="doctrine.event_subscriber"/>
+        </service>
+
+        <service id="behat_viewer.analyzer" class="%behat_viewer.analyzer.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="behat_viewer.markdown_parser" class="%behat_viewer.markdown_parser.class%">
+        </service>
+
+        <service id="behat_viewer.session" class="%behat_viewer.session.class%">
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="behat_viewer.collector" class="%behat_viewer.collector.class%">
+            <tag name="data_collector" template="BehatViewerBundle:DataCollector:behatviewer" id="behatviewer" />
+        </service>
+    </services>
+</container>

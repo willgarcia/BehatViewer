@@ -1,0 +1,45 @@
+{% set steps = scenario.getStepsCount %}
+
+{% set passed = scenario.getStepsHavingStatusCount('passed') %}
+{% set passedpcnt = ((passed / steps) * 100)|round %}
+
+{% set failed = scenario.getStepsHavingStatusCount('failed') %}
+{% set failedpcnt = ((failed / steps) * 100)|round %}
+
+{% set skipped = scenario.getStepsHavingStatusCount('skipped') %}
+{% set skippedpcnt = ((skipped / steps) * 100)|round %}
+
+{% set undefined = scenario.getStepsHavingStatusCount('undefined') %}
+{% set undefinedpcnt = ((undefined / steps) * 100)|round %}
+
+{% set pending = scenario.getStepsHavingStatusCount('pending') %}
+{% set pendingpcnt = ((pending / steps) * 100)|round %}
+
+<h2 id="{{ scenario.slug }}">
+    {{ scenario.name }}
+    <small>
+        <span>{{ steps }} step(s)</span> /
+        {% if passed > 0 %}<span class="success" style="color: #62C462; font-weight: bold">Passed: {{ passed }}/{{ steps }} ({{ passedpcnt }}%)</span>{% endif %}
+        {% if passed > 0 and (failed > 0 or skipped > 0 or pending > 0 or undefined > 0) %} / {% endif %}
+        {% if failed > 0 %}<span class="danger" style="color: #EE5F5B; font-weight: bold">Failed: {{ failed }}/{{ steps }} ({{ failedpcnt }}%)</span>{% endif %}
+        {% if failed > 0 and (skipped > 0 or pending > 0 or undefined > 0) %} / {% endif %}
+        {% if skipped > 0 %}<span class="info" style="color: #5BC0DE; font-weight: bold">Skipped: {{ skipped }}/{{ steps }} ({{ skippedpcnt }}%)</span>{% endif %}
+        {% if skipped > 0 and (pending > 0 or undefined > 0) %} / {% endif %}
+        {% if pending > 0 %}<span class="info" style="color: #5BC0DE; font-weight: bold">Pending: {{ pending }}/{{ steps }} ({{ pendingpcnt }}%)</span>{% endif %}
+        {% if pending > 0 and undefined > 0 %} / {% endif %}
+        {% if undefined > 0 %}<span class="warning" style="color: #FBB450; font-weight: bold">Undefined: {{ undefined }}/{{ steps }} ({{ undefinedpcnt }}%)</span>{% endif %}
+    </small>
+</h2>
+
+<p>
+    {% for tag in scenario.tags %}
+    <a href="{{ path('behatviewer.tag', {slug: tag.slug}) }}" class="label label-info">{{ tag.name }}</a>
+    {% endfor %}
+</p>
+
+
+{% for step in scenario.steps %}
+{% include "BehatViewerBundle::Feature/step.html.twig" %}
+{% endfor %}
+
+<hr class="soften"/>

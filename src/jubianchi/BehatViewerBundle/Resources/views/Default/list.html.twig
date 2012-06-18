@@ -1,0 +1,70 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% if not features and build %}
+{% set features = build.features %}
+{% endif %}
+
+{% block container %}
+<h1 class="page-header">
+    Features for {{ project.name }} {% if build %}
+    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+    {% endif %}
+
+    {% include 'BehatViewerBundle::Default/switcher.html.twig' %}
+</h1>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% if features %}
+            <table class="table table-bordered table-striped tablesorter {sortlist: [[1,0]]}">
+                <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Completion</th>
+                    <th>Progress</th>
+                    <th>Details</th>
+                    <th class="{sorter: false}">Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for feature in features %}
+                {% include 'BehatViewerBundle::Default/feature-row.html.twig' %}
+                {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <div class="alert alert-block alert-info">
+                <h4 class="alert-heading">No feature</h4>
+
+                <p>This project has not been built yet. Click on the build button to launch test suite.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
+<script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
+<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/home.js') }}"></script>
+<script>
+    behat.application.setController(behat.home);
+
+    if ($.fn.tablesorter) {
+        $('.tablesorter').tablesorter({
+            textExtraction:{
+                2:function (node, table, cellIndex) {
+                    return $(node).attr('data-value');
+                },
+                3:function (node, table, cellIndex) {
+                    return $(node).attr('data-value');
+                }
+            }
+        });
+    }
+
+    $('.tablesorter').fixedTable();
+</script>
+{% endblock %}

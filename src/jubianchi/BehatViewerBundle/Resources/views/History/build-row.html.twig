@@ -1,0 +1,73 @@
+{% set steps = build.getStepsHavingStatusCount() %}
+
+{% set passed = build.getStepsHavingStatusCount('passed') %}
+{% set passedpcnt = ((passed / steps) * 100)|round(3) %}
+
+{% set failed = build.getStepsHavingStatusCount('failed') %}
+{% set failedpcnt = ((failed / steps) * 100)|round(3) %}
+
+{% set skipped = build.getStepsHavingStatusCount('skipped') %}
+{% set skippedpcnt = ((skipped / steps) * 100)|round(3) %}
+
+{% set undefined = build.getStepsHavingStatusCount('undefined') %}
+{% set undefinedpcnt = ((undefined / steps) * 100)|round(3) %}
+
+{% set pending = build.getStepsHavingStatusCount('pending') %}
+{% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
+
+<tr>
+    <td style="width: 15px">
+        <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
+    </td>
+    <td style="width: 5%"><strong>{{ build.id }}</strong></td>
+    <td>{{ build.date|date("Y-m-d H:i:s") }}</td>
+    <td style="width: 10%">{{ passedpcnt|round }}%</td>
+    <td style="min-width: 250px; width: 25%" data-value="{{ passedpcnt }}">
+        <div class="progress">
+            {% if passed > 0 %}
+                <div class="bar progress-success" style="width: {{ passedpcnt }}%;"></div>
+            {% endif %}
+            {% if failed > 0 %}
+                <div class="bar progress-danger" style="width: {{ failedpcnt }}%;"></div>
+            {% endif %}
+            {% if skipped + pending > 0 %}
+                <div class="bar progress-info" style="width: {{ skippedpcnt + pendingpcnt }}%;"></div>
+            {% endif %}
+            {% if undefined > 0 %}
+                <div class="bar progress-warning" style="width: {{ undefinedpcnt }}%;"></div>
+            {% endif %}
+        </div>
+    </td>
+    <td data-value="{{ steps }}">
+        <ul class="pull-left">
+            {% if passed > 0 %}
+            <li><span class="success" style="color: #62C462; font-weight: bold">Passed: {{ passed }}/{{ steps }} ({{ passedpcnt|round }}%)</span>
+            </li>
+            {% endif %}
+            {% if failed > 0 %}
+            <li><span class="danger" style="color: #EE5F5B; font-weight: bold">Failed: {{ failed }}/{{ steps }} ({{ failedpcnt|round }}%)</span>
+            </li>
+            {% endif %}
+            {% if skipped > 0 %}
+            <li><span class="info" style="color: #5BC0DE; font-weight: bold">Skipped: {{ skipped }}/{{ steps }} ({{ skippedpcnt|round }}%)</span>
+            </li>
+            {% endif %}
+            {% if pending > 0 %}
+            <li><span class="info" style="color: #5BC0DE; font-weight: bold">Pending: {{ pending }}/{{ steps }} ({{ pendingpcnt|round }}%)</span>
+            </li>
+            {% endif %}
+            {% if undefined > 0 %}
+            <li><span class="warning" style="color: #FBB450; font-weight: bold">Undefined: {{ undefined }}/{{ steps }} ({{ undefinedpcnt|round }}%)</span>
+            </li>
+            {% endif %}
+        </ul>
+    </td>
+    <td class="action" style="min-width: 150px; width: 10%">
+        <div class="btn-group" id="toolbar">
+            <a href="{{ path('behatviewer.historyentry', {"id": build.id}) }}" class="btn"
+               data-action="details">Details</a>
+            <a href="{{ path('behatviewer.historydelete', {"id": build.id}) }}" class="btn btn-danger"
+               data-action="delete">Delete</a>
+        </div>
+    </td>
+</tr>

@@ -1,0 +1,26 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<h1 class="page-header">
+    {{ feature.name }} {% if build %}
+    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+    {% endif %}
+
+    {% include 'BehatViewerBundle::Feature/switcher.html.twig' %}
+</h1>
+<div class="row-fluid">
+    {% if source %}
+    <pre class="prettyprint linenums lang-feature">{{ source }}</pre>
+    {% else %}
+    <div class="alert alert-danger alert-block">
+        <h4 class="alert-heading">Error</h4>
+
+        <p>The file {{ feature.getFile() }} is not accessible.</p>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script>window.prettyPrint();</script>
+{% endblock %}

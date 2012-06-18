@@ -1,0 +1,29 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="row-fluid">
+    <div class="span3">
+        <div class="well sidebar-nav">
+            <ul class="nav nav-list">
+                <li class="nav-header">Navigation</li>
+                <li><a href="{{ path('behatviewer.help') }}">Home</a></li>
+
+                {% for section in sections %}
+                    <li class="nav-header">{{ section }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+    <div class="span9">
+        {{ help | markdown }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/prettify.js') }}"></script>
+<script>
+  window.prettyPrint();
+</script>
+{% endblock %}

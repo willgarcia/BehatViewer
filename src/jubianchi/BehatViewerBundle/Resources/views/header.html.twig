@@ -1,0 +1,29 @@
+<div id="toolbar" class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container-fluid">
+            <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </a>
+            <a class="brand" href="{{ path('behatviewer.homepage') }}">Behat Viewer <span id="project">{% if project.name %}[{{ project.name }}]{% endif %}</span></a>
+
+            <div class="nav-collapse">
+                <ul class="nav">
+                    <li><a href="{{ path('behatviewer.homepage') }}">Home</a></li>
+                    <li><a href="{{ path('behatviewer.history') }}">History</a></li>
+                    <li><a href="{{ path('behatviewer.stats') }}">Stats</a></li>
+                    <li><a href="{{ path('behatviewer.definitions') }}">Definitions</a></li>
+                    <li><a href="{{ path('behatviewer.config') }}">Config</a></li>
+                    <li><a href="{{ path('behatviewer.help') }}">Help</a></li>
+                    <li>
+                        <div id="loader"></div>
+                    </li>
+                </ul>
+                <ul class="nav pull-right" id="last-build">
+                    <li><button href="{{ path('behatviewer.homepage') }}" class="btn btn-primary">Last build &raquo;</button></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

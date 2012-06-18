@@ -1,0 +1,18 @@
+[twig]
+    git=https://github.com/fabpot/Twig.git
+    version=v1.6.2
+
+[twig-extensions]
+    git=https://github.com/fabpot/Twig-extensions.git
+
+[FOSJsRoutingBundle]
+    git=git://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git
+    target=/bundles/FOS/JsRoutingBundle
+
+[Behat]
+    git=https://github.com/Behat/Behat.git
+    version=v2.4.0
+
+[Gherkin]
+    git=https://github.com/Behat/Gherkin.git
+    version=v2.2.1

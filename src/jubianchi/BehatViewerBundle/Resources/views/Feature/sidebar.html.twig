@@ -1,0 +1,107 @@
+{% set steps = feature.getStepsHavingStatusCount %}
+{% set scenarios = feature.getScenariosCount %}
+
+{% set spassed = feature.getPassedScenariosCount %}
+{% set sfailed = feature.getFailedScenariosCount %}
+
+{% set passed = feature.getStepsHavingStatusCount('passed') %}
+{% set passedpcnt = ((passed / steps) * 100)|round(3) %}
+
+{% set failed = feature.getStepsHavingStatusCount('failed') %}
+{% set failedpcnt = ((failed / steps) * 100)|round(3) %}
+
+{% set skipped = feature.getStepsHavingStatusCount('skipped') %}
+{% set skippedpcnt = ((skipped / steps) * 100)|round(3) %}
+
+{% set undefined = feature.getStepsHavingStatusCount('undefined') %}
+{% set undefinedpcnt = ((undefined / steps) * 100)|round(3) %}
+
+{% set pending = feature.getStepsHavingStatusCount('pending') %}
+{% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
+
+
+{% if feature.description != '' %}
+<p>{{ feature.description|nl2br }}</p>
+{% endif %}
+
+
+<div class="well sidebar-nav clearfix">
+    <ul class="nav nav-list">
+        <li class="nav-header">Summary</li>
+        <li>
+            <div class="progress">
+                {% if passed > 0 %}
+                <div class="bar progress-success" style="width: {{ passedpcnt }}%;"></div>
+                {% endif %}
+                {% if failed > 0 %}
+                <div class="bar progress-danger" style="width: {{ failedpcnt }}%;"></div>
+                {% endif %}
+                {% if skipped + pending > 0 %}
+                <div class="bar progress-info" style="width: {{ skippedpcnt + pendingpcnt }}%;"></div>
+                {% endif %}
+                {% if undefined > 0 %}
+                <div class="bar progress-warning" style="width: {{ undefinedpcnt }}%;"></div>
+                {% endif %}
+            </div>
+        </li>
+    </ul>
+    <ul class="nav nav-list pull-left">
+        <li class="nav-header">Feature:</li>
+        <li><span class="success" style="color: #62C462; font-weight: bold">Completion: {{ passedpcnt|round }}%</span>
+        </li>
+    </ul>
+    <ul class="nav nav-list pull-left">
+        <li class="nav-header">Scenarios:</li>
+        {% if spassed > 0 %}
+        <li><span class="success"
+                  style="color: #62C462; font-weight: bold">Passed: {{ spassed }} / {{ scenarios }}</span></li>
+        {% endif %}
+        {% if sfailed > 0 %}
+        <li><span class="danger"
+                  style="color: #EE5F5B; font-weight: bold">Failed: {{ sfailed }} / {{ scenarios }}</span></li>
+        {% endif %}
+    </ul>
+    <ul class="nav nav-list pull-left">
+        <li class="nav-header">Steps:</li>
+        {% if passed %}
+        <li><span class="success" style="color: #62C462; font-weight: bold">Passed: {{ passed }} / {{ steps }}</span>
+        </li>
+        {% endif %}
+        {% if failed %}
+        <li><span class="danger" style="color: #EE5F5B; font-weight: bold">Failed: {{ failed }} / {{ steps }}</span>
+        </li>
+        {% endif %}
+        {% if skipped %}
+        <li><span class="info" style="color: #5BC0DE; font-weight: bold">Skipped: {{ skipped }} / {{ steps }}</span>
+        </li>
+        {% endif %}
+        {% if pending %}
+        <li><span class="info" style="color: #5BC0DE; font-weight: bold">Pending: {{ pending }} / {{ steps }}</span>
+        </li>
+        {% endif %}
+        {% if undefined %}
+        <li><span class="warning"
+                  style="color: #FBB450; font-weight: bold">Undefined: {{ undefined }} / {{ steps }}</span></li>
+        {% endif %}
+    </ul>
+</div>
+
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Scenarios</li>
+        {% for scenario in feature.scenarios %}
+        <li><a href="#{{ scenario.slug }}">{{ scenario.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Features</li>
+        {% for feature in features %}
+        <li><a href="{{ path('behatviewer.feature', {'id': feature.id, 'slug': feature.slug}) }}">{{ feature.name }}</a></li>
+        {% endfor %}
+    </ul>
+</div>
+
+

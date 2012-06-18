@@ -1,0 +1,75 @@
+{% set class = 'success' %}
+
+{% if step.status == 'failed' %}
+{% set class = 'danger' %}
+{% endif %}
+
+{% if step.status == 'skipped' %}
+{% set class = 'info' %}
+{% endif %}
+
+{% if step.status == 'pending' %}
+{% set class = 'info' %}
+{% endif %}
+
+{% if step.status == 'undefined' %}
+{% set class = 'warning' %}
+{% endif %}
+
+<div class="alert alert-{{ class }} clearfix">
+    <h4 class="alert-heading">
+        {% if step.background %}[Background]{% endif %}
+        {{ step.type }} {{ step.text }}
+    </h4>
+
+    {% if step.argument != '' %}
+    <pre class="prettyprint linenums argument" id="argument-{{ step.id }}"><code>{{ step.argument }}</code></pre>
+    {% endif %}
+
+    <div class="clearfix">
+        {{ step.file }} : {{ step.line }}
+        {% if step.definition != '' %}
+        <br/>
+        <small>{{ step.definition }}</small>
+        {% endif %}
+
+
+        <div class="btn-group pull-right">
+            {% set class = 'success' %}
+            {% if step.status == 'failed' %}
+            {% set class = 'danger' %}
+            {% endif %}
+            {% if step.status == 'undefined' %}
+            {% set class = 'warning' %}
+            {% endif %}
+            {% if step.status in ['skipped', 'pending'] %}
+            {% set class = 'info' %}
+            {% endif %}
+
+            {% if not (step.status in ['skipped', 'pending', 'undefined']) and step.screen != '' %}
+            <button class="btn btn-{{ class }}" data-rel="screenshot" data-toggle="screenshot-{{ step.id }}">
+                Screenshot
+            </button>
+            {% endif %}
+
+            {% if step.snippet != '' %}
+            <button class="btn btn-{{ class }}" data-rel="snippet" data-toggle="snippet-{{ step.id }}">Snippet</button>
+            {% endif %}
+        </div>
+    </div>
+
+    {% if step.snippet != '' %}
+    <br/>
+    <pre class="prettyprint linenums snippet" id="snippet-{{ step.id }}"><code
+        class="language-php">{{ step.snippet }}</code></pre>
+    {% endif %}
+
+    {% if step.exception != '' %}
+    <br/>
+    <pre class="exception" id="exception-{{ step.id }}">{{ step.exception }}</pre>
+    {% endif %}
+
+    {% if step.screen != '' %}
+    <p style="text-align: center" id="screenshot-{{ step.id }}" class="screenshot"></p>
+    {% endif %}
+</div>

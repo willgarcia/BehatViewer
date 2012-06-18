@@ -1,0 +1,49 @@
+<?php
+
+namespace jubianchi\BehatViewerBundle\Controller;
+
+use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    \jubianchi\BehatViewerBundle\Entity;
+
+/**
+ * @Route("/tag")
+ */
+class TagController extends BehatViewerController
+{
+    /**
+     * @param \jubianchi\BehatViewerBundle\Entity\Tag $tag
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     *
+     * @Route("/{slug}", name="behatviewer.tag")
+     */
+    public function indexAction(Entity\Tag $tag)
+    {
+        if($response = $this->beforeAction()) {
+            return $response;
+        }
+
+        $build = $this->getSession()->getBuild();
+
+        $features = $this->getDoctrine()->getRepository('BehatViewerBundle:Feature')->findByTagAndBuild($tag, $build);
+        $scenarios = $this->getDoctrine()->getRepository('BehatViewerBundle:Scenario')->findByTagAndBuild($tag, $build);
+
+        foreach($scenarios as $scenario) {
+            if(!in_array($scenario->getFeature(), $features)) {
+                $features[] = $scenario->getFeature();
+            }
+        }
+
+        return $this->render(
+            'BehatViewerBundle:Default:index.html.twig',
+            array(
+                'tag' => $tag,
+                'build' => $build,
+                'features' => $features
+            )
+        );
+    }
+}

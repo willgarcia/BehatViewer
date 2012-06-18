@@ -1,0 +1,12 @@
+<div class="pull-right" xmlns="http://www.w3.org/1999/html">
+  <div class="btn-group">
+    <button data-toggle="dropdown" class="btn dropdown-toggle btn-icon">
+      <i class="icon-eye-open"></i> <span>Switch view</span>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu">
+      <li><a href="{{ path("behatviewer.feature", {'id': feature.id, 'slug': feature.slug}) }}" data-action="summary" title="Summary"><i class="icon-reorder"></i> Summary</a></li>
+      <li><a href="{{ path("behatviewer.source", {'id': feature.id, 'slug': feature.slug}) }}" data-action="source" title="Source"><i class="icon-file"></i> Source</a></li>
+    </ul>
+  </div>
+</div>

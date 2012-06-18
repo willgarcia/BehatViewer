@@ -1,0 +1,1 @@
+{"base_url":"\/behat","routes":{"behatviewer.screenshot":{"tokens":[["text","\/screenshot"],["variable","\/","[^\/]+?","id"],["text","\/feature"]],"defaults":[]}}}

@@ -1,0 +1,45 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% if not features and build %}
+{% set features = build.features %}
+{% endif %}
+
+{% block container %}
+<h1 class="page-header" xmlns="http://www.w3.org/1999/html">
+    Features for {{ project.name }} {% if build %}
+    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+    {% endif %}
+
+    {% include 'BehatViewerBundle::Default/switcher.html.twig' %}
+</h1>
+
+<div class="row-fluid">
+    <div class="span12">
+        <div class="row-fluid">
+            {% for feature in features %}
+            {% include 'BehatViewerBundle::Default/feature.html.twig' %}
+
+            {% if loop.index is divisibleby(3) %}
+        </div>
+        <br/>
+
+        <div class="row-fluid">
+            {% endif %}
+            {% else %}
+            <div class="alert alert-block alert-info">
+                <h4 class="alert-heading">No feature</h4>
+
+                <p>This project has not been built yet. Click on the build button to launch test suite.</p>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/home.js') }}"></script>
+<script>
+    behat.application.setController(behat.home);
+</script>
+{% endblock %}

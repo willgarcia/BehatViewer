@@ -1,0 +1,63 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="row-fluid">
+    <div class="span12">
+        <h1 class="page-header">
+            Definitions for {{ project.name }}
+        </h1>
+
+        {% if definitions|count > 0 %}
+        <table id="definitions" class="table table-bordered table-striped tablesorter">
+            <thead>
+            <tr>
+                <th>Step</th>
+                <th>Context</th>
+                <th>Description</th>
+            </tr>
+            <tr>
+                <th>
+                    <input type="text" id="search" class="search-query" style="width: 80%"
+                           placeholder="Search through definitions..."/>
+                </th>
+                <th>
+                    <select id="contexts" style="width: 80%" multiple="">
+                        {% for context in contexts %}
+                        <option value="{{ context.context }}">{{ context.context }}</option>
+                        {% endfor %}
+                    </select>
+                </th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for definition in definitions %}
+            <tr>
+                <td style="width: 60%" class="snippet" data-search="{{ definition.snippet|clean }}">
+                    <strong>{{ definition.snippet }}</strong></td>
+                <td style="width: 10%" class="context">{{ definition.context }}::{{ definition.method }}</td>
+                <td style="width: 30%">{{definition.description }}</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+        <div class="alert alert-info">
+            <h4 class="alert-heading">No definitions</h4>
+
+            <p>No step definition found. To load definitions from your context library, please run <code>app/console
+                behat-viewer:definitions {% if project.name %}{{ project.name }}{% else %}foo-bar{% endif %}</code>.</p>
+        </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
+<script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
+<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/definitions.js') }}"></script>
+<script>
+    behat.application.setController(behat.definitions);
+</script>
+    {% endblock %}

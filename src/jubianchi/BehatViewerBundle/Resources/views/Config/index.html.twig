@@ -1,0 +1,96 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="row-fluid">
+    <h1 class="page-header">
+        Project configuration
+    </h1>
+
+    {% if not project.id %}
+    <div class="alert alert-block alert-info">
+        <h4 class="alert-heading">No project configured</h4>
+
+        <p>Before using Behat Viewer, you should configure your project.</p>
+    </div>
+    {% endif %}
+
+    <form class="form-horizontal" method="post" action="{{ path('behatviewer.config') }}" id="configuration">
+        <fieldset>
+            <!--
+				<div class="alert alert-block alert-danger">
+					<h4>Errors</h4>
+					{{ form_errors(form) }}
+				</div>
+				-->
+
+            <div class="span6">
+                <div class="control-group">
+                    <label for="Project_name" class="control-label">Project name</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.name, {'attr': {'class': 'input-xlarge', 'placeholder': 'My Project'}}) }}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="Project_slug" class="control-label">Identifier</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.slug, {'attr': {'class': 'input-xlarge', 'placeholder': 'my-project'}}) }}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="Project_base_url" class="control-label">Base URL</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.base_url, {'attr': {'class': 'input-xlarge', 'placeholder': 'http://myproject/app_test.php'}})
+                        }}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="Project_root_path" class="control-label">Root path</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.root_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}})
+                        }}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="Project_output_path" class="control-label">Output path</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.output_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}})
+                        }}
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label for="Project_test_command" class="control-label">Test command</label>
+
+                    <div class="controls">
+                        {{ form_widget(form.test_command, {'attr': {'class': 'input-xlarge', 'placeholder': 'app/console --env=test behat @AcmeBundle'}})
+                        }}
+                    </div>
+                </div>
+
+                {{ form_rest(form) }}
+            </div>
+        </fieldset>
+
+        <div class="form-actions">
+            <input class="btn btn-primary" type="submit" value="Save changes"/>
+            <input class="btn" type="reset" value="Cancel"/>
+        </div>
+    </form>
+</div>
+{% endblock %}
+
+{% block javascript %}
+<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/config.js') }}"></script>
+<script>
+    behat.application.setController(behat.config);
+</script>
+    {% endblock %}

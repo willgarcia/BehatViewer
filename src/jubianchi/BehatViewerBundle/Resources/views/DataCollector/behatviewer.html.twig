@@ -1,0 +1,14 @@
+{% extends 'WebProfilerBundle:Profiler:layout.html.twig' %}
+
+{% block toolbar %}
+{% set text %}
+<span>Behat Viewer</span>
+{% endset %}
+
+<a style="text-decoration: none; margin: 0; padding: 0;" href="{{ path("behatviewer.homepage") }}">
+    <img width="17" height="20"
+         src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABEAAAAUCAYAAABroNZJAAAAAXNSR0IArs4c6QAAAAZiS0dEAP8A/wD/oL2nkwAAAAlwSFlzAAALEwAACxMBAJqcGAAAAAd0SU1FB9wEExMoG9dcUioAAAAZdEVYdENvbW1lbnQAQ3JlYXRlZCB3aXRoIEdJTVBXgQ4XAAABqElEQVQ4y63UT4hOYRTH8Y8xC6MpTSE0olGsppM/ZRb2ZDcWVtQoGxtpNspCsZkUNrZIFmyUFWrIRpk0Q53GhoVihoWNIvlThs25db3mZRZO3X7n+d36Puc599yH/xDLFjMjYh0OYR+GsRqf8QQTmfmwKyQiVuIMjuMxrmEGXzCCi1iLg5l56w9IRKzHPWzDGGaxHUMYyMzxiNiPO5jHpsxcgN4CrChA4EBm3o6IGeysPSZLm2MMYiNeQ0+Z4wWYLEBfrZuYLu1veQtN0kDGSm+U7miqrJgp3Vs6X89vkKHS56UjHR9sOiL6cbrW5zPzZyfkTem3RSAfsBX3S2/iUnuHBnIMr+rLdEIGqqGNN4pzEbG867BFxAa8bVkncQFbcB27yz+VmRPtStrR2Y9HmfkjM1/WEDZxtPM43SDf8ay1zla+eamQp5n5rQPaxKdFIRHRi10ta6pjg8FWPtutkmH0/QUy2srvNknvP5r6MSKO1CTvwdnyP+NKt0rakDmswVV8xQOsqncnMvP9UiBTNWQvWt47HM7My/+82Tqa3VO/Pcw1d0g7fgEo+XZ1CE4h+wAAAABJRU5ErkJggg=="
+         style="border-width: 0" alt="Behat Viewer">
+</a>
+{% include 'WebProfilerBundle:Profiler:toolbar_item.html.twig' with { 'link': '' } %}
+    {% endblock %}
