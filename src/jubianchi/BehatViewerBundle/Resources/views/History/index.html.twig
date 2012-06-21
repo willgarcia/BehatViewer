@@ -5,6 +5,9 @@
         <div class="span12">
             <h1 class="page-header">
                 Builds for {{ project.name }}
+                {% if pages > 1 %}
+                    <small>Page {{ current }}/{{ pages }}</small>
+                {% endif %}
             </h1>
 
             {% if builds|count > 0 %}

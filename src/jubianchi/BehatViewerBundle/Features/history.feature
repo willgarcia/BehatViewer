@@ -3,15 +3,16 @@ Feature: History
     @reset
     Scenario: Single project and no build
         Given I load the "single-project.sql" fixture
-          And I am on "/history"
+          And I am on "/"
+          And I follow "History"
          Then I should see "Builds for Foo Bar"
-          And I should see a ".alert" element
-	      And I should see "No build"
-	      And I should see "This project has not been built yet. To build it, please run app/console behat-viewer:build foo-bar."
+	      And I should see "No build" in the ".alert" element
+	      And I should see "This project has not been built yet. To build it, please run app/console behat-viewer:build foo-bar." in the ".alert" element
 
     Scenario: Single project and a single build
         Given I load the "single-build.sql" fixture
-          And I am on "/history"
+          And I am on "/"
+          And I follow "History"
          Then I should see "Builds for Foo Bar"
           And I should see a "table" element
           And the columns schema of the "table" table should match:
@@ -29,7 +30,8 @@ Feature: History
 
     Scenario: With a second build
         Given I load the "second-build.sql" fixture
-          And I am on "/history"
+          And I am on "/"
+          And I follow "History"
          Then I should see "Builds for Foo Bar"
           And I should see a "table" element
           And the data in the 1st row of the "table" table should match:
@@ -43,22 +45,23 @@ Feature: History
     Scenario: Pagination
         Given I load the "single-project.sql" fixture
         Given I load the "many-builds.sql" fixture
-          And I am on "/history"
+          And I am on "/"
+          And I follow "History"
          Then I should see a ".prev.disabled" element
           And I should see a ".next" element
 
         Given I follow "Next"
-         Then I should be on "/history/page/2"
+         Then I should see "Page 2/3"
           And I should see a ".prev" element
           And I should see a ".next" element
 
         Given I follow "Next"
-         Then I should be on "/history/page/3"
+         Then I should see "Page 3/3"
           And I should see a ".prev" element
           And I should see a ".next.disabled" element
 
         Given I follow "Previous"
-         Then I should be on "/history/page/2"
+         Then I should see "Page 2/3"
 
         Given I follow "Previous"
-         Then I should be on "/history/page/1"
+         Then I should see "Page 1/3"
