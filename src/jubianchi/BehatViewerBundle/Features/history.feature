@@ -1,6 +1,6 @@
 Feature: History
 
-    @reset @javascript
+    @reset
     Scenario: Single project and no build
         Given I load the "single-project.sql" fixture
           And I am on "/history"

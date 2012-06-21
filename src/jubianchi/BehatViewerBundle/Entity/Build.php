@@ -37,7 +37,7 @@ class Build extends Base
     private $project;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Feature", mappedBy="builds", cascade={"remove","persist"})
+     * @ORM\OneToMany(targetEntity="Feature", mappedBy="build", cascade={"remove","persist"})
      */
     private $features;
 

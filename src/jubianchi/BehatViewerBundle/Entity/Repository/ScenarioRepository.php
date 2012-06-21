@@ -20,4 +20,20 @@ class ScenarioRepository extends EntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function removeForFeature(Entity\Feature $feature) {
+        $scenarios = $this->createQueryBuilder('s')
+            ->where('s.feature = :feature')
+            ->setParameter('feature', $feature)
+            ->getQuery()
+            ->getResult();
+
+        foreach($scenarios as $scenario) {
+            $this->getEntityManager()->remove($scenario);
+        }
+
+        $this->getEntityManager()->flush();
+
+        return count($scenarios);
+    }
 }

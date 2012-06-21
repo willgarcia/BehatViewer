@@ -43,9 +43,9 @@ class Scenario extends Base
     private $status;
 
     /**
-     * @var jubianchi\BehatViewerBundle\Entity\Feature $feature
+     * @var \jubianchi\BehatViewerBundle\Entity\Feature $feature
      *
-     * @ORM\ManyToOne(targetEntity="Feature", inversedBy="scenarios", cascade={"remove","remove"})
+     * @ORM\ManyToOne(targetEntity="Feature", inversedBy="scenarios", cascade={"persist"})
      * @ORM\JoinColumn(name="feature_id", referencedColumnName="id")
      */
     private $feature;
@@ -56,7 +56,7 @@ class Scenario extends Base
     private $steps;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="scenarios", cascade={"persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="scenarios", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="scenario_tags")
      */
     private $tags;

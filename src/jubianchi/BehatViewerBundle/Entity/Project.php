@@ -58,6 +58,13 @@ class Project extends Base
     private $root_path;
 
     /**
+     * @var bool $auto_clean
+     *
+     * @ORM\Column(name="auto_clean", type="boolean")
+     */
+    private $auto_clean;
+
+    /**
      * @var string $test_command
      *
      * @ORM\Column(name="test_command", type="string", length=255)
@@ -152,6 +159,26 @@ class Project extends Base
     public function setRootPath($rootPath)
     {
         $this->root_path = $rootPath;
+    }
+
+    /**
+     * Get source_path
+     *
+     * @return string
+     */
+    public function getAutoClean()
+    {
+        return $this->auto_clean;
+    }
+
+    /**
+     * Set source_path
+     *
+     * @param bool $autoClean
+     */
+    public function setAutoClean($autoClean)
+    {
+        $this->auto_clean = $autoClean;
     }
 
     /**

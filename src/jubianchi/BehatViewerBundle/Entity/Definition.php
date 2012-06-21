@@ -52,7 +52,7 @@ class Definition extends Base
     /**
      * @var jubianchi\BehatViewerBundle\Entity\Project $project
      *
-     * @ORM\ManyToOne(targetEntity="Project", inversedBy="definitions", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Project", inversedBy="definitions")
      * @ORM\JoinColumn(name="project_id", referencedColumnName="id")
      */
     private $project;

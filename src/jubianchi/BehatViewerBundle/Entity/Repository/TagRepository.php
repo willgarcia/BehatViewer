@@ -2,7 +2,9 @@
 
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
 
-use \Doctrine\ORM\EntityRepository;
+use \Doctrine\ORM\EntityRepository,
+    \Doctrine\ORM\Query\Expr,
+    \jubianchi\BehatViewerBundle\Entity;
 
 /**
  * TagRepository

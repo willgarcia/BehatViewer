@@ -43,20 +43,20 @@ class Feature extends Base
     private $description;
 
     /**
-     * @var jubianchi\BehatViewerBundle\Entity\Job $builds
+     * @var \jubianchi\BehatViewerBundle\Entity\Build $build
      *
-     * @ORM\ManyToMany(targetEntity="Build", inversedBy="features", cascade={"remove","persist"})
-     * @ORM\JoinTable(name="feature_builds")
+     * @ORM\ManyToOne(targetEntity="Build", inversedBy="features", cascade={"persist"})
+     * @ORM\JoinColumn(name="build_id", referencedColumnName="id")
      */
-    private $builds;
+    private $build;
 
     /**
-     * @ORM\OneToMany(targetEntity="Scenario", mappedBy="feature", cascade={"remove","persist"})
+     * @ORM\OneToMany(targetEntity="Scenario", mappedBy="feature", cascade={"remove", "persist"})
      */
     private $scenarios;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="features", cascade={"remove","persist"})
+     * @ORM\ManyToMany(targetEntity="Tag", inversedBy="features", cascade={"remove", "persist"})
      * @ORM\JoinTable(name="feature_tags")
      */
     private $tags;
@@ -213,7 +213,7 @@ class Feature extends Base
     /**
      * Add tags
      *
-     * @param jubianchi\BehatViewerBundle\Entity\Tag $tags
+     * @param \jubianchi\BehatViewerBundle\Entity\Tag $tags
      */
     public function addTag(\jubianchi\BehatViewerBundle\Entity\Tag $tags)
     {
@@ -223,7 +223,7 @@ class Feature extends Base
     /**
      * Add tags
      *
-     * @param jubianchi\BehatViewerBundle\Entity\Tag $tags
+     * @param \jubianchi\BehatViewerBundle\Entity\Tag $tags
      */
     public function addTags(array $tags)
     {
@@ -233,7 +233,7 @@ class Feature extends Base
     /**
      * Get tags
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTags()
     {
@@ -251,20 +251,20 @@ class Feature extends Base
     /**
      * Add builds
      *
-     * @param jubianchi\BehatViewerBundle\Entity\Build $builds
+     * @param \jubianchi\BehatViewerBundle\Entity\Build $builds
      */
-    public function addBuild(\jubianchi\BehatViewerBundle\Entity\Build $builds)
+    public function setBuild(\jubianchi\BehatViewerBundle\Entity\Build $build)
     {
-        $this->builds[] = $builds;
+        $this->build = $build;
     }
 
     /**
      * Get builds
      *
-     * @return Doctrine\Common\Collections\Collection
+     * @return \jubianchi\BehatViewerBundle\Entity\Build
      */
-    public function getBuilds()
+    public function getBuild()
     {
-        return $this->builds;
+        return $this->build;
     }
 }

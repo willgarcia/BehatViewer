@@ -108,7 +108,7 @@ class Step extends Base
     /**
      * @var jubianchi\BehatViewerBundle\Entity\Scenario $scenario
      *
-     * @ORM\ManyToOne(targetEntity="Scenario", inversedBy="scenario", cascade={"remove"})
+     * @ORM\ManyToOne(targetEntity="Scenario", inversedBy="steps", cascade={"remove", "persist"})
      * @ORM\JoinColumn(name="scenario_id", referencedColumnName="id")
      */
     private $scenario;

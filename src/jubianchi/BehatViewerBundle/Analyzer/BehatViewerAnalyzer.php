@@ -17,12 +17,14 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      * @param \jubianchi\BehatViewerBundle\Entity\Project $project
      * @param array                                       $data
      */
-    public function analyze(Entity\Project $project, array $data)
+    public function analyze(Entity\Project $project, array $data, Entity\Feature $feature = null)
     {
-        $build = $this->getBuildFromData($data);
-        $build->setProject($project);
+        $build = $this->getBuildFromData($data, $feature);
 
-        $project->addBuild($build);
+        if(null === $feature) {
+            $build->setProject($project);
+            $project->addBuild($build);
+        }
 
         $this->getEntityManager()->persist($build);
         $this->getEntityManager()->persist($project);
@@ -82,14 +84,19 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      *
      * @return \jubianchi\BehatViewerBundle\Entity\Build
      */
-    public function getBuildFromData(array $data)
+    public function getBuildFromData(array $data, Entity\Feature $feature = null)
     {
-        $build = new Entity\Build();
+        if(null !== $feature) {
+            $build = $feature->getBuild();
+        } else {
+            $build = new Entity\Build();
+        }
+
         $build->setDate(new \DateTime('now'));
 
         foreach($data as $featureData)
         {
-            $feature = $this->getFeatureFromData($featureData);
+            $myFeature = $this->getFeatureFromData($featureData, $feature);
 
             $this->dispatchEvent('foundFeature', $featureData);
 
@@ -109,12 +116,15 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
                     $scenario->addStep($step);
                 }
 
-                $scenario->setFeature($feature);
-                $feature->addScenario($scenario);
+                $scenario->setFeature($myFeature);
+                $myFeature->addScenario($scenario);
+
+                $this->getEntityManager()->persist($scenario);
             }
 
-            $feature->addBuild($build);
-            $build->addFeature($feature);
+            $myFeature->setBuild($build);
+
+            $this->getEntityManager()->persist($myFeature);
         }
 
         return $build;
@@ -125,15 +135,31 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      *
      * @return \jubianchi\BehatViewerBundle\Entity\Feature
      */
-    protected function getFeatureFromData(array $data)
+    protected function getFeatureFromData(array $data, Entity\Feature $feature = null)
     {
-        $feature = new Entity\Feature();
+        if(null !== $feature) {
+            $this->getDoctrine()
+              ->getRepository('BehatViewerBundle:Scenario')
+              ->removeForFeature($feature);
+
+            $this->getEntityManager()->refresh($feature);
+        } else {
+            $feature = new Entity\Feature();
+        }
+
         $feature->setName($data['name']);
         $feature->setSlug($this->slugify($data['name']));
         $feature->setDescription($data['desc']);
 
         $tags = $this->getTagsFromData($data['tags']);
-        $feature->addTags($tags);
+        if(sizeof($tags)) {
+            foreach($tags as $tag)
+            {
+              if(null !== $feature->getTags() && false === $feature->getTags()->contains($tag)) {
+                $feature->addTag($tag);
+              }
+            }
+        }
 
         return $feature;
     }
@@ -201,10 +227,10 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
                     $tag = new Entity\Tag();
                     $tag->setName($name);
                     $tag->setSlug($this->slugify($name));
-                }
 
-                $this->getEntityManager()->persist($tag);
-                $this->getEntityManager()->flush();
+                    $this->getEntityManager()->persist($tag);
+                    $this->getEntityManager()->flush();
+                }
 
                 $tags[] = $tag;
             }

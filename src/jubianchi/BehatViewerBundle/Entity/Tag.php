@@ -36,12 +36,12 @@ class Tag extends Base
     private $slug;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Feature", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Feature", mappedBy="tags", cascade={"persist"})
      */
     private $features;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Scenario", mappedBy="tags")
+     * @ORM\ManyToMany(targetEntity="Scenario", mappedBy="tags", cascade={"persist"})
      */
     private $scenarios;
 

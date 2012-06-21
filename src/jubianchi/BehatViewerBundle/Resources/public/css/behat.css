@@ -185,6 +185,13 @@ a [class^="icon-"]:before {
 
 .dropdown-menu { font-size: 13px; }
 
+form label[for]::selection, label.checkbox::selection {
+    background: transparent;
+}
+form label[for]::-moz-selection, label.checkbox::-moz-selection {
+    background: transparent;
+}
+
 @media (max-width: 979px) {
     .noty_bar.noty_layout_top {
         position: static;

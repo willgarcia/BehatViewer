@@ -76,6 +76,17 @@
                     </div>
                 </div>
 
+                <div class="control-group">
+                    <label for="Project_auto_clean" class="control-label">Clean builds</label>
+
+                    <div class="controls">
+                      <label class="checkbox">
+                        {{ form_widget(form.auto_clean, {'attr': {'class': 'input-xlarge'}}) }}
+                        Only one build per week will be kept
+                      </label>
+                    </div>
+                </div>
+
                 {{ form_rest(form) }}
             </div>
         </fieldset>

@@ -8,6 +8,7 @@ use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     \Symfony\Component\EventDispatcher\EventSubscriberInterface,
     \Symfony\Component\EventDispatcher\Event,
     \Symfony\Component\Console\Formatter\OutputFormatterStyle,
+    \Symfony\Component\Console\Input\InputOption,
     \jubianchi\BehatViewerBundle\Entity;
 
 /**
@@ -30,9 +31,12 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             ->setDescription('Analyzes a project\'s report file')
             ->setDefinition(
                 array(
-                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to analyze')
+                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to analyze'),
+                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes outdated builds'),
+                    new InputOption('feature', null, InputOption::VALUE_REQUIRED, 'Rebuilds a feature')
                 )
-            );
+            )
+        ;
     }
 
     /**
@@ -121,18 +125,32 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
         $output->getFormatter()->setStyle('undefined', new OutputFormatterStyle('white', 'yellow'));
         $this->output = $output;
 
-        $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Project');
-        $project = $repository->findOneById(1);
+        $project = $this->getContainer()->get('doctrine')
+            ->getRepository('BehatViewerBundle:Project')
+            ->findOneById(1);
+
+        $input->setOption('clean', $project->getAutoClean() || $input->getOption('clean'));
 
         $report = $project->getOutputPath() . DIRECTORY_SEPARATOR . 'behat-viewer.json';
         if(!is_file($report) || !is_readable($report)) {
             throw new \RuntimeException(sprintf('File not found : %s', $report));
         }
 
+        $feature = null;
+        if(($feature = $input->getOption('feature'))) {
+            $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
+            $feature = $repository->findOneById($feature);
+        }
+
         $data = json_decode(file_get_contents($report), true);
 
         $analyzer = $this->getContainer()->get('behat_viewer.analyzer');
         $analyzer->addSubscriber($this);
-        $analyzer->analyze($project, $data);
+        $analyzer->analyze($project, $data, $feature);
+
+        if($input->getOption('clean')) {
+            $input = new \Symfony\Component\Console\Input\ArrayInput(array('project' => $input->getArgument('project')));
+            $this->getApplication()->find('behat-viewer:clean')->run($input, $output);
+        }
     }
 }
