@@ -5,9 +5,7 @@ Feature: All pages
         Given am on "<url>"
          Then the response status code should be <status>
           And I should see "Project configuration"
-          And I should see a ".alert" element
-          And I should see "No project configured"
-          And I should see "Before using Behat Viewer, you should configure your project."
+          And I should see an alert message with title "No project configured" and text "Before using Behat Viewer, you should configure your project."
 
           Examples:
             | url                   | status |

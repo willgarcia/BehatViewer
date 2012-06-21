@@ -4,7 +4,7 @@ Feature: Last build notification
     Scenario: Last build notification
         Given I load the "single-project.sql" fixture
           And I load the "single-build.sql" fixture
-          And I am on "/"
+          And I am on the homepage
          Then I should not see "Last build"
 
         Given I load the "second-build.sql" fixture

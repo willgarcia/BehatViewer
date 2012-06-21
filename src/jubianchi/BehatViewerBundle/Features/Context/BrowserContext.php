@@ -6,10 +6,18 @@ use \Behat\MinkExtension\Context\MinkContext,
     \Behat\Mink\Exception\ExpectationException,
     \Behat\Gherkin\Node\PyStringNode,
     \Behat\Symfony2Extension\Context\KernelAwareInterface,
-    \Symfony\Component\HttpKernel\KernelInterface;
+    \Symfony\Component\HttpKernel\KernelInterface,
+    \Behat\Behat\Context\Step;
 
 class BrowserContext extends MinkContext implements KernelAwareInterface
 {
+    protected $parameters;
+
+    public function __construct(array $parameters = array())
+    {
+        $this->parameters = $parameters;
+    }
+
     /**
      * @var \Symfony\Component\HttpKernel\KernelInterface
      */
@@ -81,5 +89,13 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     public function iShouldSee(PyStringNode $string)
     {
         $this->assertPageContainsText((string)$string);
+    }
+
+    /**
+     * @Given /^I am on the homepage$/
+     */
+    public function iAmOnTheHomepage()
+    {
+        return new Step\Given(sprintf('I am on "%s"', $this->parameters['base_url']));
     }
 }

@@ -7,11 +7,14 @@ use \Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand,
 
 class FeatureContext extends BehatViewerContext
 {
-    public function __construct()
+    public function __construct(array $parameters = array())
     {
-        $this->useContext('fixture', new FixtureContext());
-        $this->useContext('browser', new BrowserContext());
-        $this->useContext('table', new TableContext());
+        parent::__construct($parameters);
+
+        $this->useContext('fixture', new FixtureContext($parameters));
+        $this->useContext('browser', new BrowserContext($parameters));
+        $this->useContext('table', new TableContext($parameters));
+        $this->useContext('message', new BootstrapMessageContext($parameters));
     }
 
     public function setKernel(KernelInterface $kernel)
