@@ -23,7 +23,6 @@ class BuildCommand extends ContainerAwareCommand
             ->setDefinition(
                 array(
                     new InputArgument('project', InputArgument::OPTIONAL, 'The project to build'),
-                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes outdated builds'),
                     new InputOption('feature', null, InputOption::VALUE_REQUIRED, 'Rebuilds a feature'),
                     new InputOption('definitions', null, InputOption::VALUE_NONE, 'Updates definition list'),
                 )
@@ -42,8 +41,6 @@ class BuildCommand extends ContainerAwareCommand
         $project = $this->getContainer()->get('doctrine')
             ->getRepository('BehatViewerBundle:Project')
             ->findOneById(1);
-
-        $input->setOption('clean', $project->getAutoClean() || $input->getOption('clean'));
 
         if($input->getOption('definitions')) {
             $this->getApplication()->find('behat-viewer:definitions')->run(new \Symfony\Component\Console\Input\ArgvInput(), $output);

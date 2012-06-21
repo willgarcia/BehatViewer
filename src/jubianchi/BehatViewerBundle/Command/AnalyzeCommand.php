@@ -32,7 +32,6 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             ->setDefinition(
                 array(
                     new InputArgument('project', InputArgument::OPTIONAL, 'The project to analyze'),
-                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes outdated builds'),
                     new InputOption('feature', null, InputOption::VALUE_REQUIRED, 'Rebuilds a feature')
                 )
             )
@@ -129,7 +128,6 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             ->getRepository('BehatViewerBundle:Project')
             ->findOneById(1);
 
-        $input->setOption('clean', $project->getAutoClean() || $input->getOption('clean'));
 
         $report = $project->getOutputPath() . DIRECTORY_SEPARATOR . 'behat-viewer.json';
         if(!is_file($report) || !is_readable($report)) {
@@ -147,10 +145,5 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
         $analyzer = $this->getContainer()->get('behat_viewer.analyzer');
         $analyzer->addSubscriber($this);
         $analyzer->analyze($project, $data, $feature);
-
-        if($input->getOption('clean')) {
-            $input = new \Symfony\Component\Console\Input\ArrayInput(array('project' => $input->getArgument('project')));
-            $this->getApplication()->find('behat-viewer:clean')->run($input, $output);
-        }
     }
 }
