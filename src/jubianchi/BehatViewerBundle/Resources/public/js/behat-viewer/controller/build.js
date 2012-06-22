@@ -79,17 +79,14 @@ var BuildController;
                 });
             }
 
-            $('tbody [type=checkbox]').each(function() {
-                $(this).attr('checked', !$(this).attr('checked'));
+            $(document).delegate('thead [type=checkbox]', 'click', function() {
+                $('tbody [type=checkbox]').each(function() {
+                    $(this).attr('checked', !$(this).attr('checked'));
+                });
             });
 
             $('.tablesorter').fixedTable();
         }
-
-        var c = new BuildController('#container')
-        app.controller.current(c);
-
-        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
     }
   );
 }(jQuery));

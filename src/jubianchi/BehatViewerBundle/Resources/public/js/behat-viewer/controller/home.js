@@ -32,8 +32,6 @@ var HomeController;
 
             app.controller.navigationAction(elem, e)
         };
-
-        app.controller.current(new HomeController('#container'));
     }
   );
 }(jQuery));

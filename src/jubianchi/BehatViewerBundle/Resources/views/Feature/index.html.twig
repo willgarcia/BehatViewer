@@ -41,7 +41,12 @@
 {% block javascript %}
     {% if xhr %}
         <script type="text/javascript">
-            JSC.require('controller/feature');
+            JSC.require(
+                'controller/feature',
+                function() {
+                    app.controller.current(new FeatureController('#container'));
+                }
+            );
         </script>
     {% endif %}
 {% endblock %}

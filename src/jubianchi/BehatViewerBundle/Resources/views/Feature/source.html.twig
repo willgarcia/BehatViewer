@@ -24,7 +24,14 @@
 {% block javascript %}
     {% if xhr %}
         <script type="text/javascript">
-          JSC.require('controller/feature-source');
+            JSC.require(
+                'controller/feature-source',
+                function() {
+                    var c = new FeatureSourceController('#container');
+                    app.controller.current(c);
+                    $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+                }
+            );
         </script>
     {% endif %}
 {% endblock %}

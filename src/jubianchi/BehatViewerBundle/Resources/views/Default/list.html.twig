@@ -49,10 +49,16 @@
 <script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
 <script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
 
-
 {% if xhr %}
     <script type="text/javascript">
-        JSC.require('controller/home-list');
+        JSC.require(
+            'controller/home-list',
+            function() {
+                var c = new HomeListController('#container');
+                app.controller.current(c);
+                $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+            }
+        );
     </script>
 {% endif %}
 {% endblock %}

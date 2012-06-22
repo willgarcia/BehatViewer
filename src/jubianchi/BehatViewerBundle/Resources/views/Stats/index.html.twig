@@ -108,8 +108,7 @@
         <h2>Steps</h2>
 
         <div class="span5">
-            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container"
-                   data-graph-type="line" data-graph-yaxis-1-title-text="Steps">
+            <table class="table table-striped highchart" data-graph-container=".. .. .highchart-container" data-graph-type="line" data-graph-yaxis-1-title-text="Steps">
                 <caption>Number of steps</caption>
                 <thead>
                 <tr>
@@ -148,6 +147,5 @@
 <script src="{{ asset('bundles/behatviewer/js/jquery.highchartTable.js') }}"></script>
 <script>
     $(window).on('loadComplete', function () { $('table.highchart').highchartTable(); $(window).off('loadComplete', this); });
-
 </script>
 {% endblock %}

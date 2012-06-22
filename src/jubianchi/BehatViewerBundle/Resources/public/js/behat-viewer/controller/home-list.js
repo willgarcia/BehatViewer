@@ -35,10 +35,6 @@ var HomeListController;
 
             $('.tablesorter').fixedTable();
         };
-
-        var c = new HomeListController('#container');
-        app.controller.current(c);
-        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
     }
   );
 }(jQuery));

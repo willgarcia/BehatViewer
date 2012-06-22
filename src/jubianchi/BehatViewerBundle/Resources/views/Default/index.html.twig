@@ -41,7 +41,12 @@
 {% block javascript %}
     {% if xhr %}
         <script type="text/javascript">
-            JSC.require('controller/home');
+            JSC.require(
+                'controller/home',
+                function() {
+                    app.controller.current(new HomeController('#container'));
+                }
+            );
         </script>
     {% endif %}
 {% endblock %}

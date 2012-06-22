@@ -22,10 +22,6 @@ var FeatureSourceController;
         FeatureSourceController.prototype.complete = function () {
             window.prettyPrint();
         };
-
-        var c = new FeatureSourceController('#container');
-        app.controller.current(c);
-        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
     }
   );
 }(jQuery));

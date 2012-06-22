@@ -52,8 +52,6 @@ var FeatureController;
                 t();
             }
         }
-
-        app.controller.current(new FeatureController('#container'));
     }
   );
 }(jQuery));
