@@ -18,6 +18,9 @@
     <services>
         <service id="behat_viewer.twig.extension" class="%behat_viewer.twig.extension.class%">
             <tag name="twig.extension"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
         </service>
 
         <service id="behat_viewer.db.table_prefix_subscriber" class="%behat_viewer.db.table_prefix_subscriber.class%">

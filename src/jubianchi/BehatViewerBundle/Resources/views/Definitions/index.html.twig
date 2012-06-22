@@ -56,8 +56,9 @@
 {% block javascript %}
 <script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
 <script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
-<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/definitions.js') }}"></script>
-<script>
-    behat.application.setController(behat.definitions);
-</script>
-    {% endblock %}
+    {% if xhr %}
+        <script type="text/javascript">
+          JSC.require('controller/definitions');
+        </script>
+    {% endif %}
+{% endblock %}

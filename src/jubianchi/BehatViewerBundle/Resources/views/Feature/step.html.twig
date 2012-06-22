@@ -47,13 +47,13 @@
             {% endif %}
 
             {% if not (step.status in ['skipped', 'pending', 'undefined']) and step.screen != '' %}
-            <button class="btn btn-{{ class }}" data-rel="screenshot" data-toggle="screenshot-{{ step.id }}">
+            <button class="btn btn-{{ class }}" data-action="screenshot" data-toggle="screenshot-{{ step.id }}">
                 Screenshot
             </button>
             {% endif %}
 
             {% if step.snippet != '' %}
-            <button class="btn btn-{{ class }}" data-rel="snippet" data-toggle="snippet-{{ step.id }}">Snippet</button>
+            <button class="btn btn-{{ class }}" data-action="snippet" data-toggle="snippet-{{ step.id }}">Snippet</button>
             {% endif %}
         </div>
     </div>

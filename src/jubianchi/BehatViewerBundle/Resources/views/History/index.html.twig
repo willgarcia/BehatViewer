@@ -31,7 +31,7 @@
                 </table>
 
                 <div class="btn-group">
-                    <a href="{{ path('behatviewer.historydeletesel') }}" class="btn btn-danger" data-action="delete-selected">Delete selected</a>
+                    <a href="{{ path('behatviewer.historydeletesel') }}" class="btn btn-danger" data-action="delselected">Delete selected</a>
                 </div>
 
                 {% if pages > 1 %}
@@ -40,7 +40,7 @@
 
                             <li class="prev{% if current == 1 %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current - 1}) }}" title="Previous">«</a></li>
                             {% for i in range(1, pages) %}
-                                <li{% if i == current %} class="active"{% endif %}><a href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
+                                <li{% if i == current %} class="active"{% endif %}><a data-action="navig" href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
                             {% endfor %}
                             <li class="next{% if current == pages %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current + 1}) }}" title="Next">»</a></li>
                         </ul>
@@ -62,8 +62,10 @@
 {% block javascript %}
     <script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
     <script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
-    <script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/build.js') }}"></script>
-    <script>
-        behat.application.setController(behat.build);
-    </script>
+
+    {% if xhr %}
+        <script type="text/javascript">
+            JSC.require('controller/feature');
+        </script>
+    {% endif %}
 {% endblock %}

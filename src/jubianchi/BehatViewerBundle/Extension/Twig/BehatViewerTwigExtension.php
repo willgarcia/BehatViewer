@@ -1,14 +1,29 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Extension\Twig;
 
-
+use \Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    \Symfony\Component\DependencyInjection\ContainerInterface;;
 
 /**
  *
  */
-class BehatViewerTwigExtension extends \Twig_Extension
+class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAwareInterface
 {
+    protected $container;
+
     /**
+     * Sets the Container.
+     *
+     * @param ContainerInterface $container A ContainerInterface instance
+     *
+     * @api
+     */
+    function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
+    }
+
+  /**
      * @return string
      */
     public function getName()
@@ -31,6 +46,13 @@ class BehatViewerTwigExtension extends \Twig_Extension
             'iconv' => new \Twig_Filter_Method($this, 'iconv'),
             'count' => new \Twig_Filter_Function('count'),
             'nl2br' => new \Twig_Filter_Function('nl2br'),
+        );
+    }
+
+    public function getGlobals()
+    {
+        return array(
+          'domain' => $this->container->get('request')->getHost()
         );
     }
 

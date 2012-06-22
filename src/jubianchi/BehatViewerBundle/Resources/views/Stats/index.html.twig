@@ -147,6 +147,7 @@
 <script src="{{ asset('bundles/behatviewer/js/highchart.js') }}"></script>
 <script src="{{ asset('bundles/behatviewer/js/jquery.highchartTable.js') }}"></script>
 <script>
-    $('table.highchart').highchartTable();
+    $(window).on('loadComplete', function () { $('table.highchart').highchartTable(); $(window).off('loadComplete', this); });
+
 </script>
-    {% endblock %}
+{% endblock %}

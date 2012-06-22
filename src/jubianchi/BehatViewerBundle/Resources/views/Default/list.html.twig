@@ -48,23 +48,11 @@
 {% block javascript %}
 <script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
 <script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
-<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/home.js') }}"></script>
-<script>
-    behat.application.setController(behat.home);
 
-    if ($.fn.tablesorter) {
-        $('.tablesorter').tablesorter({
-            textExtraction:{
-                2:function (node, table, cellIndex) {
-                    return $(node).attr('data-value');
-                },
-                3:function (node, table, cellIndex) {
-                    return $(node).attr('data-value');
-                }
-            }
-        });
-    }
 
-    $('.tablesorter').fixedTable();
-</script>
+{% if xhr %}
+    <script type="text/javascript">
+        JSC.require('controller/home-list');
+    </script>
+{% endif %}
 {% endblock %}

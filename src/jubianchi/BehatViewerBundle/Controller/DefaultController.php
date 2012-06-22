@@ -15,7 +15,7 @@ class DefaultController extends BehatViewerController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/", name="behatviewer.homepage")
+     * @Route("/", name="behatviewer.homepage", options={"expose"=true})
      * @Template()
      */
     public function indexAction()

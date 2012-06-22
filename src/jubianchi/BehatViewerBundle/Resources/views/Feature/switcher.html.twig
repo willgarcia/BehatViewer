@@ -5,8 +5,8 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu">
-      <li><a href="{{ path("behatviewer.feature", {'id': feature.id, 'slug': feature.slug}) }}" data-action="summary" title="Summary"><i class="icon-reorder"></i> Summary</a></li>
-      <li><a href="{{ path("behatviewer.source", {'id': feature.id, 'slug': feature.slug}) }}" data-action="source" title="Source"><i class="icon-file"></i> Source</a></li>
+      <li><a data-action="switch" href="{{ path("behatviewer.feature", {'id': feature.id, 'slug': feature.slug}) }}" title="Summary"><i class="icon-reorder"></i> Summary</a></li>
+      <li><a data-action="switch" href="{{ path("behatviewer.source", {'id': feature.id, 'slug': feature.slug}) }}" title="Source"><i class="icon-file"></i> Source</a></li>
     </ul>
   </div>
 </div>

@@ -21,6 +21,7 @@
 
             {% if loop.index is divisibleby(3) %}
         </div>
+
         <br/>
 
         <div class="row-fluid">
@@ -38,8 +39,9 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/home.js') }}"></script>
-<script>
-    behat.application.setController(behat.home);
-</script>
+    {% if xhr %}
+        <script type="text/javascript">
+            JSC.require('controller/home');
+        </script>
+    {% endif %}
 {% endblock %}

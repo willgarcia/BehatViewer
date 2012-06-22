@@ -65,28 +65,19 @@
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.noty.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/spin.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/moment.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/helper.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/loader.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/notifier.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/toolbar.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/server.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/application.js') }}"></script>
+
 <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
-<script>
-    $(function () {
-        behat.application.init();
-    });
+<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/JSC.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/bootstrap.js') }}"></script>
+<script type="text/javascript">
+  JSC.base = 'http://{{ domain }}/bundles/behatviewer/js/behat-viewer';
+  JSC.debug = {{ app.debug }};
 </script>
 {% endif %}
 
-<script>
-    behat.toolbar.lastBuild({{ lastbuild }});
-</script>
 
-{% block javascript %}
-
-{% endblock %}
+{% block javascript %}{% endblock %}
 </body>
 </html>

@@ -1,69 +1,78 @@
+var DefinitionsController;
+
 (function ($) {
-    if (!window.behat) {
-        window.behat = {};
-    }
+  "use strict";
 
-    var defaults = {
-    };
+  JSC.require(
+    ['NavigationController'],
+    function () {
+        DefinitionsController = function (master) {
+            NavigationController.call(this, master);
+        };
 
-    behat.definitions = {
-        settings:{},
-        window:$(window)
-    };
+        DefinitionsController.prototype = new NavigationController();
+        DefinitionsController.prototype.constructor = DefinitionsController;
 
-    behat.definitions.init = function (options) {
-        this.settings = $.extend({}, defaults, options);
+        DefinitionsController.prototype.init = function () {
+            NavigationController.prototype.init.call(this);
 
-        if ($.fn.tablesorter) $('.tablesorter').tablesorter();
+            return this;
+        };
 
-        $('#contexts').chosen();
-        $('#contexts').chosen().change(function () {
-            var vals = $('#contexts').val(),
-                v = function (e) {
-                    for (var c in vals) {
-                        if (e.text().indexOf(vals[c]) > -1) return true;
-                    }
+        DefinitionsController.prototype.deinit = function () {
+            NavigationController.prototype.deinit.call(this);
 
-                    return false;
-                };
+            $(document).delegate('#search', 'keyup');
 
-            if (!vals) {
-                $('#definitions tr').css('display', '');
-            } else {
-                $('td.context').each(function () {
-                    if (v($(this))) {
-                        $(this).parent().css('display', '');
-                    } else {
-                        $(this).parent().css('display', 'none');
-                    }
-                })
+            return this;
+        };
+
+        DefinitionsController.prototype.complete = function () {
+            if ($.fn.tablesorter) {
+                $('.tablesorter').tablesorter();
             }
-        });
 
-        $(document).delegate('#search', 'keyup', function () {
-            var list = $('#definitions');
+            $('#contexts').chosen();
+            $('#contexts').chosen().change(function () {
+                var vals = $('#contexts').val(),
+                    v = function (e) {
+                        for (var c in vals) {
+                            if (e.text().indexOf(vals[c]) > -1) return true;
+                        }
 
-            if ($(this).val()) {
-                $('td.snippet:not([data-search*="' + $(this).val().toString().toLowerCase().clean() + '"])', list).parent().css('display', 'none');
-                $('td.snippet[data-search*="' + $(this).val().toString().toLowerCase().clean() + '"]', list).parent().css('display', '')
-            } else {
-                $('td.snippet[data-search]', list).parent().css('display', '')
-            }
-        });
+                        return false;
+                    };
 
-        $('thead th input').on('click', function (e) {
-            e.stopPropagation();
-            $(this).focus();
-        });
+                if (!vals) {
+                    $('#definitions tr').css('display', '');
+                } else {
+                    $('td.context').each(function () {
+                      if (v($(this))) {
+                          $(this).parent().css('display', '');
+                      } else {
+                          $(this).parent().css('display', 'none');
+                      }
+                    })
+                }
+            });
 
-        $('.tablesorter').fixedTable();
-    };
+            $(document).delegate('#search', 'keyup', function () {
+                var list = $('#definitions');
 
-    behat.definitions.deinit = function () {
-        $(document).delegate('#search', 'keyup');
-    };
+                if ($(this).val()) {
+                    $('td.snippet:not([data-search*="' + $(this).val().toString().toLowerCase().clean() + '"])', list).parent().css('display', 'none');
+                    $('td.snippet[data-search*="' + $(this).val().toString().toLowerCase().clean() + '"]', list).parent().css('display', '')
+                } else {
+                    $('td.snippet[data-search]', list).parent().css('display', '')
+                }
+            });
 
-    behat.definitions.filter = function () {
+            $('.tablesorter').fixedTable();
+        };
 
+        var c = new DefinitionsController('#container');
+        app.controller.current(c);
+        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
     }
-})(window.jQuery);
+  );
+}(jQuery));

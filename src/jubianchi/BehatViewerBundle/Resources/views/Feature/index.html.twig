@@ -10,36 +10,38 @@
 
 {% block container %}
 <h1 class="page-header">
-    {{ feature.name }} {% if build %}
-    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+    {{ feature.name }}
+    {% if build %}
+        <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Feature/switcher.html.twig' %}
 
     {% if feature.tags|count %}
-    <br/>
-    {% for tag in feature.tags %}
-    <a href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
-    {% endfor %}
+        <br/>
+        {% for tag in feature.tags %}
+            <a data-action="navig" href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
+        {% endfor %}
     {% endif %}
 </h1>
 <div class="row-fluid">
     <div class="fix-scroll span3">
         {% block sidebar %}
-        {% include "BehatViewerBundle::Feature/sidebar.html.twig" %}
+            {% include "BehatViewerBundle::Feature/sidebar.html.twig" %}
         {% endblock %}
     </div>
     <div class="span9">
         {% for scenario in feature.scenarios %}
-        {% include "BehatViewerBundle::Feature/scenario.html.twig" %}
+            {% include "BehatViewerBundle::Feature/scenario.html.twig" %}
         {% endfor %}
     </div>
 </div>
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ asset('bundles/behatviewer/js/behat-viewer/controller/feature.js') }}"></script>
-<script>
-    behat.application.setController(behat.feature);
-</script>
+    {% if xhr %}
+        <script type="text/javascript">
+            JSC.require('controller/feature');
+        </script>
+    {% endif %}
 {% endblock %}

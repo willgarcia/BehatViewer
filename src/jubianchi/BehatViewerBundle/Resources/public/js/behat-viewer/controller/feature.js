@@ -1,70 +1,59 @@
+var FeatureController;
+
 (function ($) {
-    if (!window.behat) {
-        window.behat = {};
-    }
+  "use strict";
 
-    var defaults = {
-    };
+  JSC.require(
+    ['NavigationController'],
+    function () {
+        FeatureController = function (master) {
+          NavigationController.call(this, master);
 
-    behat.feature = {
-        settings:{}
-    };
+          this.actions = ['snippet', 'screenshot', 'switch', 'navig'];
+        };
 
-    behat.feature.init = function (options) {
-        this.settings = $.extend({}, defaults, options);
+        FeatureController.prototype = new NavigationController();
+        FeatureController.prototype.constructor = FeatureController;
 
-        window.prettyPrint && prettyPrint();
+        FeatureController.prototype.init = function () {
+          NavigationController.prototype.init.call(this);
 
-        $(document).delegate('[href^="#"]', 'click', function (e) {
+          return this;
+        };
+
+        FeatureController.prototype.switchAction = function (elem, e) {
+            app.controller.navigationAction(elem, e)
+        };
+
+        FeatureController.prototype.navigAction = function (elem, e) {
+            app.controller.navigationAction(elem, e)
+        };
+
+        FeatureController.prototype.snippetAction = function (elem, e) {
+            $('#' + $(e.target).attr('data-toggle')).toggle()
+        };
+
+        FeatureController.prototype.screenshotAction = function (elem, e) {
             e.preventDefault();
 
-            var target = $(this).attr('href');
-            $(document).scrollTop($(target).position().top - parseInt($('body').css('padding-top')))
-        });
+            var p = $(e.target).attr('data-toggle').split('-'),
+                id = p[1],
+                t = function() { $('#' + $(e.target).attr('data-toggle')).toggle(); };
 
-        $(document).delegate('[data-rel=snippet]', 'click', behat.feature.snippet);
-        $(document).delegate('[data-rel=screenshot]', 'click', behat.feature.screenshot);
-        $(document).delegate('[data-action=summary]', 'click', behat.feature.browse);
-        $(document).delegate('[data-action=source]', 'click', behat.feature.browse);
-        $(document).delegate('a.label', 'click', behat.feature.browse)
-    };
-
-    behat.feature.deinit = function () {
-        $(document).undelegate('[data-rel=snippet]', 'click');
-        $(document).undelegate('[data-rel=screenshot]', 'click');
-        $(document).undelegate('a.label', 'click')
-    };
-
-    behat.feature.snippet = function (e) {
-        e.preventDefault();
-
-        $('#' + $(e.target).attr('data-toggle')).toggle()
-    };
-
-    behat.feature.screenshot = function (e) {
-        e.preventDefault();
-
-        var p = $(e.target).attr('data-toggle').split('-'),
-            id = p[1],
-            t = function() { $('#' + $(e.target).attr('data-toggle')).toggle(); };
-
-        if(!$('#' + $(e.target).attr('data-toggle')).find('img').length) {
-            $.get(
-                Routing.generate('behatviewer.screenshot', {"id": id}),
-                function(data) {
-                    $('#' + $(e.target).attr('data-toggle')).append('<img src="' + data + '" style="width: 70%" />');
-                    t();
-                }
-            );
-        } else {
-            t();
+            if(!$('#' + $(e.target).attr('data-toggle')).find('img').length) {
+                $.get(
+                    Routing.generate('behatviewer.screenshot', {"id": id}),
+                    function(data) {
+                        $('#' + $(e.target).attr('data-toggle')).append('<img src="' + data + '" style="width: 70%" />');
+                        t();
+                    }
+                );
+            } else {
+                t();
+            }
         }
+
+        app.controller.current(new FeatureController('#container'));
     }
-
-    behat.feature.browse = function (e) {
-        e.preventDefault();
-
-        behat.application.browse($(e.currentTarget).attr('href'))
-    }
-})(window.jQuery);
-
+  );
+}(jQuery));

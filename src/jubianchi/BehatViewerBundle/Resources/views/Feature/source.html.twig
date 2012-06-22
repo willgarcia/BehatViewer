@@ -22,5 +22,9 @@
 {% endblock %}
 
 {% block javascript %}
-<script>window.prettyPrint();</script>
+    {% if xhr %}
+        <script type="text/javascript">
+          JSC.require('controller/feature-source');
+        </script>
+    {% endif %}
 {% endblock %}

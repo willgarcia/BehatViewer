@@ -1,92 +1,95 @@
+var BuildController;
+
 (function ($) {
-    if (!window.behat) {
-        window.behat = {};
-    }
+  "use strict";
 
-    var defaults = {};
+  JSC.require(
+    ['NavigationController'],
+    function () {
+        BuildController = function (master) {
+            NavigationController.call(this, master);
 
-    behat.build = {
-        settings:{},
-        window:$(window)
-    };
+            this.actions = ['navig', 'delete', 'delselected'];
+        };
 
-    behat.build.init = function (options) {
-        this.settings = $.extend({}, defaults, options);
+        BuildController.prototype = new NavigationController();
+        BuildController.prototype.constructor = BuildController;
 
-        if ($.fn.tablesorter) {
-            $('.tablesorter').tablesorter({
-                textExtraction:{
-                    4:function (node, table, cellIndex) {
-                        return $(node).attr('data-value');
-                    },
-                    5:function (node, table, cellIndex) {
-                        return $(node).attr('data-value');
-                    }
-                }
-            });
-        }
+        BuildController.prototype.init = function () {
+            NavigationController.prototype.init.call(this);
 
-        $(document).delegate('[data-action*=delete]', 'click', behat.build.del);
-        $(document).delegate('[data-action=details]', 'click', behat.build.details);
-        $(document).delegate('[data-action=output]', 'click', behat.build.details);
-        $(document).delegate('.pagination a', 'click', behat.build.details);
-        $(document).delegate('thead [type=checkbox]', 'click', behat.build.select);
+            return this;
+        };
 
-        $('.tablesorter').fixedTable();
-    };
+        BuildController.prototype.deinit = function () {
+            NavigationController.prototype.deinit.call(this);
 
-    behat.build.deinit = function () {
-        $(document).undelegate('[data-action*=delete]', 'click');
-        $(document).undelegate('[data-action=details]', 'click');
-        $(document).undelegate('[data-action=output]', 'click');
-        $(document).undelegate('.pagination a', 'click');
-        $(document).undelegate('thead [type=checkbox]', 'click');
-    };
+            $(document).undelegate('thead [type=checkbox]', 'click');
 
-    behat.build.select = function (e) {
-        $('tbody [type=checkbox]').each(function() {
-            $(this).attr('checked', !$(this).attr('checked'));
-        });
-    };
+            return this;
+        };
 
-    behat.build.del = function (e) {
-        e.preventDefault();
+        BuildController.prototype.navigAction = function (elem, e) {
+            app.controller.navigationAction(elem, e)
+        };
 
-        var target = $(e.target);
+        BuildController.prototype.deleteAction = function (e) {
+            e.preventDefault();
 
-        if(target.attr('data-action') == 'delete') {
+            var target = $(e.target);
+
             $.get(
                 target.attr('href'),
                 function () {
-                    behat.application.notifier.notify('success', 'Build has been deleted');
-
                     target.parents('tr').fadeOut(500, function () {
                         $(this).remove()
-                    })
+                    });
                 }
             )
-        } else {
-            alert($('input[name*=delete]').serialize());
+        };
+
+        BuildController.prototype.delselectedAction = function (e) {
+            e.preventDefault();
+
+            var target = $(e.target);
 
             $.ajax({
                 type: 'POST',
                 url: target.attr('href'),
                 data: $(':checked').serialize(),
                 success: function () {
-                    behat.application.notifier.notify('success', 'Builds have been deleted');
-
                     $(':checked').parents('tr').fadeOut(500, function () {
                         $(this).remove()
                     })
                 }
             });
+        };
+
+        BuildController.prototype.complete = function () {
+            if ($.fn.tablesorter) {
+                $('.tablesorter').tablesorter({
+                    textExtraction:{
+                        4:function (node, table, cellIndex) {
+                            return $(node).attr('data-value');
+                        },
+                        5:function (node, table, cellIndex) {
+                            return $(node).attr('data-value');
+                        }
+                    }
+                });
+            }
+
+            $('tbody [type=checkbox]').each(function() {
+                $(this).attr('checked', !$(this).attr('checked'));
+            });
+
+            $('.tablesorter').fixedTable();
         }
-    };
 
-    behat.build.details = function (e) {
-        e.preventDefault();
+        var c = new BuildController('#container')
+        app.controller.current(c);
 
-        behat.application.browse($(e.target).attr('href'))
+        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
     }
-})(window.jQuery);
-
+  );
+}(jQuery));
