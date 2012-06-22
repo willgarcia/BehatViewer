@@ -16,12 +16,6 @@
 
     <form class="form-horizontal" method="post" action="{{ path('behatviewer.config') }}" id="configuration">
         <fieldset>
-            <!--
-				<div class="alert alert-block alert-danger">
-					<h4>Errors</h4>
-					{{ form_errors(form) }}
-				</div>
-				-->
 
             <div class="span6">
                 <div class="control-group">
@@ -76,17 +70,6 @@
                     </div>
                 </div>
 
-                <div class="control-group">
-                    <label for="Project_auto_clean" class="control-label">Clean builds</label>
-
-                    <div class="controls">
-                      <label class="checkbox">
-                        {{ form_widget(form.auto_clean, {'attr': {'class': 'input-xlarge'}}) }}
-                        Only one build per week will be kept
-                      </label>
-                    </div>
-                </div>
-
                 {{ form_rest(form) }}
             </div>
         </fieldset>
@@ -104,4 +87,4 @@
 <script>
     behat.application.setController(behat.config);
 </script>
-    {% endblock %}
+{% endblock %}
