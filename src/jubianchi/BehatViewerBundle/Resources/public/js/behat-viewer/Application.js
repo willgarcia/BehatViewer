@@ -2,13 +2,14 @@ var Application;
 
 (function ($) {
 	JSC.require(
-		['Controller'],
+		['Controller', 'Loader'],
 		function () {
 			Application = function (master, url, controller) {
 				Controller.call(this, master);
 
 				this.controller = controller;
 				this.home = url;
+                this.loader = new Loader();
 			};
 
 			Application.prototype = new Controller();
@@ -23,7 +24,7 @@ var Application;
 					this.controller.navigate(this.home);
 				}
 
-        return this;
+                return this;
 			};
 		}
 	);
