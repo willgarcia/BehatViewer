@@ -32,7 +32,7 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
   $(function () {
     JSC
       .require(
-        ['Toolbar'],
+        ['jsc/Toolbar'],
         function () {
           Navbar = function (master, controller) {
             Toolbar.call(this, master, controller);
@@ -62,7 +62,7 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
         }
       )
       .require(
-        ['NavigationController'],
+        ['jsc/NavigationController'],
         function () {
           MainController = function (master) {
             NavigationController.call(this, master);
@@ -73,7 +73,7 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
         }
       )
       .require(
-        ['Application'],
+        ['jsc/Application'],
         function () {
           BehatViewer = function (master) {
             Application.call(this, master, Routing.generate('behatviewer.homepage'), new MainController('#container'));
@@ -87,6 +87,6 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
           app = new BehatViewer('#application').init();
         }
       )
-      .require(['controller/home']);
+      .require(['behat-viewer/home']);
   });
 }(jQuery));

@@ -4,10 +4,12 @@ var FeatureSourceController;
   "use strict";
 
   JSC.require(
-    ['controller/feature'],
+    ['behat-viewer/feature'],
     function () {
         FeatureSourceController = function (master) {
             FeatureController.call(this, master);
+
+            this.cls = 'FeatureSourceController';
         };
 
         FeatureSourceController.prototype = new FeatureController();

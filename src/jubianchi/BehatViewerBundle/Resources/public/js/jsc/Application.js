@@ -2,10 +2,12 @@ var Application;
 
 (function ($) {
 	JSC.require(
-		['Controller', 'Loader'],
+		['jsc/Controller', 'jsc/Loader'],
 		function () {
 			Application = function (master, url, controller) {
 				Controller.call(this, master);
+
+                this.cls = 'Application';
 
 				this.controller = controller;
 				this.home = url;

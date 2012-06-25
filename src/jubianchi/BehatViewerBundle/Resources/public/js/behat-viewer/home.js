@@ -1,15 +1,17 @@
 var HomeController;
 
-(function ($) {
+(function ($, JSC) {
   "use strict";
 
   JSC.require(
-    ['NavigationController'],
+    ['jsc/NavigationController'],
     function () {
         HomeController = function (master) {
-          NavigationController.call(this, master);
+            NavigationController.call(this, master);
 
-          this.actions = ['switch', 'details'];
+            this.cls = 'HomeController';
+
+            this.actions = ['switch', 'details'];
         };
 
         HomeController.prototype = new NavigationController();
@@ -34,4 +36,4 @@ var HomeController;
         };
     }
   );
-}(jQuery));
+}(window.jQuery, window.JSC));

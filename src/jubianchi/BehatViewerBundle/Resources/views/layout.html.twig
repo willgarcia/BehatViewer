@@ -63,20 +63,17 @@
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/chosen.jquery.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/promise.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.noty.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/spin.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/moment.js') }}"></script>
 
 <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
 <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/JSC.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jsc/JSC.js') }}"></script>
 <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/bootstrap.js') }}"></script>
 <script type="text/javascript">
-  JSC.base = 'http://{{ domain }}/bundles/behatviewer/js/behat-viewer';
-  JSC.debug = {{ app.debug }};
+  JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
+  JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
 </script>
 {% endif %}
-
 
 {% block javascript %}{% endblock %}
 </body>

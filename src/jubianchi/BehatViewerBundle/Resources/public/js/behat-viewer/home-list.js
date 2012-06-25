@@ -4,10 +4,12 @@ var HomeListController;
   "use strict";
 
   JSC.require(
-    ['controller/home'],
+    ['behat-viewer/home'],
     function () {
         HomeListController = function (master) {
             HomeController.call(this, master);
+
+            this.cls = 'HomeListController';
         };
 
         HomeListController.prototype = new HomeController();

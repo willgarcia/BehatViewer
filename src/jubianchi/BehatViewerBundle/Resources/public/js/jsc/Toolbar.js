@@ -4,10 +4,12 @@ var Toolbar;
   "use strict";
 
   JSC.require(
-		['Controller'],
+		['jsc/Controller'],
 		function () {
 			Toolbar = function (master, controller) {
 				Controller.call(this, master);
+
+                this.cls = 'Toolbar';
 
 				this.controller = controller;
 				$.extend(this.actions, ['menu']);

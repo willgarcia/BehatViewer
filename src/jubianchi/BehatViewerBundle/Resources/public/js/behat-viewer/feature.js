@@ -4,12 +4,14 @@ var FeatureController;
   "use strict";
 
   JSC.require(
-    ['NavigationController'],
+    ['jsc/NavigationController'],
     function () {
         FeatureController = function (master) {
-          NavigationController.call(this, master);
+            NavigationController.call(this, master);
 
-          this.actions = ['snippet', 'screenshot', 'switch', 'navig'];
+            this.cls = 'FeatureController';
+
+            this.actions = ['snippet', 'screenshot', 'switch', 'navig'];
         };
 
         FeatureController.prototype = new NavigationController();

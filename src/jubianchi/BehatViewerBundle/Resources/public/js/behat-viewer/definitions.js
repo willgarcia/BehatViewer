@@ -1,13 +1,15 @@
 var DefinitionsController;
 
-(function ($) {
+(function ($, JSC) {
   "use strict";
 
   JSC.require(
-    ['NavigationController'],
+    ['jsc/NavigationController'],
     function () {
         DefinitionsController = function (master) {
             NavigationController.call(this, master);
+
+            this.cls = 'DefinitionsController';
         };
 
         DefinitionsController.prototype = new NavigationController();
@@ -70,9 +72,7 @@ var DefinitionsController;
             $('.tablesorter').fixedTable();
         };
 
-        var c = new DefinitionsController('#container');
-        app.controller.current(c);
-        $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+        app.controller.current(new DefinitionsController('#container'));
     }
   );
-}(jQuery));
+}(window.jQuery, window.JSC));

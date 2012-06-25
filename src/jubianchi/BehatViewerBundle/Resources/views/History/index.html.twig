@@ -66,12 +66,11 @@
     {% if xhr %}
         <script type="text/javascript">
             JSC.require(
-                'controller/build',
+                'behat-viewer/build',
                 function() {
                   var c = new BuildController('#container')
                   app.controller.current(c);
-
-                  $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+                  //$(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
                 }
             );
         </script>

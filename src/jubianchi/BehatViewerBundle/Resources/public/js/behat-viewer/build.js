@@ -4,10 +4,12 @@ var BuildController;
   "use strict";
 
   JSC.require(
-    ['NavigationController'],
+    ['jsc/NavigationController', 'moment'],
     function () {
         BuildController = function (master) {
             NavigationController.call(this, master);
+
+            this.cls = 'BuildController';
 
             this.actions = ['navig', 'delete', 'delselected'];
         };
@@ -66,6 +68,8 @@ var BuildController;
         };
 
         BuildController.prototype.complete = function () {
+            NavigationController.prototype.complete.call(this);
+
             if ($.fn.tablesorter) {
                 $('.tablesorter').tablesorter({
                     textExtraction:{

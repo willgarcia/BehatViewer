@@ -52,11 +52,11 @@
 {% if xhr %}
     <script type="text/javascript">
         JSC.require(
-            'controller/home-list',
+            'behat-viewer/home-list',
             function() {
                 var c = new HomeListController('#container');
                 app.controller.current(c);
-                $(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+                //$(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
             }
         );
     </script>
