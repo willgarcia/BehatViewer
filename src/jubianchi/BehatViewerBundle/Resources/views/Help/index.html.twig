@@ -24,6 +24,6 @@
 {% block javascript %}
 <script src="{{ asset('bundles/behatviewer/js/prettify.js') }}"></script>
 <script>
-  window.prettyPrint();
+    $(window).on('loadComplete', function () { window.prettyPrint(); $(window).off('loadComplete', this); });
 </script>
 {% endblock %}
