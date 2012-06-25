@@ -192,6 +192,8 @@ form label[for]::-moz-selection, label.checkbox::-moz-selection {
     background: transparent;
 }
 
+td small { font-size: 0.8em; }
+
 @media (max-width: 979px) {
     .noty_bar.noty_layout_top {
         position: static;

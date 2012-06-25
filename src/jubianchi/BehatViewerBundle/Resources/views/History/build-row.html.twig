@@ -20,7 +20,9 @@
         <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
     </td>
     <td style="width: 5%"><strong>{{ build.id }}</strong></td>
-    <td>{{ build.date|date("Y-m-d H:i:s") }}</td>
+    <td rel="moment">
+        {{ build.date|date("Y-m-d H:i:s") }}
+    </td>
     <td style="width: 10%">{{ passedpcnt|round }}%</td>
     <td style="min-width: 250px; width: 25%" data-value="{{ passedpcnt }}">
         <div class="progress">

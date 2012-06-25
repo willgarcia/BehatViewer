@@ -86,6 +86,13 @@ var BuildController;
             });
 
             $('.tablesorter').fixedTable();
+
+            $('[rel="moment"]').each(function() {
+                var text = $(this).text().trim();
+                $(this).html(
+                    moment(text, "YYYY-MM-DD h:mm:ss").fromNow() + ' <small>(' + text + ')</small>'
+                );
+            });
         }
     }
   );
