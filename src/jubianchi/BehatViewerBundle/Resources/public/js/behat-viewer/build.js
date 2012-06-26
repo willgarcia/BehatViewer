@@ -32,6 +32,10 @@ var BuildController;
         };
 
         BuildController.prototype.navigAction = function (elem, e) {
+            if($(elem).is('tr')) {
+                elem = $('[data-action=navig]', e.currentTarget).get(0);
+            }
+
             app.controller.navigationAction(elem, e)
         };
 

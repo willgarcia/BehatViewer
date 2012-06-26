@@ -15,7 +15,7 @@
 {% set pending = build.getStepsHavingStatusCount('pending') %}
 {% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
 
-<tr>
+<tr data-action="navig" class="navig">
     <td style="width: 15px">
         <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
     </td>
