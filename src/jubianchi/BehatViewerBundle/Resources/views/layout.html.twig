@@ -37,11 +37,11 @@
 <body>
 
 {% if not xhr %}
-{% block header %}
-{% include 'BehatViewerBundle::header.html.twig' %}
-{% endblock %}
+    {% block header %}
+        {% include 'BehatViewerBundle::header.html.twig' %}
+    {% endblock %}
 
-<div id="notification"></div>
+    <div id="notification"></div>
 {% endif %}
 
 <div class="container-fluid" id="container">
@@ -50,29 +50,39 @@
     <hr class="soften"/>
 
     {% block footer %}
-    {% include 'BehatViewerBundle::footer.html.twig' %}
+        {% include 'BehatViewerBundle::footer.html.twig' %}
     {% endblock %}
 </div>
 
 {% if not xhr %}
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/bootstrap.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/bootstrap.fixed-table.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/prettify.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/prettify.feature.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/chosen.jquery.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/promise.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.noty.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jsc/JSC.js') }}"></script>
+    <script type="text/javascript">
+        JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
+        JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
 
-<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jsc/JSC.js') }}"></script>
-<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/behat-viewer/bootstrap.js') }}"></script>
-<script type="text/javascript">
-  JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
-  JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
-</script>
+        JSC.require([
+            'bootstrap',
+            'bootstrap.fixed-table',
+            'jquery.noty',
+            'jquery.promise',
+            'behat-viewer/app'
+        ]);
+    </script>
+{% else %}
+    <script type="text/javascript">
+        {% if lastbuild %}
+            {% if lastbuild != build.id %}
+                $(window).trigger('showLastBuild', [{{ lastbuild }}]);
+            {% else %}
+                $(window).trigger('hideLastBuild');
+            {% endif %}
+        {% else %}
+            $(window).trigger('hideLastBuild');
+        {% endif %}
+    </script>
 {% endif %}
 
 {% block javascript %}{% endblock %}

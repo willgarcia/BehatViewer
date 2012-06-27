@@ -16,7 +16,7 @@ var HomeListController;
         HomeListController.prototype.constructor = HomeListController;
 
         HomeListController.prototype.init = function () {
-          NavigationController.prototype.init.call(this);
+            Controller.prototype.init.call(this);
 
           return this;
         };

@@ -11,10 +11,10 @@ class ScenarioRepository extends EntityRepository
     public function findByTagAndBuild(Entity\Tag $tag, Entity\Build $build)
     {
         return $this->createQueryBuilder('s')
-            ->select(array('s', 'st', 'f', 'fb'))
+            ->select(array('s', 'st', 'f'))
             ->join('s.tags', 'st', Expr\Join::WITH, 'st = :tag')
             ->join('s.feature', 'f', Expr\Join::WITH, 'f = s.feature')
-            ->join('f.builds', 'fb', Expr\Join::WITH, 'fb = :build')
+            ->where('f.build = :build')
             ->setParameter('tag', $tag)
             ->setParameter('build', $build)
             ->getQuery()

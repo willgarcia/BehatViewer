@@ -6,8 +6,14 @@
 
 {% block container %}
 <h1 class="page-header">
-    Features for {{ project.name }} {% if build %}
-    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+    {% if not tag is defined %}
+        Features for {{ project.name }}
+    {% else %}
+        Tag {{ tag.name }}
+    {% endif %}
+
+    {% if build %}
+        <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Default/switcher.html.twig' %}
@@ -46,17 +52,12 @@
 {% endblock %}
 
 {% block javascript %}
-<script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
-<script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
-
 {% if xhr %}
     <script type="text/javascript">
         JSC.require(
-            'behat-viewer/home-list',
+            ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/home-list'],
             function() {
-                var c = new HomeListController('#container');
-                app.controller.current(c);
-                //$(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+                app.controller.current(new HomeListController('#container'));
             }
         );
     </script>

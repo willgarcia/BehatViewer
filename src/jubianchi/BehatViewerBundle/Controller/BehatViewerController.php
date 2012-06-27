@@ -27,6 +27,7 @@ abstract class BehatViewerController extends Controller
             array(
                 'xhr' => $this->getRequest()->isXmlHttpRequest(),
                 'project' => $this->getSession()->getProject(),
+                'build' => $this->getSession()->getBuild(),
                 'lastbuild' => null !== ($build = $this->getLastBuild()) ? $build->getId() : 0
             ),
             $variables

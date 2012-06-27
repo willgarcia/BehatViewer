@@ -75,9 +75,22 @@
         </fieldset>
 
         <div class="form-actions">
-            <input class="btn btn-primary" type="submit" value="Save changes"/>
+            <input class="btn btn-primary" type="submit" data-action="submit" value="Save changes"/>
             <input class="btn" type="reset" value="Cancel"/>
         </div>
     </form>
 </div>
+{% endblock %}
+
+{% block javascript %}
+    {% if xhr %}
+        <script type="text/javascript">
+            JSC.require(
+                ['behat-viewer/config'],
+                function() {
+                    app.controller.current(new ConfigController('#container'));
+                }
+            );
+        </script>
+    {% endif %}
 {% endblock %}

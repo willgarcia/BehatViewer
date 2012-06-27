@@ -17,9 +17,9 @@ class FeatureRepository extends EntityRepository
     public function findBySlugAndBuild($slug, Entity\Build $build)
     {
         return $this->createQueryBuilder('f')
-            ->select(array('f', 'fb'))
-            ->join('f.builds', 'fb', Expr\Join::WITH, 'fb = :build')
+            ->select(array('f'))
             ->where('f.slug = :slug')
+            ->andWhere('f.build = :build')
             ->setParameter('slug', $slug)
             ->setParameter('build', $build)
             ->getQuery()
@@ -29,9 +29,9 @@ class FeatureRepository extends EntityRepository
     public function findByTagAndBuild(Entity\Tag $tag, Entity\Build $build)
     {
         return $this->createQueryBuilder('f')
-            ->select(array('f', 'ft', 'fb'))
+            ->select(array('f', 'ft'))
             ->join('f.tags', 'ft', Expr\Join::WITH, 'ft = :tag')
-            ->join('f.builds', 'fb', Expr\Join::WITH, 'fb = :build')
+            ->where('f.build = :build')
             ->setParameter('tag', $tag)
             ->setParameter('build', $build)
             ->getQuery()

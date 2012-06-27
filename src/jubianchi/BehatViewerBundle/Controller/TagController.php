@@ -19,6 +19,7 @@ class TagController extends BehatViewerController
      * @return \Symfony\Component\HttpFoundation\Response
      *
      * @Route("/{slug}", name="behatviewer.tag")
+     * @Template("BehatViewerBundle:Default:index.html.twig")
      */
     public function indexAction(Entity\Tag $tag)
     {
@@ -37,8 +38,7 @@ class TagController extends BehatViewerController
             }
         }
 
-        return $this->render(
-            'BehatViewerBundle:Default:index.html.twig',
+        return $this->getResponse(
             array(
                 'tag' => $tag,
                 'build' => $build,

@@ -22,10 +22,10 @@ var JSC;
               script = [script];
             }
 
+            this.log('Script(s) to load ', script);
+
             for (var i = 0, m = script.length; i < m; i++) {
                 if($.inArray(script[i], this.loaded) < 0) {
-                    this.log('Script to load ', script[i]);
-
                     var path = this.base + '/' + script[i] + '.js';
 
                     this.loaded[this.loaded.length] = script[i]

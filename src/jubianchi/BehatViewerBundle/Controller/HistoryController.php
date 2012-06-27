@@ -52,7 +52,6 @@ class HistoryController extends BehatViewerController
         }
 
         return $this->getResponse(array(
-            'project' => $project,
             'builds' => $builds,
             'current' => $page + 1,
             'pages' => $pages
@@ -123,6 +122,7 @@ class HistoryController extends BehatViewerController
         $manager = $this->getDoctrine()->getEntityManager();
 
         $project = $this->getSession()->getproject();
+        $pages = ceil(sizeof($this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(array())) / 10);
 
         $manager->remove($build);
         $manager->flush();
@@ -134,11 +134,10 @@ class HistoryController extends BehatViewerController
         }
         else
         {
-            return array(
-                'xhr' => $this->getRequest()->isXmlHttpRequest(),
-                'project' => $project,
-                'builds' => $builds
-            );
+            return $this->getResponse(array(
+                'builds' => $builds,
+                'pages' => $pages
+            ));
         }
     }
 

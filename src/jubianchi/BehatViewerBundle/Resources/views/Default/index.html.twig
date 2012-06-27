@@ -5,9 +5,15 @@
 {% endif %}
 
 {% block container %}
-<h1 class="page-header" xmlns="http://www.w3.org/1999/html">
-    Features for {{ project.name }} {% if build %}
-    <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+<h1 class="page-header">
+    {% if not tag is defined %}
+        Features for {{ project.name }}
+    {% else %}
+        Tag {{ tag.name }}
+    {% endif %}
+
+    {% if build %}
+        <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Default/switcher.html.twig' %}

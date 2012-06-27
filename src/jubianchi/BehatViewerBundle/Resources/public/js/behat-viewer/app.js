@@ -46,6 +46,21 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
           Navbar.prototype = new Toolbar();
           Navbar.prototype.constructor = Navbar;
 
+          Navbar.prototype.init = function () {
+              Toolbar.prototype.init.call(this);
+
+              $(window).bind('showLastBuild', function(e, id) {
+                  $('#lastBuild').attr('href', Routing.generate('behatviewer.historyentry', {'id': id}));
+                  $('#lastBuild').show();
+              });
+
+              $(window).bind('hideLastBuild', function() {
+                  $('#lastBuild').hide();
+              });
+
+              return this;
+          }
+
           Navbar.prototype.getItemByHref = function (href) {
             return $('[href=\'' + href + '\']', this.master);
           };
@@ -59,6 +74,10 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
 
             Toolbar.prototype.menuAction.call(this, elem, e);
           };
+
+          Navbar.prototype.setTitle = function(title) {
+              $('.title', this.master).text(title);
+          }
         }
       )
       .require(

@@ -39,9 +39,7 @@ var BuildController;
             app.controller.navigationAction(elem, e)
         };
 
-        BuildController.prototype.deleteAction = function (e) {
-            e.preventDefault();
-
+        BuildController.prototype.deleteAction = function (elem, e) {
             var target = $(e.target);
 
             $.get(
@@ -54,9 +52,7 @@ var BuildController;
             )
         };
 
-        BuildController.prototype.delselectedAction = function (e) {
-            e.preventDefault();
-
+        BuildController.prototype.delselectedAction = function (elem, e) {
             var target = $(e.target);
 
             $.ajax({
@@ -77,10 +73,10 @@ var BuildController;
             if ($.fn.tablesorter) {
                 $('.tablesorter').tablesorter({
                     textExtraction:{
-                        4:function (node, table, cellIndex) {
+                        4: function (node, table, cellIndex) {
                             return $(node).attr('data-value');
                         },
-                        5:function (node, table, cellIndex) {
+                        5: function (node, table, cellIndex) {
                             return $(node).attr('data-value');
                         }
                     }

@@ -4,7 +4,7 @@ var DefinitionsController;
   "use strict";
 
   JSC.require(
-    ['jsc/NavigationController'],
+    ['jquery.chosen', 'jsc/NavigationController'],
     function () {
         DefinitionsController = function (master) {
             NavigationController.call(this, master);
@@ -71,8 +71,6 @@ var DefinitionsController;
 
             $('.tablesorter').fixedTable();
         };
-
-        app.controller.current(new DefinitionsController('#container'));
     }
   );
 }(window.jQuery, window.JSC));

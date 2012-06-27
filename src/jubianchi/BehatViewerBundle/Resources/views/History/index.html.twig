@@ -60,17 +60,12 @@
 {% endblock %}
 
 {% block javascript %}
-    <script src="{{ asset('bundles/behatviewer/js/jquery.metadata.js') }}"></script>
-    <script src="{{ asset('bundles/behatviewer/js/jquery.tablesorter.js') }}"></script>
-
     {% if xhr %}
         <script type="text/javascript">
             JSC.require(
-                'behat-viewer/build',
+                ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/build'],
                 function() {
-                  var c = new BuildController('#container')
-                  app.controller.current(c);
-                  //$(window).on('loadComplete', function () { c.complete(); $(window).off('loadComplete', this); });
+                  app.controller.current(new BuildController('#container'));
                 }
             );
         </script>

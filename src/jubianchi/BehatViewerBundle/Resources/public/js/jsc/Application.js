@@ -2,7 +2,7 @@ var Application;
 
 (function ($) {
 	JSC.require(
-		['jsc/Controller', 'jsc/Loader'],
+		['jsc/Controller', 'jsc/Loader', 'jsc/Notifier'],
 		function () {
 			Application = function (master, url, controller) {
 				Controller.call(this, master);
@@ -12,6 +12,7 @@ var Application;
 				this.controller = controller;
 				this.home = url;
                 this.loader = new Loader();
+                this.notifier = new Notifier();
 			};
 
 			Application.prototype = new Controller();
