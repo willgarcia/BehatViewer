@@ -51,6 +51,8 @@ class BuildCommand extends ContainerAwareCommand
         }
 
         $cmd = $project->getTestCommand();
+        $cmd = str_replace("\r", PHP_EOL, $cmd);
+
         if(($feature = $input->getOption('feature'))) {
             $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
             $feature = $repository->findOneById($feature);
@@ -59,23 +61,18 @@ class BuildCommand extends ContainerAwareCommand
             $cmd .= ' ' . escapeshellarg($feature->getFile());
         }
 
-        $process = new \Symfony\Component\Process\Process($cmd, $project->getRootPath());
+        if(file_exists('build.sh')) unlink('build.sh');
+        $fp = fopen('build.sh', 'w+');
+        fwrite($fp, '#!/bin/sh' . PHP_EOL . $cmd);
+        fclose($fp);
+
+        $process = new \jubianchi\BehatViewerBundle\Process\UnbefferedProcess('sh -e build.sh', $project->getRootPath());
         $process->setTimeout(600);
         $process->run(function ($type, $buffer) use($output) {
             if ('err' === $type) {
                 $output->writeln('<error>' . $buffer . '</error>');
             } else {
-                $output->getFormatter()->setStyle('tag', new \Symfony\Component\Console\Formatter\OutputFormatterStyle('blue', null, array('bold')));
-                $output->getFormatter()->setStyle('string', new \Symfony\Component\Console\Formatter\OutputFormatterStyle('green', null, array('bold')));
-                $output->getFormatter()->setStyle('keyword', new \Symfony\Component\Console\Formatter\OutputFormatterStyle('white', null, array('bold', 'underscore')));
-
-                $buffer = rtrim($buffer);
-                $buffer = preg_replace('/(\s*)(@[\w\-\:]+)(\s*)/', '$1<tag>$2</tag>$3', $buffer);
-                $buffer = preg_replace('/"([^\\"]*)"/', '"<string>$1</string>"', $buffer);
-                $buffer = preg_replace('/\s+(# [\w\/\-_\.:\\\\\(\)]*)/', '     <comment>$1</comment>', $buffer);
-                $buffer = preg_replace('/^(\s+)(Given|Then|And|But|Scenario:|Feature:|Background:|Scenario Outline:|Examples:)/', '$1<keyword>$2</keyword>', $buffer);
-
-                $output->writeln($buffer);
+                $output->write($buffer);
             }
         });
 

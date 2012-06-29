@@ -60,7 +60,7 @@ class Project extends Base
     /**
      * @var string $test_command
      *
-     * @ORM\Column(name="test_command", type="string", length=255)
+     * @ORM\Column(name="test_command", type="text", length=255)
      */
     private $test_command;
 

@@ -3,3 +3,5 @@ container->get('kernel.bundles');
 app/console cache:clear && app/console cache:clear --env=prod && app/console assets:install --symlink web && sudo chmod -R 777 app/cache app/logs
 
 http://www.modernfidelity.co.uk/tech/installing-configuring-and-running-gearman-php-ubuntu
+
+app/console --env=test cache:clear && app/console --env=test doctrine:schema:drop --force && app/console --env=test doctrine:schema:create && php behat.phar @BehatViewerBundle

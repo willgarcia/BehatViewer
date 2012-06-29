@@ -22,7 +22,7 @@ class ProjectType extends AbstractType
             ->add('base_url', 'url')
             ->add('output_path', 'text')
             ->add('root_path', 'text')
-            ->add('test_command', 'text');
+            ->add('test_command', 'textarea');
     }
 
     /**
