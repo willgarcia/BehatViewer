@@ -1,9 +1,8 @@
 Feature: Main menu
 
-    @menu
     Scenario: Main menu without Javascript
         Given I am on the homepage
-         Then I should see "Behat Viewer [Foo Bar]"
+         Then I should see "Behat Viewer"
           And I should see "Home"
           And I should see "History"
           And I should see "Definitions"
