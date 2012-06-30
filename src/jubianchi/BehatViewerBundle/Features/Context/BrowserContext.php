@@ -63,7 +63,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
             )
         );
 
-        if(!isset($nodes[$index - 1])) {
+        if (!isset($nodes[$index - 1])) {
             throw new ExpectationException(sprintf('The %d%s link with id|name|label|value "%s" was not found', $index, $suffix, $link), $this->getSession());
         }
 
@@ -78,7 +78,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
         $image = str_replace('\\"', '"', $image);
         $nodes = $this->getSession()->getPage()->findAll('css', 'img[alt="' . $image . '"]');
 
-        if(sizeof($nodes) === 0) {
+        if (sizeof($nodes) === 0) {
             throw new ExpectationException(sprintf('The image with alternative text "%s" was not found', $image), $this->getSession());
         }
     }
@@ -88,7 +88,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
      */
     public function iShouldSee(PyStringNode $string)
     {
-        $this->assertPageContainsText((string)$string);
+        $this->assertPageContainsText((string) $string);
     }
 
     /**

@@ -21,7 +21,7 @@ class FeatureContext extends BehatViewerContext
     {
         parent::setKernel($kernel);
 
-        foreach($this->getSubcontexts() as $context) {
+        foreach ($this->getSubcontexts() as $context) {
             $context->setKernel($kernel);
         }
     }

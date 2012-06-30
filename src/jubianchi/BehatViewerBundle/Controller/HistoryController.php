@@ -25,7 +25,7 @@ class HistoryController extends BehatViewerController
      */
     public function indexAction($page = 1)
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -37,8 +37,7 @@ class HistoryController extends BehatViewerController
         $page = $page < 0 ? 0 : $page;
         $page = $page >= $pages ? $pages : $page;
 
-        if($project !== null)
-        {
+        if ($project !== null) {
             $builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
                 array(
                     'project' => $project->getId()
@@ -68,11 +67,11 @@ class HistoryController extends BehatViewerController
      */
     public function entryAction(Entity\Build $build = null)
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
-        if($build !== null) {
+        if ($build !== null) {
             $this->getSession()->setBuild($build);
         }
 
@@ -81,11 +80,9 @@ class HistoryController extends BehatViewerController
             'features' => null
         ));
 
-        if($this->get('session')->get('listview', false)) {
+        if ($this->get('session')->get('listview', false)) {
             $template = 'BehatViewerBundle:Default:list.html.twig';
-        }
-        else
-        {
+        } else {
             $template = 'BehatViewerBundle:Default:index.html.twig';
         }
 
@@ -115,7 +112,7 @@ class HistoryController extends BehatViewerController
      */
     public function deleteAction(Entity\Build $build)
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -129,11 +126,9 @@ class HistoryController extends BehatViewerController
 
         $builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findByProject($project->getId());
 
-        if($this->getRequest()->isXmlHttpRequest()) {
+        if ($this->getRequest()->isXmlHttpRequest()) {
             return new \Symfony\Component\HttpFoundation\Response();
-        }
-        else
-        {
+        } else {
             return $this->getResponse(array(
                 'builds' => $builds,
                 'pages' => $pages
@@ -153,8 +148,7 @@ class HistoryController extends BehatViewerController
         $manager = $this->getDoctrine()->getEntityManager();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Build');
 
-        foreach($this->getRequest()->get('delete') as $id)
-        {
+        foreach ($this->getRequest()->get('delete') as $id) {
             $build = $repository->findOneById($id);
             $manager->remove($build);
             $manager->flush();

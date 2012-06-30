@@ -119,8 +119,7 @@ class Build extends Base
     public function getScenarios()
     {
         $scenarios = array();
-        foreach($this->getFeatures() as $feature)
-        {
+        foreach ($this->getFeatures() as $feature) {
             $scenarios = array_merge($feature->getScenarios()->toArray(), $scenarios);
         }
 
@@ -130,8 +129,7 @@ class Build extends Base
     public function getStepsHavingStatus($status = null)
     {
         $steps = array();
-        foreach($this->getFeatures() as $feature)
-        {
+        foreach ($this->getFeatures() as $feature) {
             $steps = array_merge($feature->getStepsHavingStatus($status), $steps);
         }
 

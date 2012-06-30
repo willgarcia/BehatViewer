@@ -164,9 +164,8 @@ class Scenario extends Base
     public function getStepsHavingStatus($status = null)
     {
         $steps = array();
-        foreach($this->getSteps() as $step)
-        {
-            if($status === null || $step->getStatus() === $status) {
+        foreach ($this->getSteps() as $step) {
+            if ($status === null || $step->getStatus() === $status) {
                 $steps[] = $step;
             }
         }
@@ -178,7 +177,6 @@ class Scenario extends Base
     {
         return sizeof($this->getStepsHavingStatus($status));
     }
-
 
     /**
      * Set slug
@@ -217,7 +215,7 @@ class Scenario extends Base
      */
     public function addTags(array $tags)
     {
-        $this->tags = array_merge($tags, (array)$this->tags);
+        $this->tags = array_merge($tags, (array) $this->tags);
     }
 
     /**

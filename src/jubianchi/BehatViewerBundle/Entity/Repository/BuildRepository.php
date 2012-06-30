@@ -26,7 +26,7 @@ class BuildRepository extends EntityRepository
             ->getQuery()
             ->getResult();
 
-        if(sizeof($limit) > 0) {
+        if (sizeof($limit) > 0) {
             $query = $this->createQueryBuilder('b')
                 ->where('b.project = :project')
                 ->andWhere('b.id >= :limit')
@@ -41,7 +41,7 @@ class BuildRepository extends EntityRepository
 
     public function removeBuilds(array $builds)
     {
-        foreach($builds as $build) {
+        foreach ($builds as $build) {
             $this->getEntityManager()->remove($build);
         }
 
@@ -50,7 +50,8 @@ class BuildRepository extends EntityRepository
         return count($builds);
     }
 
-    public function removeWeekBuildsForProject(Entity\Project $project) {
+    public function removeWeekBuildsForProject(Entity\Project $project)
+    {
         $sql = '
                 SELECT id
                 FROM behatviewer_build b1
@@ -68,7 +69,7 @@ class BuildRepository extends EntityRepository
         $stmt->execute();
 
         $ids = $stmt->fetchAll(\PDO::FETCH_COLUMN);
-        if(0 === sizeof($ids)) {
+        if (0 === sizeof($ids)) {
             return 0;
         }
 

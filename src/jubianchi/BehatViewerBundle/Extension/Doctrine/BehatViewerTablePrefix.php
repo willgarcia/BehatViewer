@@ -19,7 +19,7 @@ class BehatViewerTablePrefix implements \Doctrine\Common\EventSubscriber
      */
     public function __construct($prefix)
     {
-        $this->prefix = (string)$prefix;
+        $this->prefix = (string) $prefix;
     }
 
     /**
@@ -37,12 +37,12 @@ class BehatViewerTablePrefix implements \Doctrine\Common\EventSubscriber
     {
         $classMetadata = $args->getClassMetadata();
 
-        if(strpos($classMetadata->namespace, 'BehatViewerBundle') !== false) {
+        if (strpos($classMetadata->namespace, 'BehatViewerBundle') !== false) {
             $classMetadata->setPrimaryTable(array('name' => $this->prefix . $classMetadata->getTableName()));
 
             $mappings = $classMetadata->getAssociationMappings();
-            foreach($mappings as $fieldName => $mapping) {
-                if($mapping['type'] == ClassMetadataInfo::MANY_TO_MANY && isset($classMetadata->associationMappings[$fieldName]['joinTable']['name'])) {
+            foreach ($mappings as $fieldName => $mapping) {
+                if ($mapping['type'] == ClassMetadataInfo::MANY_TO_MANY && isset($classMetadata->associationMappings[$fieldName]['joinTable']['name'])) {
                     $mappedTableName = $classMetadata->associationMappings[$fieldName]['joinTable']['name'];
                     $classMetadata->associationMappings[$fieldName]['joinTable']['name'] = $this->prefix . $mappedTableName;
                 }

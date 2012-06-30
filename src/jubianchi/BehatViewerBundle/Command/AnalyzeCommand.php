@@ -104,7 +104,7 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
         $this->output->writeln(
             sprintf(
                 '<info>[INFO]</info>              |-+- Found tags <pending> %s </pending>',
-                implode(' </pending> <pending> ', (array)$event->data)
+                implode(' </pending> <pending> ', (array) $event->data)
             )
         );
     }
@@ -128,14 +128,13 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             ->getRepository('BehatViewerBundle:Project')
             ->findOneById(1);
 
-
         $report = $project->getOutputPath() . DIRECTORY_SEPARATOR . 'behat-viewer.json';
-        if(!is_file($report) || !is_readable($report)) {
+        if (!is_file($report) || !is_readable($report)) {
             throw new \RuntimeException(sprintf('File not found : %s', $report));
         }
 
         $feature = null;
-        if(($feature = $input->getOption('feature'))) {
+        if (($feature = $input->getOption('feature'))) {
             $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
             $feature = $repository->findOneById($feature);
         }

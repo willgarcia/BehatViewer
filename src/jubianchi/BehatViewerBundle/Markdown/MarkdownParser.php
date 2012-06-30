@@ -8,11 +8,12 @@ class MarkdownParser extends Max
     protected function _doHeaders_callback_setext($matches)
     {
         if ($matches[3] == '-' && preg_match('{^- }', $matches[1]))
+
             return $matches[0];
         $level = $matches[3]{0} == '=' ? 1 : 2;
         $attr = $this->_doHeaders_attr($id = & $matches[2]);
 
-        if($level == 1) {
+        if ($level == 1) {
           $block = "<h$level$attr class=\"page-header\">".$this->runSpanGamut($matches[1])."</h$level>";
         } else {
           $block = "<h$level$attr>".$this->runSpanGamut($matches[1])."</h$level>";
@@ -26,7 +27,7 @@ class MarkdownParser extends Max
         $level = strlen($matches[1]);
         $attr = $this->_doHeaders_attr($id = & $matches[3]);
 
-        if($level == 1) {
+        if ($level == 1) {
             $attr .= ' class="page-header"';
         }
 
@@ -45,4 +46,3 @@ class MarkdownParser extends Max
         return "\n\n".$this->hashBlock($codeblock)."\n\n";
     }
 }
-?>

@@ -53,7 +53,7 @@ class DefinitionsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if($input->getOption('clean')) {
+        if ($input->getOption('clean')) {
             $this->manager = $this->getDoctrine()->getEntityManager();
             $this->connection = $this->manager->getConnection();
             $this->platform = $this->connection->getDatabasePlatform();
@@ -71,7 +71,7 @@ class DefinitionsCommand extends ContainerAwareCommand
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Project');
         $project = $repository->findOneById(1);
 
-        if($project === null) {
+        if ($project === null) {
             throw new \RuntimeException(sprintf('Project %s does not exist', $input->getArgument('project')));
         }
 
@@ -91,24 +91,23 @@ class DefinitionsCommand extends ContainerAwareCommand
     protected function saveProjectDefinitionsFromData(Entity\Project $project, $data, $output)
     {
         $definition = null;
-        foreach($data as $item)
-        {
+        foreach ($data as $item) {
             $line = trim($item);
 
-            if(empty($line) === false) {
-                if($definition === null) {
+            if (empty($line) === false) {
+                if ($definition === null) {
                     $this->log($output, sprintf('Found step definition <comment>%s</comment>', $line), 1);
 
                     $definition = $this->getStepDefinition($project, $line);
                 }
 
-                if(strpos($line, '-') === 0) {
+                if (strpos($line, '-') === 0) {
                     $this->log($output, 'Adding step <comment>description</comment>', 2);
 
                     $definition->setDescription(trim($line, '- '));
                 }
 
-                if(strpos($line, '#') === 0) {
+                if (strpos($line, '#') === 0) {
                     $infos = $this->getContextInfosFromString($line);
 
                     $this->log($output, sprintf('Adding step context <comment>%s</comment>', $infos['context']), 2);

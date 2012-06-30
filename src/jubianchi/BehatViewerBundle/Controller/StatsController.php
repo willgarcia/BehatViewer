@@ -20,7 +20,7 @@ class StatsController extends BehatViewerController
      */
     public function indexAction()
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 

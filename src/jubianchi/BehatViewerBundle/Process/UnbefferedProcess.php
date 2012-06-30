@@ -8,7 +8,7 @@ class UnbefferedProcess extends Process
     public function run($callback = null)
     {
         exec('which unbuffer', $output, $status);
-        if(0 === $status) {
+        if (0 === $status) {
             $this->setCommandLine('unbuffer ' . $this->getCommandLine());
         }
 

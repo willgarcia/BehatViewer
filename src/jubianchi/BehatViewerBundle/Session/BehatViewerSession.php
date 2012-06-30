@@ -19,11 +19,11 @@ class BehatViewerSession extends ContainerAware
         $repository = $this->container->get('doctrine')->getRepository('BehatViewerBundle:Project');
         $project = null;
 
-        if($projectId !== null) {
+        if ($projectId !== null) {
             $project = $repository->find($projectId);
         }
 
-        if($project === null) {
+        if ($project === null) {
             $project = $repository->find(1);
         }
 
@@ -51,11 +51,11 @@ class BehatViewerSession extends ContainerAware
         $repository = $this->container->get('doctrine')->getRepository('BehatViewerBundle:Build');
         $build = null;
 
-        if($buildId !== null) {
+        if ($buildId !== null) {
             $build = $repository->find($buildId);
         }
 
-        if($build === null && $this->getProject() !== null) {
+        if ($build === null && $this->getProject() !== null) {
             $build = $repository->findLastForProject($this->getProject());
         }
 

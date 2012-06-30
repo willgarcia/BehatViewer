@@ -20,17 +20,13 @@ class DefaultController extends BehatViewerController
      */
     public function indexAction()
     {
-        if($response = $this->beforeAction())
-        {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
-        if($this->get('session')->get('listview', false))
-        {
+        if ($this->get('session')->get('listview', false)) {
             return $this->forward('BehatViewerBundle:History:entrylist', array('build' => $this->getSession()->getBuild()));
-        }
-        else
-        {
+        } else {
             return $this->forward('BehatViewerBundle:History:entry', array('build' => $this->getSession()->getBuild()));
         }
     }
@@ -43,8 +39,7 @@ class DefaultController extends BehatViewerController
      */
     public function indexlistAction()
     {
-        if($response = $this->beforeAction())
-        {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -66,7 +61,7 @@ class DefaultController extends BehatViewerController
      */
     public function indexthumbAction()
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 

@@ -21,14 +21,15 @@ class ScenarioRepository extends EntityRepository
             ->getResult();
     }
 
-    public function removeForFeature(Entity\Feature $feature) {
+    public function removeForFeature(Entity\Feature $feature)
+    {
         $scenarios = $this->createQueryBuilder('s')
             ->where('s.feature = :feature')
             ->setParameter('feature', $feature)
             ->getQuery()
             ->getResult();
 
-        foreach($scenarios as $scenario) {
+        foreach ($scenarios as $scenario) {
             $this->getEntityManager()->remove($scenario);
         }
 

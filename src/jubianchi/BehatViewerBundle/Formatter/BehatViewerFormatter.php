@@ -84,7 +84,7 @@ class BehatViewerFormatter extends ConsoleFormatter
      */
     public function afterOutline(Event\OutlineEvent $event)
     {
-        if($this->features[$this->feature]['scenarios'][$this->scenario]['status'] !== 'passed') {
+        if ($this->features[$this->feature]['scenarios'][$this->scenario]['status'] !== 'passed') {
             $this->features[$this->feature]['status'] = 'failed';
             $this->features[$this->feature]['failed']++;
         } else {
@@ -178,7 +178,7 @@ class BehatViewerFormatter extends ConsoleFormatter
      */
     public function afterScenario(Event\ScenarioEvent $event)
     {
-        if($this->features[$this->feature]['scenarios'][$this->scenario]['status'] !== 'passed') {
+        if ($this->features[$this->feature]['scenarios'][$this->scenario]['status'] !== 'passed') {
             $this->features[$this->feature]['status'] = 'failed';
             $this->features[$this->feature]['failed']++;
         } else {
@@ -210,8 +210,8 @@ class BehatViewerFormatter extends ConsoleFormatter
             'argument' => ''
         );
 
-        if(isset($args[0]) && ($args[0] instanceof Node\TableNode || $args[0] instanceof Node\PyStringNode)) {
-            $data['argument'] = (string)$args[0];
+        if (isset($args[0]) && ($args[0] instanceof Node\TableNode || $args[0] instanceof Node\PyStringNode)) {
+            $data['argument'] = (string) $args[0];
         }
 
         $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][] = $data;
@@ -228,45 +228,45 @@ class BehatViewerFormatter extends ConsoleFormatter
 
         $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['status'] = $status;
 
-        if(($definition = $event->getDefinition()) !== null) {
+        if (($definition = $event->getDefinition()) !== null) {
             $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['definition'] = $definition->getPath();
         }
 
-        if($status !== 'passed') {
+        if ($status !== 'passed') {
             $this->features[$this->feature]['scenarios'][$this->scenario]['status'] = 'failed';
 
-            if($status === 'undefined') {
+            if ($status === 'undefined') {
                 $snippets = $this->logger->getDefinitionsSnippets();
 
-                if(isset($snippets[$event->getSnippet()->getHash()])) {
+                if (isset($snippets[$event->getSnippet()->getHash()])) {
                     $snippet = $snippets[$event->getSnippet()->getHash()];
-                    $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['snippet'] = (string)$snippet;
+                    $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['snippet'] = (string) $snippet;
                 }
             }
         }
 
-        if($status === 'failed') {
+        if ($status === 'failed') {
             $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['exception'] = $event->getException()->getMessage();
         }
 
         $tags = array();
-        if($event->getStep()->getParent() instanceof \Behat\Gherkin\Node\BackgroundNode) {
+        if ($event->getStep()->getParent() instanceof \Behat\Gherkin\Node\BackgroundNode) {
           $tags = $event->getStep()->getParent()->getFeature()->getTags();
         } else {
           $tags = $event->getStep()->getParent()->getTags();
         }
 
-        if(in_array($status, array('passed', 'failed')) && in_array('javascript', $tags)) {
+        if (in_array($status, array('passed', 'failed')) && in_array('javascript', $tags)) {
             sleep(1);
 
-            if($screenid = $this->parameters->get('screen_id')) {
+            if ($screenid = $this->parameters->get('screen_id')) {
                 exec(sprintf('xdpyinfo -display :%d >/dev/null 2>&1 && echo OK || echo KO', $screenid), $output, $return);
 
-                if($return === 0 && sizeof($output) > 0 && $output[0] == 'OK') {
+                if ($return === 0 && sizeof($output) > 0 && $output[0] == 'OK') {
                     $screen = sprintf('%s/%s.png', sys_get_temp_dir(), uniqid());
 
                     exec(sprintf('DISPLAY=:%d import -window root %s 2>&1', $screenid, $screen), $output, $return);
-                    if($return === 0) {
+                    if ($return === 0) {
                         $img = $this->base64Encode($screen);
                         $this->features[$this->feature]['scenarios'][$this->scenario]['steps'][$index]['screen'] = $img;
                         unlink($screen);
@@ -286,20 +286,16 @@ class BehatViewerFormatter extends ConsoleFormatter
      */
     protected function base64Encode($filename)
     {
-        if(!file_exists($filename))
-        {
+        if (!file_exists($filename)) {
             throw new \RuntimeException(sprintf('File "%s" does not exist', $filename));
         }
 
         $imgtype = array('jpg', 'gif', 'png');
         $filetype = pathinfo($filename, PATHINFO_EXTENSION);
 
-        if(in_array($filetype, $imgtype))
-        {
+        if (in_array($filetype, $imgtype)) {
             $imgbinary = fread(fopen($filename, "r"), filesize($filename));
-        }
-        else
-        {
+        } else {
             throw new \RuntimeException(sprintf('File type "%s" is not supported', $filetype));
         }
 
@@ -315,13 +311,11 @@ class BehatViewerFormatter extends ConsoleFormatter
     {
         $outputPath = $this->parameters->get('viewer_output_path');
 
-        if(null === $outputPath)
-        {
+        if (null === $outputPath) {
             throw new FormatterException(sprintf(
                 'You should specify "viewer_output_path" parameter for %s', get_class($this)
             ));
-        }
-        elseif(is_file($outputPath))
+        } elseif(is_file($outputPath))
         {
             throw new FormatterException(sprintf(
                 'Directory path expected as "viewer_output_path" parameter of %s, but got: %s',
@@ -330,13 +324,12 @@ class BehatViewerFormatter extends ConsoleFormatter
             ));
         }
 
-        if(!is_dir($outputPath))
-        {
+        if (!is_dir($outputPath)) {
             mkdir($outputPath, 0777, true);
         }
 
         $output = $outputPath . DIRECTORY_SEPARATOR . 'behat-viewer.json';
-        if(is_file($output)) {
+        if (is_file($output)) {
             unlink($output);
         }
 

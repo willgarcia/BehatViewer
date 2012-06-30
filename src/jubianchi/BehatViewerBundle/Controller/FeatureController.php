@@ -25,21 +25,18 @@ class FeatureController extends BehatViewerController
      */
     public function beforeAction()
     {
-        if($response = parent::beforeAction()) {
+        if ($response = parent::beforeAction()) {
             return $response;
         }
 
-        if(($build = $this->getSession()->getBuild()) === null)
-        {
+        if (($build = $this->getSession()->getBuild()) === null) {
             throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException('No build found.');
-        }
-        else
-        {
+        } else {
             $id = $this->getRequest()->get('id');
             $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Feature');
             $this->feature = $repository->findOneById($id);
 
-            if($this->feature === null) {
+            if ($this->feature === null) {
                 throw new \Symfony\Component\HttpKernel\Exception\NotFoundHttpException(
                     sprintf(
                         'The #%d "%s" feature was not found in the build #%d.',
@@ -60,7 +57,7 @@ class FeatureController extends BehatViewerController
      */
     public function indexAction($id, $slug)
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -79,7 +76,7 @@ class FeatureController extends BehatViewerController
      */
     public function sourceAction()
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 

@@ -21,7 +21,7 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
     {
         $build = $this->getBuildFromData($data, $feature);
 
-        if(null === $feature) {
+        if (null === $feature) {
             $build->setProject($project);
             $project->addBuild($build);
         }
@@ -86,7 +86,7 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      */
     public function getBuildFromData(array $data, Entity\Feature $feature = null)
     {
-        if(null !== $feature) {
+        if (null !== $feature) {
             $build = $feature->getBuild();
         } else {
             $build = new Entity\Build();
@@ -94,20 +94,17 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
 
         $build->setDate(new \DateTime('now'));
 
-        foreach($data as $featureData)
-        {
+        foreach ($data as $featureData) {
             $myFeature = $this->getFeatureFromData($featureData, $feature);
 
             $this->dispatchEvent('foundFeature', $featureData);
 
-            foreach($featureData['scenarios'] as $scenarioData)
-            {
+            foreach ($featureData['scenarios'] as $scenarioData) {
                 $scenario = $this->getScenarioFromData($scenarioData);
 
                 $this->dispatchEvent('foundScenario', $scenarioData);
 
-                foreach($scenarioData['steps'] as $stepData)
-                {
+                foreach ($scenarioData['steps'] as $stepData) {
                     $step = $this->getStepFromData($stepData);
 
                     $this->dispatchEvent('foundStep', $stepData);
@@ -137,7 +134,7 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      */
     protected function getFeatureFromData(array $data, Entity\Feature $feature = null)
     {
-        if(null !== $feature) {
+        if (null !== $feature) {
             $this->getDoctrine()
               ->getRepository('BehatViewerBundle:Scenario')
               ->removeForFeature($feature);
@@ -152,10 +149,9 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
         $feature->setDescription($data['desc']);
 
         $tags = $this->getTagsFromData($data['tags']);
-        if(sizeof($tags)) {
-            foreach($tags as $tag)
-            {
-              if(null !== $feature->getTags() && false === $feature->getTags()->contains($tag)) {
+        if (sizeof($tags)) {
+            foreach ($tags as $tag) {
+              if (null !== $feature->getTags() && false === $feature->getTags()->contains($tag)) {
                 $feature->addTag($tag);
               }
             }
@@ -216,14 +212,13 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
         $tags = array();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Tag');
 
-        if(sizeof($data)) {
+        if (sizeof($data)) {
             $this->dispatchEvent('foundTags', $data);
 
-            foreach((array)$data as $name)
-            {
+            foreach ((array) $data as $name) {
                 $tag = $repository->findOneByName($name);
 
-                if($tag === null) {
+                if ($tag === null) {
                     $tag = new Entity\Tag();
                     $tag->setName($name);
                     $tag->setSlug($this->slugify($name));
@@ -249,14 +244,14 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
         $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
         $text = trim($text, '-');
 
-        if(function_exists('iconv')) {
+        if (function_exists('iconv')) {
             $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
         }
 
         $text = strtolower($text);
         $text = preg_replace('~[^-\w]+~', '', $text);
 
-        if(empty($text)) {
+        if (empty($text)) {
             return 'n-a';
         }
 

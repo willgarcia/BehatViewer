@@ -19,7 +19,6 @@ class FixtureContext extends BehatViewerContext
       $this->platform = $this->connection->getDatabasePlatform();
     }
 
-
   /**
      * @BeforeScenario @reset
      */
@@ -34,8 +33,7 @@ class FixtureContext extends BehatViewerContext
             'BehatViewerBundle:Project'
         );
 
-        foreach($entities as $entity)
-        {
+        foreach ($entities as $entity) {
             $this->connection->executeUpdate(
                 $this->platform->getTruncateTableSQL(
                     $this->manager->getClassMetadata($entity)->getTableName(),
@@ -53,8 +51,7 @@ class FixtureContext extends BehatViewerContext
         $dir = dirname(__DIR__) . DIRECTORY_SEPARATOR . 'Fixtures';
         $file = $dir . DIRECTORY_SEPARATOR . $fixture;
 
-        if(!file_exists($file))
-        {
+        if (!file_exists($file)) {
             throw new \RuntimeException(sprintf('Fixture %s does not exist', $fixture));
         }
 

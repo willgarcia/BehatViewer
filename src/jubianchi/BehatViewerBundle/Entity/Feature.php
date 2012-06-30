@@ -144,9 +144,8 @@ class Feature extends Base
     public function getHavingStatusScenarios($status)
     {
         $scenarios = array();
-        foreach($this->getScenarios() as $scenario)
-        {
-            if($scenario->getStatus() === $status) {
+        foreach ($this->getScenarios() as $scenario) {
+            if ($scenario->getStatus() === $status) {
                 $scenarios[] = $scenario;
             }
         }
@@ -177,8 +176,7 @@ class Feature extends Base
     public function getStepsHavingStatus($status = null)
     {
         $steps = array();
-        foreach($this->getScenarios() as $scenario)
-        {
+        foreach ($this->getScenarios() as $scenario) {
             $steps = array_merge($scenario->getStepsHavingStatus($status), $steps);
         }
 
@@ -227,7 +225,7 @@ class Feature extends Base
      */
     public function addTags(array $tags)
     {
-        $this->tags = array_merge($tags, (array)$this->tags);
+        $this->tags = array_merge($tags, (array) $this->tags);
     }
 
     /**

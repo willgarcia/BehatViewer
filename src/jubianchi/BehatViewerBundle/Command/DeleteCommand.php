@@ -48,7 +48,7 @@ class DeleteCommand extends ContainerAwareCommand
 
         $output->writeln(sprintf('<info>[INFO]</info> Deleting builds for project <comment>%s</comment>', $project->getSlug()));
 
-        switch(true) {
+        switch (true) {
           case preg_match('/^(\d+)\.\.(\d+)$/', $builds, $matches):
               $output->writeln(sprintf(
                 '<info>[INFO]</info> Deleting builds by <comment>ID interval [%d - %d]</comment>',
@@ -62,7 +62,7 @@ class DeleteCommand extends ContainerAwareCommand
               try {
                   $start = new \DateTime($matches[1]);
                   $end = new \DateTime($matches[2]);
-              } catch(\Exception $e) {
+              } catch (\Exception $e) {
                   throw new \RuntimeException('Invalid date');
               }
 
@@ -76,7 +76,7 @@ class DeleteCommand extends ContainerAwareCommand
               break;
           default:
               $count = $repository->removeBuildsByDateIntervalForProject(
-                  $repository->findOneById((int)$builds),
+                  $repository->findOneById((int) $builds),
                   $project
               );
               break;

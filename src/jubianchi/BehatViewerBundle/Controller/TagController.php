@@ -23,7 +23,7 @@ class TagController extends BehatViewerController
      */
     public function indexAction(Entity\Tag $tag)
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -32,8 +32,8 @@ class TagController extends BehatViewerController
         $features = $this->getDoctrine()->getRepository('BehatViewerBundle:Feature')->findByTagAndBuild($tag, $build);
         $scenarios = $this->getDoctrine()->getRepository('BehatViewerBundle:Scenario')->findByTagAndBuild($tag, $build);
 
-        foreach($scenarios as $scenario) {
-            if(!in_array($scenario->getFeature(), $features)) {
+        foreach ($scenarios as $scenario) {
+            if (!in_array($scenario->getFeature(), $features)) {
                 $features[] = $scenario->getFeature();
             }
         }

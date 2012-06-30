@@ -18,7 +18,7 @@ class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAware
      *
      * @api
      */
-    function setContainer(ContainerInterface $container = null)
+    public function setContainer(ContainerInterface $container = null)
     {
         $this->container = $container;
     }
@@ -64,7 +64,7 @@ class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAware
      */
     public function round($value, $dec = 1)
     {
-        return round((float)$value, $dec);
+        return round((float) $value, $dec);
     }
 
     /**
@@ -108,8 +108,7 @@ class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAware
      */
     public function iconv($text)
     {
-        if(function_exists('iconv'))
-        {
+        if (function_exists('iconv')) {
             $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
         }
 

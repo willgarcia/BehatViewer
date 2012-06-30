@@ -22,7 +22,7 @@ class HelpController extends BehatViewerController
     public function indexAction($page)
     {
         $file = $this->getDataDirectory() . '/' . $page . '.md';
-        if(false === file_exists($file)) {
+        if (false === file_exists($file)) {
             return new Response('', 404);
         }
 
@@ -42,8 +42,8 @@ class HelpController extends BehatViewerController
         $content = new \RecursiveDirectoryIterator($this->getDataDirectory(), \FilesystemIterator::SKIP_DOTS);
         $sections = array();
 
-        foreach($content as $directory) {
-            if($directory->isDir()) {
+        foreach ($content as $directory) {
+            if ($directory->isDir()) {
                 $sections[basename($directory)] = $directory;
             }
         }

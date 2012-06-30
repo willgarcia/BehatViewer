@@ -30,17 +30,16 @@ class BootstrapMessageContext extends BehatViewerContext
     {
         $alerts = $this->getMinkContext()->getSession()->getPage()->findAll('css', '.alert');
 
-        if(count($alerts) < 1)
-        {
+        if (count($alerts) < 1) {
             throw new Exception\ExpectationException('No alert message found');
         }
 
-        foreach($alerts as $alert) {
-            if(false !== strpos($alert->getText(), $text)) {
+        foreach ($alerts as $alert) {
+            if (false !== strpos($alert->getText(), $text)) {
                 $heads = $alert->findAll('css', '.alert-heading');
 
-                foreach($heads as $head) {
-                    if($head->getText() === $title) {
+                foreach ($heads as $head) {
+                    if ($head->getText() === $title) {
                         return;
                     }
                 }

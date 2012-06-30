@@ -19,7 +19,7 @@ class DefinitionsController extends BehatViewerController
      */
     public function indexAction()
     {
-        if($response = $this->beforeAction()) {
+        if ($response = $this->beforeAction()) {
             return $response;
         }
 
@@ -28,7 +28,7 @@ class DefinitionsController extends BehatViewerController
         $project = $this->getSession()->getProject();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Definition');
 
-        if($project !== null) {
+        if ($project !== null) {
             $definitions = $repository->findByProject($project->getId());
             $contexts = $repository->getContexts($project);
         }

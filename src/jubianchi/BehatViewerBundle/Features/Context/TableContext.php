@@ -16,8 +16,7 @@ class TableContext extends BehatViewerContext
     {
         $suffix = 'th';
 
-        switch($number)
-        {
+        switch ($number) {
             case 1:
                 $suffix = 'st';
                 break;
@@ -46,10 +45,8 @@ class TableContext extends BehatViewerContext
         $hash = $content->getHash();
         $this->iShouldSeeColumnsInTheTable(count($hash), $table);
 
-        foreach($hash as $key => $column)
-        {
-            if(current($column) != $columns[$key]->getText())
-            {
+        foreach ($hash as $key => $column) {
+            if (current($column) != $columns[$key]->getText()) {
                 throw new Exception\ExpectationException(
                     sprintf(
                         'Expected "%s" as %s column but found "%s"',
@@ -74,8 +71,7 @@ class TableContext extends BehatViewerContext
         $head = $this->getMinkContext()->getSession()->getPage()->findAll('css', $headSelector);
         $columns = $head[0]->findAll('css', 'th');
 
-        if(count($columns) != $count)
-        {
+        if (count($columns) != $count) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'Expected %d column(s) but found %d',
@@ -95,13 +91,13 @@ class TableContext extends BehatViewerContext
     public function iShouldSeeRowsInTheNthTable($occurences, $index, $element)
     {
         $tables = $this->getMinkContext()->getSession()->getPage()->findAll('css', $element);
-        if(!isset($tables[$index - 1])) {
+        if (!isset($tables[$index - 1])) {
             throw new Exception\ElementNotFoundException(sprintf('The %d table "%s" was not found in the page', $index, $element));
         }
 
         $rows = $tables[$index - 1]->findAll('css', 'tbody tr');
 
-        if(count($rows) != $occurences) {
+        if (count($rows) != $occurences) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'Expected %d row(s) but found %d',
@@ -133,20 +129,20 @@ class TableContext extends BehatViewerContext
         $rowsSelector = sprintf('%s tbody tr', $element);
         $rows = $this->getMinkContext()->getSession()->getPage()->findAll('css', $rowsSelector);
 
-        if(!isset($rows[$index - 1])) {
+        if (!isset($rows[$index - 1])) {
             throw new \Behat\Mink\Exception\ExpectationException(
                 sprintf('The row %s was not found', $this->makeIndex($index)),
                 $this->getMinkContext()->getSession()
             );
         }
 
-        $cells = (array)$rows[$index - 1]->findAll('css', 'td');
-        $cells = array_merge((array)$rows[$index - 1]->findAll('css', 'th'), $cells);
+        $cells = (array) $rows[$index - 1]->findAll('css', 'td');
+        $cells = array_merge((array) $rows[$index - 1]->findAll('css', 'th'), $cells);
 
         $hash = current($table->getHash());
         $keys = array_keys($hash);
 
-        if(count($cells) != count($hash)) {
+        if (count($cells) != count($hash)) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'Expected %d cell(s) but found %d',
@@ -157,9 +153,8 @@ class TableContext extends BehatViewerContext
             );
         }
 
-        for($i = 0; $i < count($cells); $i++)
-        {
-            if($cells[$i]->getText() != $hash[$keys[$i]]) {
+        for ($i = 0; $i < count($cells); $i++) {
+            if ($cells[$i]->getText() != $hash[$keys[$i]]) {
                 throw new Exception\ExpectationException(
                     sprintf(
                         'Expected "%s" in the %s colums of the %s row but found "%s"',
@@ -184,7 +179,7 @@ class TableContext extends BehatViewerContext
         $rowSelector = sprintf('%s tbody tr', $element);
         $rows = $this->getMinkContext()->getSession()->getPage()->findAll('css', $rowSelector);
 
-        if(!isset($rows[$rowIndex - 1])) {
+        if (!isset($rows[$rowIndex - 1])) {
             throw new \Behat\Mink\Exception\ExpectationException(
                 sprintf('The row %s was not found', $this->makeIndex($rowIndex)),
                 $this->getMinkContext()->getSession()
@@ -195,7 +190,7 @@ class TableContext extends BehatViewerContext
         $colSelector = sprintf('td', $element);
         $cols = $row->findAll('css', $colSelector);
 
-        if(!isset($cols[$colIndex - 1])) {
+        if (!isset($cols[$colIndex - 1])) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'The column %s was not found in the %s row',
@@ -208,7 +203,7 @@ class TableContext extends BehatViewerContext
 
         $actual = $cols[$colIndex - 1]->getText();
 
-        if(strpos($actual, $text) === false) {
+        if (strpos($actual, $text) === false) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'texte "%s" was not found in "%s"',
@@ -229,7 +224,7 @@ class TableContext extends BehatViewerContext
         $rows = $this->getMinkContext()->getSession()->getPage()->findAll('css', $rowsSelector);
         $hash = $table->getHash();
 
-        if(count($rows) != count($hash)) {
+        if (count($rows) != count($hash)) {
             throw new Exception\ExpectationException(
                 sprintf(
                     'Expected %d row(s) but found %d',
@@ -240,14 +235,13 @@ class TableContext extends BehatViewerContext
             );
         }
 
-        foreach($rows as $index => $row)
-        {
-            $cells = (array)$row->findAll('css', 'td');
-            $cells = array_merge((array)$row->findAll('css', 'th'), $cells);
+        foreach ($rows as $index => $row) {
+            $cells = (array) $row->findAll('css', 'td');
+            $cells = array_merge((array) $row->findAll('css', 'th'), $cells);
 
             $keys = array_keys($hash[$index]);
 
-            if(count($keys) != count($cells)) {
+            if (count($keys) != count($cells)) {
                 throw new Exception\ExpectationException(
                     sprintf(
                         'Expected %d column(s) but found %d',
@@ -258,9 +252,8 @@ class TableContext extends BehatViewerContext
                 );
             }
 
-            for($i = 0; $i < count($cells); $i++)
-            {
-                if($cells[$i]->getText() != $hash[$index][$keys[$i]]) {
+            for ($i = 0; $i < count($cells); $i++) {
+                if ($cells[$i]->getText() != $hash[$index][$keys[$i]]) {
                     throw new Exception\ExpectationException(
                         sprintf(
                             'The content of the cell at [column %d;row %d] (%s) does not match expected data %s',

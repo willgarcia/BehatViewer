@@ -23,16 +23,16 @@ class ConfigController extends BehatViewerController
         $request = $this->getRequest();
         $project = $this->getSession()->getProject();
 
-        if($project === null) {
+        if ($project === null) {
             $project = new \jubianchi\BehatViewerBundle\Entity\Project();
         }
 
         $form = $this->get('form.factory')->create(new ProjectType(), $project);
 
-        if($request->getMethod() === 'POST') {
+        if ($request->getMethod() === 'POST') {
             $form->bindRequest($request);
 
-            if($form->isValid()) {
+            if ($form->isValid()) {
                 $project->setSlug(trim($form->getData()->getSlug(), ' -'));
 
                 $manager = $this->getDoctrine()->getEntityManager();

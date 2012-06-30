@@ -42,18 +42,18 @@ class BuildCommand extends ContainerAwareCommand
             ->getRepository('BehatViewerBundle:Project')
             ->findOneById(1);
 
-        if($input->getOption('definitions')) {
+        if ($input->getOption('definitions')) {
             $this->getApplication()->find('behat-viewer:definitions')->run(new \Symfony\Component\Console\Input\ArgvInput(), $output);
         }
 
-        if($project === null) {
+        if ($project === null) {
             throw new \RuntimeException(sprintf('Project %s does not exist', $input->getArgument('project')));
         }
 
         $cmd = $project->getTestCommand();
         $cmd = str_replace("\r", PHP_EOL, $cmd);
 
-        if(($feature = $input->getOption('feature'))) {
+        if (($feature = $input->getOption('feature'))) {
             $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
             $feature = $repository->findOneById($feature);
 
