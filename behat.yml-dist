@@ -36,7 +36,13 @@ travis:
             base_url: "http://%hostname%/app_test.php"
 
     formatter:
-        name: pretty
+        classes:
+            "jubianchi\BehatViewerBundle\Formatter\BehatViewerFormatter": viewer
+
+        name: pretty,viewer
+        parameters:
+            viewer_output_path: .
+            screen_id: 99
 
     filters:
         tags: "~@javascript"

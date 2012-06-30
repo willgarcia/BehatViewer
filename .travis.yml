@@ -21,4 +21,6 @@ before_script:
     - sudo chmod -R 777 app/cache app/logs
     - sed 's/%hostname%/localhost\/behat/' behat.yml-dist > behat.yml
 
-script: php behat.phar --profile=travis @BehatViewerBundle
+script: 
+    - php behat.phar --profile=travis @BehatViewerBundle
+    - curl -i -H "Accept: application/json" -X PUT -d @behat-viewer.json http://behat-viewer-ci.jubianchi.fr/analyze
