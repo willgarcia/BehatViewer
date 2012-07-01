@@ -4,7 +4,7 @@ var FeatureSourceController;
   "use strict";
 
   JSC.require(
-    ['prettify', 'prettify.feature', 'behat-viewer/feature'],
+    ['behat-viewer/feature'],
     function () {
         FeatureSourceController = function (master) {
             FeatureController.call(this, master);
@@ -19,10 +19,6 @@ var FeatureSourceController;
           FeatureController.prototype.init.call(this);
 
             return this;
-        };
-
-        FeatureSourceController.prototype.complete = function () {
-            window.prettyPrint();
         };
     }
   );

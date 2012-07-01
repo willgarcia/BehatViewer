@@ -6,7 +6,8 @@ Feature: Main menu
           And I should see "Home"
           And I should see "History"
           And I should see "Definitions"
-          And I should see "Config"
+          And I should not see "Config"
+          And I should see "Help"
 
         Given I follow "Home"
          Then I should be on "/"
@@ -19,6 +20,19 @@ Feature: Main menu
 
         Given I follow "Definitions"
          Then I should be on "/definitions/"
+
+        Given I follow "Help"
+         Then I should be on "/help"
+
+    Scenario: Main menu without Javascript as a logged in user
+        Given I am a logged in user
+          And I am on the homepage
+         Then I should see "Behat Viewer"
+          And I should see "Home"
+          And I should see "History"
+          And I should see "Definitions"
+          And I should see "Config"
+          And I should see "Help"
 
         Given I follow "Config"
          Then I should be on "/config/"

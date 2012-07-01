@@ -2,12 +2,13 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
+    JMS\SecurityExtraBundle\Annotation\Secure,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  * @Route("/history")
@@ -108,6 +109,7 @@ class HistoryController extends BehatViewerController
      * @return \Symfony\Component\HttpFoundation\Response|array
      *
      * @Route("/delete/{id}", requirements={"id" = "\d+"}, name="behatviewer.historydelete")
+     * @Secure(roles="ROLE_USER")
      * @Template("BehatViewerBundle:History:index.html.twig")
      */
     public function deleteAction(Entity\Build $build)
@@ -139,8 +141,9 @@ class HistoryController extends BehatViewerController
     /**
      * @return array
      *
-     * @Route("/delete", name="behatviewer.historydeletesel")
      * @Method({"POST"})
+     * @Route("/delete", name="behatviewer.historydeletesel")
+     * @Secure(roles="ROLE_USER")
      * @Template("BehatViewerBundle:History:index.html.twig")
      */
     public function deleteSelectedAction()

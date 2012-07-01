@@ -68,8 +68,9 @@
         <div class="btn-group" id="toolbar">
             <a href="{{ path('behatviewer.historyentry', {"id": build.id}) }}" class="btn"
                data-action="navig">Details</a>
-            <a href="{{ path('behatviewer.historydelete', {"id": build.id}) }}" class="btn btn-danger"
-               data-action="delete">Delete</a>
+            {% if is_granted('ROLE_USER') %}
+                <a href="{{ path('behatviewer.historydelete', {"id": build.id}) }}" class="btn btn-danger" data-action="delete">Delete</a>
+            {% endif %}
         </div>
     </td>
 </tr>

@@ -1,0 +1,62 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<form action="{{ path('behatviewer.profile') }}" method="post" class="form-horizontal">
+    <div style="background-color: #888; border: none;" class="well modal-example">
+        <div style="position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1; max-width: 100%;" class="modal">
+            <div class="modal-header">
+                <h3>
+                    <img data-rel="avatar" data-size="48" class="gravatar" src="{{ app.user.email|gravatar(48)}}" />
+                    <span data-rel="username">{{ app.user.username }}</span>
+                </h3>
+            </div>
+            <div class="modal-body">
+                <div class="control-group">
+                    <label class="control-label" for="username">Username:</label>
+                    <div class="controls">
+                        <input type="text" id="username" name="_username" value="{{ app.user.username }}" class="input-xlarge" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="email">E-mail:</label>
+                    <div class="controls">
+                        <input type="text" id="email" name="_email" value="{{ app.user.email }}" class="input-xlarge" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="password">Password:</label>
+                    <div class="controls">
+                        <input type="password" id="password" name="_password" value="" class="input-xlarge" />
+                    </div>
+                </div>
+
+                <div class="control-group">
+                    <label class="control-label" for="confirm">Confirm:</label>
+                    <div class="controls">
+                        <input type="password" id="confirm" name="_confirm" class="input-xlarge" />
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <input type="submit" class="btn btn-primary" value="Save" data-action="submit" />
+            </div>
+        </div>
+    </div>
+</form>
+{% endblock %}
+
+{% block javascript %}
+    {% if xhr %}
+        <script type="text/javascript">
+            JSC.require(
+                ['behat-viewer/profile'],
+                function() {
+                    app.controller.current(new ProfileController('#container'));
+                }
+            );
+        </script>
+    {% endif %}
+{% endblock %}

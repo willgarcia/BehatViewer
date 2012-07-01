@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="{{ path('behatviewer.homepage') }}">Behat Viewer <span class="title">{% if project.name %}[{{ project.name }}]{% endif %}</span></a>
+            <a class="brand" href="{{ path('behatviewer.homepage') }}">Behat Viewer <span class="title">{% if project != '' and project.name %}[{{ project.name }}]{% endif %}</span></a>
 
             <div class="nav-collapse">
                 <ul class="nav">
@@ -14,14 +14,31 @@
                     <li><a data-action="menu" href="{{ path('behatviewer.history') }}">History</a></li>
                     <li><a data-action="menu" href="{{ path('behatviewer.stats') }}">Stats</a></li>
                     <li><a data-action="menu" href="{{ path('behatviewer.definitions') }}">Definitions</a></li>
-                    <li><a data-action="menu" href="{{ path('behatviewer.config') }}">Config</a></li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li><a data-action="menu" href="{{ path('behatviewer.config') }}">Config</a></li>
+                    {% endif %}
                     <li><a data-action="menu" href="{{ path('behatviewer.help') }}">Help</a></li>
                     <li>
                         <div id="loader"></div>
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li><button data-action="menu" id="lastBuild" href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary"{% if not lastbuild or lastbuild == build.id %} style="display: none"{% endif %}>Last build &raquo;</button></li>
+                    <li>
+                    <button data-action="menu" id="lastBuild" href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary"{% if not lastbuild or lastbuild == build.id %} style="display: none"{% endif %}>Last build &raquo;</button></li>
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Logged in as <span data-rel="username">{{ app.user.username }}</span>
+                                <img data-rel="avatar" data-size="24" class="gravatar" src="{{ app.user.email|gravatar(24)}}" />
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a data-action="menu" href="{{ path('behatviewer.profile') }}">Profile</a>
+                              <li><a href="{{ path('behatviewer.logout') }}">Logout</a>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li><a data-action="menu" href="{{ path('behatviewer.login') }}">Log in</a></li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

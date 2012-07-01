@@ -4,8 +4,7 @@ Feature: All pages
     Scenario Outline: Without data
         Given am on "<url>"
          Then the response status code should be <status>
-          And I should see "Project configuration"
-          And I should see an alert message with title "No project configured" and text "Before using Behat Viewer, you should configure your project."
+          And I should see "Login"
 
           Examples:
             | url                   | status |

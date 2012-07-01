@@ -39,6 +39,10 @@ abstract class BehatViewerController extends Controller
     protected function beforeAction()
     {
         if ($this->getSession()->getProject() === null) {
+            if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
+                return $this->forward('BehatViewerBundle:User:index');
+            }
+
             return $this->forward('BehatViewerBundle:Config:index');
         }
     }
