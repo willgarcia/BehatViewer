@@ -15,6 +15,7 @@ class FeatureContext extends BehatViewerContext
         $this->useContext('browser', new BrowserContext($parameters));
         $this->useContext('table', new TableContext($parameters));
         $this->useContext('message', new BootstrapMessageContext($parameters));
+        $this->useContext('user', new UserContext($parameters));
     }
 
     public function setKernel(KernelInterface $kernel)

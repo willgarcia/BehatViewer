@@ -46,7 +46,13 @@ class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAware
             'iconv' => new \Twig_Filter_Method($this, 'iconv'),
             'count' => new \Twig_Filter_Function('count'),
             'nl2br' => new \Twig_Filter_Function('nl2br'),
+            'gravatar' => new \Twig_Filter_Method($this, 'getGravatarImage')
         );
+    }
+
+    public function getGravatarImage($email, $size = 32, $rating = 'G')
+    {
+        return  $grav_url = "http://www.gravatar.com/avatar/" . md5(strtolower(trim( $email))) . "&s=" . $size . '&r=' . $rating;
     }
 
     public function getGlobals()

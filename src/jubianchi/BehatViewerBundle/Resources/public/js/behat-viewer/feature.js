@@ -4,7 +4,7 @@ var FeatureController;
   "use strict";
 
   JSC.require(
-    ['jsc/NavigationController'],
+    ['prettify', 'prettify.feature', 'jsc/NavigationController'],
     function () {
         FeatureController = function (master) {
             NavigationController.call(this, master);
@@ -33,6 +33,10 @@ var FeatureController;
 
         FeatureController.prototype.snippetAction = function (elem, e) {
             $('#' + $(e.target).attr('data-toggle')).toggle()
+        };
+
+        FeatureController.prototype.complete = function () {
+            window.prettyPrint();
         };
 
         FeatureController.prototype.screenshotAction = function (elem, e) {

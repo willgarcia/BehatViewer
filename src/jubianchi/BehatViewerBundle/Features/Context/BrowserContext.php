@@ -29,6 +29,14 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @BeforeScenario @reset
+     */
+    public function BeforeScenario(\Behat\Behat\Event\EventInterface $event)
+    {
+        $this->getSession()->restart();
+    }
+
+    /**
      * @Given /^I (?:do not|don't) follow (?:|the )(?:redirects?|redirections?)$/
      */
     public function iDoNotFollowRedirects()

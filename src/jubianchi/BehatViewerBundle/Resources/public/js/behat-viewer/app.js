@@ -103,6 +103,16 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
           BehatViewer.prototype = new Application();
           BehatViewer.prototype.constructor = BehatViewer;
 
+            BehatViewer.prototype.setUsername = function(username) {
+                $('[data-rel*=username]').text(username);
+            };
+
+            BehatViewer.prototype.refreshAvatar = function(email) {
+                $('[data-rel*=avatar]').each(function() {
+                    $(this).attr('src', Routing.generate('behatviewer.profileavatar', {'email': email, 'size': $(this).attr('data-size')}));
+                });
+            };
+
           app = new BehatViewer('#application').init();
         }
       )

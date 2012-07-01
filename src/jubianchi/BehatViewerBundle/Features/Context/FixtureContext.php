@@ -19,7 +19,7 @@ class FixtureContext extends BehatViewerContext
       $this->platform = $this->connection->getDatabasePlatform();
     }
 
-  /**
+    /**
      * @BeforeScenario @reset
      */
     public function BeforeScenario(\Behat\Behat\Event\EventInterface $event)
@@ -30,8 +30,11 @@ class FixtureContext extends BehatViewerContext
             'BehatViewerBundle:Feature',
             'BehatViewerBundle:Build',
             'BehatViewerBundle:Definition',
-            'BehatViewerBundle:Project'
+            'BehatViewerBundle:Project',
+            'BehatViewerBundle:User'
         );
+
+        $this->connection->query(sprintf('SET FOREIGN_KEY_CHECKS = 0;'));
 
         foreach ($entities as $entity) {
             $this->connection->executeUpdate(

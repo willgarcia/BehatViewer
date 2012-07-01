@@ -2,7 +2,8 @@ Feature: Configuration
 
     @reset
     Scenario: First project
-        Given I am on the homepage
+        Given I am a logged in user
+          And I am on the homepage
           And I follow "Config"
          Then I should see an alert message with title "No project configured" and text "Before using Behat Viewer, you should configure your project."
 
@@ -19,7 +20,8 @@ Feature: Configuration
 
     @reset @javascript
     Scenario: First project with JS
-        Given I am on the homepage
+        Given I am a logged in user
+          And I am on the homepage
          Then I should see an alert message with title "No project configured" and text "Before using Behat Viewer, you should configure your project."
 
         Given I fill in "Project name" with "Foo Bar"

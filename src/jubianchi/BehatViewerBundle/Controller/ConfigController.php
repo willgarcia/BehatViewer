@@ -2,10 +2,11 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \jubianchi\BehatViewerBundle\Form\Type\ProjectType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    JMS\SecurityExtraBundle\Annotation\Secure,
+    jubianchi\BehatViewerBundle\Form\Type\ProjectType;
 
 /**
  * @Route("/config")
@@ -16,6 +17,7 @@ class ConfigController extends BehatViewerController
      * @return array
      *
      * @Route("/", name="behatviewer.config")
+     * @Secure(roles="ROLE_USER")
      * @Template()
      */
     public function indexAction()
