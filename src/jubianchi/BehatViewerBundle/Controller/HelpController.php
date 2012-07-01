@@ -16,19 +16,20 @@ class HelpController extends BehatViewerController
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/help/{page}", name="behatviewer.help", defaults={"page" = "home"})
+     * @Route("/help/{section}/{page}", name="behatviewer.help", defaults={"section" = "", "page" = "home"})
      * @Template()
      */
-    public function indexAction($page)
+    public function indexAction($section, $page)
     {
-        $file = $this->getDataDirectory() . '/' . $page . '.md';
+        $section = $section ? $section . '/' : '';
+        $file = $this->getDataDirectory() . '/' . $section . $page . '.md';
         if (false === file_exists($file)) {
             return new Response('', 404);
         }
 
         return $this->getResponse(array(
             'help' => file_get_contents($file),
-            'sections' => array_keys($this->getSections())
+            'sections' => $this->getSections()
         ));
     }
 
@@ -44,10 +45,27 @@ class HelpController extends BehatViewerController
 
         foreach ($content as $directory) {
             if ($directory->isDir()) {
-                $sections[basename($directory)] = $directory;
+                $section = basename($directory);
+                $sections[$section] = array(
+                    'label' => preg_replace('/\d+[\.|\-]/', '', $section),
+                    'links' => array()
+                );
+
+                $iterator = new \RecursiveRegexIterator(
+                    new \RecursiveDirectoryIterator($directory->getPathname()),
+                    '/[a-z]*.md$/i'
+                );
+
+                foreach($iterator as $file) {
+                    $file = basename($file, '.md');
+                    $label = preg_replace('/\d+[\.|\-]/', '', $file);
+                    $label = str_replace('-', ' ', $label);
+                    $label = ucfirst($label);
+                    $sections[$section]['links'][$label] = $file;
+                }
             }
         }
 
-      return $sections;
+        return $sections;
     }
 }
