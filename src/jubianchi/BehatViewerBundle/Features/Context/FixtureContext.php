@@ -22,7 +22,7 @@ class FixtureContext extends BehatViewerContext
     /**
      * @BeforeScenario @reset
      */
-    public function BeforeScenario(\Behat\Behat\Event\EventInterface $event)
+    public function BeforeScenarioReset(\Behat\Behat\Event\EventInterface $event)
     {
         $entities = array(
             'BehatViewerBundle:Step',
@@ -43,6 +43,30 @@ class FixtureContext extends BehatViewerContext
                     true
                 )
             );
+        }
+
+        $this->BeforeScenarioFixture($event);
+    }
+
+    /**
+     * @BeforeScenario @fixture
+     */
+    public function BeforeScenarioFixture(\Behat\Behat\Event\EventInterface $event)
+    {
+        $tags = array();
+        switch(true) {
+            case ($event instanceof \Behat\Behat\Event\ScenarioEvent):
+                $tags = $event->getScenario()->getTags();
+                break;
+            case ($event instanceof \Behat\Behat\Event\OutlineEvent):
+                $tags = $event->getOutline()->getTags();
+                break;
+        }
+
+        foreach($tags as $tag) {
+            if(preg_match('/^fixture:(.*)$/', $tag, $match)) {
+                $this->iLoadTheFixture($match[1]);
+            }
         }
     }
 

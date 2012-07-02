@@ -14,7 +14,9 @@
                 <table id="definitions" class="table table-bordered table-striped tablesorter {sortlist: [[1,1]]}">
                     <thead>
                     <tr>
-                        <th class="{sorter: false}"><input type="checkbox" /></th>
+                        {% if is_granted('ROLE_USER') %}
+                            <th class="{sorter: false}"><input type="checkbox" /></th>
+                        {% endif %}
                         <th>#</th>
                         <th>Date</th>
                         <th>Completion</th>
@@ -30,9 +32,11 @@
                     </tbody>
                 </table>
 
-                <div class="btn-group">
-                    <a href="{{ path('behatviewer.historydeletesel') }}" class="btn btn-danger" data-action="delselected">Delete selected</a>
-                </div>
+                {% if is_granted('ROLE_USER') %}
+                    <div class="btn-group">
+                        <a href="{{ path('behatviewer.historydeletesel') }}" class="btn btn-danger" data-action="delselected">Delete selected</a>
+                    </div>
+                {% endif %}
 
                 {% if pages > 1 %}
                     <div id="content-nav" class="pagination pagination-centered menu">

@@ -1,40 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    {% if not xhr %}
-    <meta charset="utf-8">
-    <title>Behat Viewer</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Behat Viewer, from PMSIpilot">
-    <meta name="author" content="Julien Bianchi <contact@jubianchi.fr>">
+{% if not xhr %}
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        {% if not xhr %}
+        <meta charset="utf-8">
+        <title>Behat Viewer</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Behat Viewer, from PMSIpilot">
+        <meta name="author" content="Julien Bianchi <contact@jubianchi.fr>">
 
 
-    <link href="{{ asset('bundles/behatviewer/css/bootstrap.css') }}" type="text/css" rel="stylesheet"/>
-    <style type="text/css">
-        body {
-            padding-top: 60px;
-            padding-bottom: 40px;
-        }
+        <link href="{{ asset('bundles/behatviewer/css/bootstrap.css') }}" type="text/css" rel="stylesheet"/>
+        <style type="text/css">
+            body {
+                padding-top: 60px;
+                padding-bottom: 40px;
+            }
 
-        .sidebar-nav {
-            padding: 9px 0;
-        }
-    </style>
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/font-awesome.css') }}">
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/chosen.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/jquery.noty.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/noty_theme_twitter.css') }}" type="text/css" rel="stylesheet"/>
-    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/behat.css') }}" type="text/css" rel="stylesheet"/>
-    {% block stylesheet %}{% endblock %}
+            .sidebar-nav {
+                padding: 9px 0;
+            }
+        </style>
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/font-awesome.css') }}">
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/chosen.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/jquery.noty.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/noty_theme_twitter.css') }}" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/behat.css') }}" type="text/css" rel="stylesheet"/>
+        {% block stylesheet %}{% endblock %}
 
-    <!--[if lt IE 9]>
-    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-    {% endif %}
-</head>
+        <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+        {% endif %}
+    </head>
 
-<body>
+    <body>
+{% endif %}
 
 {% if not xhr %}
     {% block header %}
@@ -46,11 +48,13 @@
 
 <div class="container-fluid" id="container">
     {% block container %}{% endblock %}
+</div>
 
+{% if not xhr %}
     {% block footer %}
         {% include 'BehatViewerBundle::footer.html.twig' %}
     {% endblock %}
-</div>
+{% endif %}
 
 {% if not xhr %}
     <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.js') }}"></script>
@@ -61,13 +65,15 @@
         JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
         JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
 
-        JSC.require([
-            'bootstrap',
-            'bootstrap.fixed-table',
-            'jquery.noty',
-            'jquery.promise',
-            'behat-viewer/app'
-        ]);
+        JSC.require(
+            [
+                'bootstrap',
+                'bootstrap.fixed-table',
+                'jquery.noty',
+                'jquery.promise',
+                'behat-viewer/app'
+            ]
+        );
     </script>
 {% else %}
     <script type="text/javascript">
@@ -80,9 +86,19 @@
         {% else %}
             $(window).trigger('hideLastBuild');
         {% endif %}
+
+        {% if is_granted('ROLE_USER') %}
+            app.setUser({
+                username: '{{ app.user.username }}',
+                email: '{{ app.user.email }}'
+            });
+        {% endif %}
     </script>
 {% endif %}
 
 {% block javascript %}{% endblock %}
-</body>
-</html>
+
+{% if not xhr %}
+    </body>
+    </html>
+{% endif %}

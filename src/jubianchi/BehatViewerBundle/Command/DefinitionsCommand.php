@@ -77,7 +77,7 @@ class DefinitionsCommand extends ContainerAwareCommand
 
         $this->getDoctrine()->getRepository('BehatViewerBundle:Definition')->truncateForProject($project);
 
-        $cmd = sprintf('%s -di', $project->getTestCommand());
+        $cmd = sprintf('php behat.phar -di');
 
         exec($cmd, $data);
 

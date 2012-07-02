@@ -16,9 +16,11 @@
 {% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
 
 <tr data-action="navig" class="navig">
-    <td style="width: 15px">
-        <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
-    </td>
+    {% if is_granted('ROLE_USER') %}
+        <td style="width: 15px">
+            <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
+        </td>
+    {% endif %}
     <td style="width: 5%"><strong>{{ build.id }}</strong></td>
     <td rel="moment">
         {{ build.date|date("Y-m-d H:i:s") }}

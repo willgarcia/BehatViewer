@@ -19,17 +19,17 @@ class UserContext extends BehatViewerContext
                 new Step\Given('I am on "/login"'),
                 new Step\Then('I fill in "username" with "behat"'),
                 new Step\Then('I fill in "password" with "behat"'),
-                new Step\Then('I press "Login"')
+                new Step\Then('I press "Log in"')
             );
         } else {
             return array(
                 new Step\Given('I load the "user.sql" fixture'),
                 new Step\Given('I am on the homepage'),
-                new Step\Then('I wait 2 seconds'),
                 new Step\Given('I follow "Log in"'),
                 new Step\Then('I fill in "username" with "behat"'),
                 new Step\Then('I fill in "password" with "behat"'),
-                new Step\Then('I press "Login"')
+                new Step\Then('I press "Log in"'),
+                new Step\Then('I wait 1 second')
             );
         }
     }

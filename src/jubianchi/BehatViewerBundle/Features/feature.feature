@@ -1,10 +1,8 @@
 Feature: Feature page
 
-    @reset @javascript
+    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
     Scenario: Navigation in features details
-        Given I load the "single-project.sql" fixture
-          And I load the "single-build.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
           And I follow the 1st "Details" link
          Then I should see "Passed (#1 Built on 1970-01-01 at 00:00:00)"
           And I should see:
@@ -24,11 +22,9 @@ Feature: Feature page
           And I should see 4 ".alert-success" elements
           And I should see 1 ".alert-danger" elements
 
-    @reset @javascript
+    @reset @javascript @fixture:single-project.sql @fixture:all-step-statuses.sql
     Scenario: All step statuses
-        Given I load the "single-project.sql" fixture
-          And I load the "all-step-statuses.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
           And I follow the 1st "Details" link
          Then I should see "All statuses (#1 Built on 1970-01-01 at 00:00:00)"
           And I should see "Scenario 5 step(s) / Passed: 1/5 (20%) / Failed: 1/5 (20%) / Skipped: 1/5 (20%) / Pending: 1/5 (20%) / Undefined: 1/5 (20%)"

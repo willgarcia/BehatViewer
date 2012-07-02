@@ -29,7 +29,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
-     * @BeforeScenario @reset
+     * @BeforeScenario @reset @javascript
      */
     public function BeforeScenario(\Behat\Behat\Event\EventInterface $event)
     {

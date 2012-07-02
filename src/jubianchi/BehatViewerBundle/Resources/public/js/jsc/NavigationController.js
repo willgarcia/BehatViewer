@@ -71,10 +71,10 @@ var NavigationController;
                 });
             };
 
-			NavigationController.prototype.navigate = function (href) {
+			NavigationController.prototype.navigate = function (href, type, method, params) {
 				document.location.hash = '#!' + href;
 
-				this.load(href + ' ' + this.master + ' > *');
+				this.load(href + ' ' + this.master + ' > *', type, method, params);
 
 				this.trigger({type: 'navigate', 'href': href});
 			};

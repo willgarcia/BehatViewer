@@ -1,26 +1,23 @@
 Feature: Homepage
 
-    @reset
+    @reset @fixture:single-project.sql
     Scenario: Single project and no build
-        Given I load the "single-project.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
          Then I should see "Behat Viewer [Foo Bar]"
           And I should see "Features"
           And I should see "No feature"
           And I should see "This project has not been built yet. Click on the build button to launch test suite."
 
+    @fixture @fixture:single-build.sql
     Scenario: Homepage with some features
-        Given I load the "single-build.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
          Then I should see "Features for Foo Bar"
           And I should see "Passed (100%)"
           And I should see "Failed (80%)"
 
-    @reset @javascript
+    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
     Scenario: Some features displayed as a list with JS
-        Given I load the "single-project.sql" fixture
-          And I load the "single-build.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
           And I follow "List view"
          Then I should see "Features for Foo Bar"
           And I should see a "table" element

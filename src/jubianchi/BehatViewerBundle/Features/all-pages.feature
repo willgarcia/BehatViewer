@@ -18,11 +18,9 @@ Feature: All pages
             | /thumb                | 200    |
             | /list                 | 200    |
 
-    @reset
+    @reset @fixture:single-project.sql @fixture:single-build.sql
     Scenario Outline: With data
-        Given I load the "single-project.sql" fixture
-          And I load the "single-build.sql" fixture
-          And I am on "<url>"
+        Given I am on "<url>"
          Then the response status code should be <status>
           And I should not see "No project configured"
           And I should not see "Before using Behat Viewer, you should configure your project."

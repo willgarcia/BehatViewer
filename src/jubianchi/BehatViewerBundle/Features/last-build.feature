@@ -1,10 +1,8 @@
 Feature: Last build notification
 
-    @reset @javascript
+    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
     Scenario: Last build notification
-        Given I load the "single-project.sql" fixture
-          And I load the "single-build.sql" fixture
-          And I am on the homepage
+        Given I am on the homepage
          Then I should not see "Last build"
 
         Given I load the "second-build.sql" fixture
