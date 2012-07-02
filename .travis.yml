@@ -18,7 +18,7 @@ before_install:
     - mysql -e 'CREATE DATABASE test_myapp_test;'
 
 before_script:
-    - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// > app/config/parameters.ini
+    - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// | sed s/%secret%/ThisTokenIsNotSoSecret/ > app/config/parameters.ini
     - sed 's/%hostname%/localhost\/behat/' behat.yml-dist > behat.yml
     - bin/vendors install
     - app/console --env=test doctrine:schema:create

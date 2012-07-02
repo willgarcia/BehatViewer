@@ -16,4 +16,4 @@
 
     locale            = en
 
-    secret            = ThisTokenIsNotSoSecretChangeIt
+    secret            = %secret%
