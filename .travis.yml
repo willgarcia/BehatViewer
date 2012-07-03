@@ -13,9 +13,10 @@ before_install:
     - echo "Alias /behat $(pwd)/web" | sudo tee -a /etc/apache2/sites-available/default
     - sudo a2enmod rewrite
     - sudo /etc/init.d/apache2 restart
-    - "export DISPLAY=:99.0"
-    - "sh -e /etc/init.d/xvfb start"
     - mysql -e 'CREATE DATABASE test_myapp_test;'
+    - wget "http://downloads.sourceforge.net/project/sahi/sahi-v35/20110719/sahi-src_20110719.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsahi%2Ffiles%2Fsahi-v35%2F20110719%2F&ts=1341337630&use_mirror=freefr"
+    - unzip sahi_20110719.zip -d ~/sahi
+    - sed 's?%basedir%?'`pwd`'?' browsers.xml > ~/sahi/userdata/config/browser_types.xml
 
 before_script:
     - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// | sed s/%secret%/ThisTokenIsNotSoSecret/ > app/config/parameters.ini
@@ -23,6 +24,7 @@ before_script:
     - bin/vendors install
     - app/console --env=test doctrine:schema:create
     - sudo chmod -R 777 app/cache app/logs
+    - ~/sahi/bin/sahi.sh &
 
 script: 
     - php behat.phar --profile=travis @BehatViewerBundle

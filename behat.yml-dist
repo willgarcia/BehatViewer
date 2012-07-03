@@ -46,3 +46,7 @@ travis:
 
     filters:
         tags: "~@javascript"
+
+    extensions:
+        mink_extension.phar:
+            browser_name: chromeBg
