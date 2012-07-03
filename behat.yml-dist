@@ -46,4 +46,4 @@ travis:
 
     extensions:
         mink_extension.phar:
-            browser_name: chromeBg
+            browser_name: phantomjs
