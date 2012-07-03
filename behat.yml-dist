@@ -44,9 +44,6 @@ travis:
             viewer_output_path: .
             screen_id: 99
 
-    filters:
-        tags: "~@javascript"
-
     extensions:
         mink_extension.phar:
             browser_name: chromeBg
