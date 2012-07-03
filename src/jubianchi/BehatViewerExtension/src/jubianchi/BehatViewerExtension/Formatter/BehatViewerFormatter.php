@@ -1,10 +1,10 @@
 <?php
-namespace jubianchi\BehatViewerBundle\Formatter;
+namespace jubianchi\BehatViewerExtension\Formatter;
 
-use \Behat\Behat\Formatter\ConsoleFormatter,
-    \Behat\Behat\Event,
-    \Behat\Behat\Exception\FormatterException,
-    \Behat\Gherkin\Node;
+use Behat\Behat\Formatter\ConsoleFormatter,
+    Behat\Behat\Event,
+    Behat\Behat\Exception\FormatterException,
+    Behat\Gherkin\Node;
 
 /**
  *
@@ -315,7 +315,7 @@ class BehatViewerFormatter extends ConsoleFormatter
             throw new FormatterException(sprintf(
                 'You should specify "viewer_output_path" parameter for %s', get_class($this)
             ));
-        } elseif(is_file($outputPath))
+        } elseif(false === is_dir($outputPath))
         {
             throw new FormatterException(sprintf(
                 'Directory path expected as "viewer_output_path" parameter of %s, but got: %s',

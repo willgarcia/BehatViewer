@@ -31,7 +31,15 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     /**
      * @BeforeScenario @reset @javascript
      */
-    public function BeforeScenario(\Behat\Behat\Event\EventInterface $event)
+    public function BeforeScenarioReset(\Behat\Behat\Event\EventInterface $event)
+    {
+        $this->getSession()->reset();
+    }
+
+    /**
+     * @BeforeScenario @restart @javascript
+     */
+    public function BeforeScenarioRestart(\Behat\Behat\Event\EventInterface $event)
     {
         $this->getSession()->restart();
     }
