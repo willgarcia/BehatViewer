@@ -61,7 +61,9 @@ class BuildCommand extends ContainerAwareCommand
             $cmd .= ' ' . escapeshellarg($feature->getFile());
         }
 
-        if(file_exists('build.sh')) unlink('build.sh');
+        if(file_exists('build.sh')) {
+            unlink('build.sh');
+        }
         $fp = fopen('build.sh', 'w+');
         fwrite($fp, '#!/bin/sh' . PHP_EOL . $cmd);
         fclose($fp);
@@ -75,6 +77,10 @@ class BuildCommand extends ContainerAwareCommand
                 $output->write($buffer);
             }
         });
+
+        if(file_exists('build.sh')) {
+            unlink('build.sh');
+        }
 
         $this->getApplication()->find('behat-viewer:analyze')->run($input, $output);
     }
