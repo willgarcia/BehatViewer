@@ -24,6 +24,7 @@ Feature: Main menu
         Given I follow "Help"
          Then I should be on "/help"
 
+    @reset
     Scenario: Main menu without Javascript as a logged in user
         Given I am a logged in user
           And I am on the homepage
