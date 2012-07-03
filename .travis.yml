@@ -27,6 +27,7 @@ before_script:
     - sudo chmod -R 777 app/cache app/logs
     - cd ~/sahi
     - bin/sahi.sh &
+    - sleep 3
     - "cd -"
 
 script: 
