@@ -19,7 +19,7 @@ before_install:
 
 before_script:
     - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// | sed s/%secret%/ThisTokenIsNotSoSecret/ > app/config/parameters.ini
-    - sed 's/%hostname%/localhost\/behat/' behat.yml-dist > behat.yml
+    - sed 's/%hostname%/localhost\/behat/' behat.yml-dist | sed s/%behat_viewer_domain%/behat-viewer-ci.jubianchi.fr/ > behat.yml
     - bin/vendors install
     - app/console --env=test doctrine:schema:create
     - sudo chmod -R 777 app/cache app/logs

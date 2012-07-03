@@ -44,7 +44,7 @@ travis:
         name: pretty,distant
         parameters:
             viewer_output_path: .
-            behat_viewer_url: "http://behat-viewer-ci.jubianchi.fr/analyze"
+            behat_viewer_url: "http://%behat_viewer_domain%/analyze"
             screen_id: 99
 
     extensions:
