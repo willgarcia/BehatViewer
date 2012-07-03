@@ -30,7 +30,7 @@ default:
             sahi: ~
             goutte: ~
             javascript_session: "sahi"
-            browser_name: chromeBg
+            browser_name: %browser%
 
 travis:
     context:
