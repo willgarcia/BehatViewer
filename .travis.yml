@@ -25,7 +25,9 @@ before_script:
     - bin/vendors install
     - app/console --env=test doctrine:schema:create
     - sudo chmod -R 777 app/cache app/logs
-    - ~/sahi/bin/sahi.sh &
+    - cd ~/sahi
+    - bin/sahi.sh &
+    - "cd -"
 
 script: 
     - php behat.phar --profile=travis @BehatViewerBundle
