@@ -1,3 +1,4 @@
+@project
 Feature: Configuration
 
     @reset

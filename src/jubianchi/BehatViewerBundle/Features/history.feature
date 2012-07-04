@@ -1,3 +1,4 @@
+@build
 Feature: History
 
     @reset @fixture:single-project.sql

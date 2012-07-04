@@ -1,3 +1,4 @@
+@build @stats
 Feature: Stats
 
     @reset @fixture:single-project.sql

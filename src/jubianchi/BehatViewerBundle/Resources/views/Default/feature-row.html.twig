@@ -18,7 +18,15 @@
 {% endif %}
 
 <tr class="navig" data-action="details">
-    <td><strong>{{ feature.name }}</strong></td>
+    <td>
+        <strong>{{ feature.name }}</strong>
+        {% if feature.tags|count > 0 %}
+            <br/>
+            {% for tag in feature.tags %}
+                <a data-action="details" href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>&nbsp;
+            {% endfor %}
+        {% endif %}
+    </td>
     <td style="width: 10%">{% if steps > 0 %}{{ passedpcnt|round }}{% else %}0{% endif %}%</td>
     <td style="min-width: 250px; width: 25%" data-value="{% if steps > 0 %}{{ passedpcnt|round }}{% else %}0{% endif %}">
         <div class="progress">

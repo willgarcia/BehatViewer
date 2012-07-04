@@ -209,13 +209,13 @@ class Feature extends Base
     }
 
     /**
-     * Add tags
+     * Add tag
      *
-     * @param \jubianchi\BehatViewerBundle\Entity\Tag $tags
+     * @param \jubianchi\BehatViewerBundle\Entity\Tag $tag
      */
-    public function addTag(\jubianchi\BehatViewerBundle\Entity\Tag $tags)
+    public function addTag(\jubianchi\BehatViewerBundle\Entity\Tag $tag)
     {
-        $this->tags[] = $tags;
+        $this->tags[] = $tag;
     }
 
     /**

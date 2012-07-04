@@ -1,3 +1,4 @@
+@navigation
 Feature: Main menu
 
     Scenario: Main menu without Javascript

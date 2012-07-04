@@ -1,3 +1,4 @@
+@build @feature @project
 Feature: Homepage
 
     @reset @fixture:single-project.sql

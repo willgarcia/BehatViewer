@@ -1,3 +1,4 @@
+@navigation
 Feature: All pages
 
     @reset

@@ -1,3 +1,4 @@
+@build @feature
 Feature: Feature page
 
     @reset @javascript @fixture:single-project.sql @fixture:single-build.sql

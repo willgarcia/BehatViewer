@@ -1,3 +1,4 @@
+@project
 Feature: Definitions
 
     @reset @fixture:single-project.sql

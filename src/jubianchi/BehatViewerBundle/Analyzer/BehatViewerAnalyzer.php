@@ -151,9 +151,9 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
         $tags = $this->getTagsFromData($data['tags']);
         if (sizeof($tags)) {
             foreach ($tags as $tag) {
-              if (null !== $feature->getTags() && false === $feature->getTags()->contains($tag)) {
-                $feature->addTag($tag);
-              }
+                if (null === $feature->getTags() || (null !== $feature->getTags() && false === in_array($tag, (array)$feature->getTags()))) {
+                    $feature->addTag($tag);
+                }
             }
         }
 
@@ -224,7 +224,7 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
                     $tag->setSlug($this->slugify($name));
 
                     $this->getEntityManager()->persist($tag);
-                    $this->getEntityManager()->flush();
+                    //$this->getEntityManager()->flush();
                 }
 
                 $tags[] = $tag;

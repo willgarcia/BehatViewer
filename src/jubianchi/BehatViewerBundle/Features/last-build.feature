@@ -1,3 +1,4 @@
+@build
 Feature: Last build notification
 
     @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
