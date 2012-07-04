@@ -3,8 +3,15 @@ if (phantom.args.length === 0) {
     phantom.exit();
 } else {
     var address = unescape(phantom.args[0]);
-    console.log('Loading ' + address);
     var page = new WebPage();
+    var i = 0;
+
+    page.viewportSize = {
+        width  : 1280,
+        height : 1024
+    };
+
+    console.log('Loading ' + address);
     page.open(address, function(status) {
         if (status === 'success') {
             var title = page.evaluate(function() {
@@ -15,4 +22,14 @@ if (phantom.args.length === 0) {
             console.log('FAIL to load the address');
         }
     });
+
+    /*
+    page.onLoadFinished = function (status) {
+        page.render('/tmp/home-' + (i++) + '.png');
+    };
+
+    page.onResourceReceived = function (response) {
+        page.render('/tmp/home-' + (i++) + '.png');
+    };
+    */
 }

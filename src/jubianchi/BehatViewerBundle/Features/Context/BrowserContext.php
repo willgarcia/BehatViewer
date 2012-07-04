@@ -45,6 +45,14 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @AfterScenario
+     */
+    public function closeBrowser()
+    {
+        $this->getSession()->stop();
+    }
+
+    /**
      * @Given /^I (?:do not|don't) follow (?:|the )(?:redirects?|redirections?)$/
      */
     public function iDoNotFollowRedirects()

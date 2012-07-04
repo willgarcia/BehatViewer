@@ -11,8 +11,11 @@ notifications:
 
 before_install:
     - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-mysql php5-sqlite
-    - echo "Alias /behat $(pwd)/web" | sudo tee -a /etc/apache2/sites-available/default
+    - sed 's?%basedir%?'`pwd`'?' behat.local-dist > behat.local
+    - sudo mv behat.local /etc/apache2/sites-available/behat.local
+    - echo "127.0.0.1    behat.local" | sudo tee -a /etc/hosts
     - sudo a2enmod rewrite
+    - sudo a2ensite behat.local
     - sudo /etc/init.d/apache2 restart
     - mysql -e 'CREATE DATABASE test_myapp_test;'
     - wget -O sahi_20110719.zip "http://downloads.sourceforge.net/project/sahi/sahi-v35/20110719/sahi-src_20110719.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsahi%2Ffiles%2Fsahi-v35%2F20110719%2F&ts=1341337630&use_mirror=freefr"
@@ -21,7 +24,7 @@ before_install:
 
 before_script:
     - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// | sed s/%secret%/ThisTokenIsNotSoSecret/ > app/config/parameters.ini
-    - sed 's/%hostname%/localhost\/behat/' behat.yml-dist | sed s/%behat_viewer_domain%/behat-viewer-ci.jubianchi.fr/ > behat.yml
+    - sed 's/%hostname%/behat.local/' behat.yml-dist | sed s/%behat_viewer_domain%/behat-viewer-ci.jubianchi.fr/ > behat.yml
     - sed 's?%basedir%?'`pwd`'?' browsers.xml-dist > ~/sahi/userdata/config/browser_types.xml
     - bin/vendors install
     - app/console --env=test doctrine:schema:create
@@ -33,4 +36,3 @@ before_script:
 
 script: 
     - php behat.phar --profile=travis @BehatViewerBundle
-    - curl -i -H "Accept: application/json" -X PUT -d @behat-viewer.json http://behat-viewer-ci.jubianchi.fr/analyze
