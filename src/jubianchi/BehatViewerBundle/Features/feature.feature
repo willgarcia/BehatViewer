@@ -22,7 +22,7 @@ Feature: Feature page
           And I should see 4 ".alert-success" elements
           And I should see 1 ".alert-danger" elements
 
-    @reset @javascript @fixture:single-project.sql @fixture:all-step-statuses.sql
+    @reset @restart @javascript @fixture:single-project.sql @fixture:all-step-statuses.sql
     Scenario: All step statuses
         Given I am on the homepage
           And I follow the 1st "Details" link

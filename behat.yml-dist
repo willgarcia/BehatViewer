@@ -10,7 +10,7 @@ default:
 
     formatter:
         classes:
-            "jubianchi\BehatViewerBundle\Formatter\BehatViewerFormatter": viewer
+            "jubianchi\BehatViewerExtension\Formatter\BehatViewerFormatter": viewer
 
         name: pretty,viewer
         parameters:
@@ -18,6 +18,8 @@ default:
             screen_id: 99
 
     extensions:
+        src/jubianchi/BehatViewerExtension/init.php: ~
+
         symfony2_extension.phar:
             kernel:
                 bootstrap: "app/bootstrap.php"
@@ -28,7 +30,7 @@ default:
             sahi: ~
             goutte: ~
             javascript_session: "sahi"
-            browser_name: chromeBg
+            browser_name: %browser%
 
 travis:
     context:
@@ -37,11 +39,12 @@ travis:
 
     formatter:
         classes:
-            "jubianchi\BehatViewerBundle\Formatter\BehatViewerFormatter": viewer
+            "jubianchi\BehatViewerExtension\Formatter\BehatViewerDistantFormatter": distant
 
-        name: pretty,viewer
+        name: pretty,distant
         parameters:
             viewer_output_path: .
+            behat_viewer_url: "http://%behat_viewer_domain%/analyze"
             screen_id: 99
 
     extensions:
