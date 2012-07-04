@@ -65,7 +65,9 @@ var Controller;
 		var controller = this;
 
 		return function (e) {
-			controller[action + 'Action'](this, e);
+            JSC.log('Launching action ' + controller.cls + '.' + action);
+
+            controller[action + 'Action'](this, e);
 		};
 	};
 

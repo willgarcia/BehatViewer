@@ -36,7 +36,7 @@ var NavigationController;
                 return this;
             };
 
-            NavigationController.prototype.load = function (url, type, method, params) {
+            NavigationController.prototype.load = function (url, type, method, params, callback) {
                 var controller = this,
                     off = url.indexOf(" "),
                     selector;
@@ -66,15 +66,19 @@ var NavigationController;
 
                             JSC.log('triggering loaded');
                             $(window).trigger('loaded');
+
+                            if(typeof callback != 'undefined') {
+                                callback.call(controller);
+                            }
                         }
                     }
                 });
             };
 
-			NavigationController.prototype.navigate = function (href, type, method, params) {
+			NavigationController.prototype.navigate = function (href, type, method, params, callback) {
 				document.location.hash = '#!' + href;
 
-				this.load(href + ' ' + this.master + ' > *', type, method, params);
+				this.load(href + ' ' + this.master + ' > *', type, method, params, callback);
 
 				this.trigger({type: 'navigate', 'href': href});
 			};
