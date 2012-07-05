@@ -39,6 +39,7 @@ echo "---> Virtualhost name : $(tput bold ; tput setaf 3)$VHOSTNAME$(tput sgr0)"
 echo "---> Browser name : $(tput bold ; tput setaf 3)$BROWSERNAME$(tput sgr0)"
 echo "---> Features path : $(tput bold ; tput setaf 3)$FEATURES$(tput sgr0)"
 echo "---> Bootstrap path : $(tput bold ; tput setaf 3)$BOOTSTRAP$(tput sgr0)"
-echo "---> Configuration file path : $(tput bold ; tput setaf 3)$CONFIG(tput sgr0)"
+echo "---> Configuration file path : $(tput bold ; tput setaf 3)$CONFIG$(tput sgr0)"
+echo "---> Destionation file path : $(tput bold ; tput setaf 3)$ROOTDIR/behat.yml$(tput sgr0)"
 
-sed s/%hostname%/$VHOSTNAME/ $CONFIG | sed s/%browser%/$BROWSERNAME/ | sed s?%features%?$FEATURES? | sed s?%bootstrap%?$BOOTSTRAP? > $ROOTDIR/behat.yml
+sed s/%hostname%/$VHOSTNAME/ "$CONFIG" | sed s/%browser%/$BROWSERNAME/ | sed s?%features%?$FEATURES? | sed s?%bootstrap%?$BOOTSTRAP? | sed 's?%behat_viewer_url%?http://behat-viewer-ci.jubianchi.fr/analyze?'> $ROOTDIR/behat.yml

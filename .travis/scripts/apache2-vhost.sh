@@ -10,12 +10,19 @@ then
     VHOSTNAME="$1"
 fi
 
+DOCROOT=""
+if [ "$2" ]
+then
+    DOCROOT="$2"
+fi
+
 echo "---> Starting $(tput bold ; tput setaf 2)virtual host creation$(tput sgr0)"
 echo "---> Working directory : $(tput bold ; tput setaf 3)$BASEDIR$(tput sgr0)"
 echo "---> Root directory : $(tput bold ; tput setaf 3)$ROOTDIR$(tput sgr0)"
 echo "---> Virtualhost name : $(tput bold ; tput setaf 3)$VHOSTNAME$(tput sgr0)"
+echo "---> Document root : $(tput bold ; tput setaf 3)$DOCROOT$(tput sgr0)"
 
-sed s?%basedir%?$ROOTDIR? "$BASEDIR/apache2/virtualhost.local-dist" | sed s/%hostname%/$VHOSTNAME/ > $VHOSTNAME
+sed s?%basedir%?$ROOTDIR? "$BASEDIR/apache2/virtualhost.local-dist" | sed s/%hostname%/$VHOSTNAME/ | sed s?%document_root%?$DOCROOT? > $VHOSTNAME
 sudo mv $VHOSTNAME /etc/apache2/sites-available/$VHOSTNAME
 
 echo "---> $(tput bold ; tput setaf 2)Adding host to /etc/hosts$(tput sgr0) :"

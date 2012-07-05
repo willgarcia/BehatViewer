@@ -2,7 +2,7 @@
     ServerName %hostname%
     ServerAdmin contact@jubianchi.fr
 
-    DocumentRoot %basedir%
+    DocumentRoot %basedir%/web
 
     <Directory %basedir%/web>
         DirectoryIndex app.php
