@@ -10,29 +10,22 @@ notifications:
     on_failure: change
 
 before_install:
-    - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-mysql php5-sqlite
-    - sed 's?%basedir%?'`pwd`'?' behat.local-dist > behat.local
-    - sudo mv behat.local /etc/apache2/sites-available/behat.local
-    - echo "127.0.0.1    behat.local" | sudo tee -a /etc/hosts
-    - sudo a2enmod rewrite
-    - sudo a2ensite behat.local
-    - sudo /etc/init.d/apache2 restart
-    - mysql -e 'CREATE DATABASE test_myapp_test;'
-    - wget -O sahi_20110719.zip "http://downloads.sourceforge.net/project/sahi/sahi-v35/20110719/sahi-src_20110719.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fsahi%2Ffiles%2Fsahi-v35%2F20110719%2F&ts=1341337630&use_mirror=freefr"
-    - unzip sahi_20110719.zip -d ~/
-    - sudo chmod +x ~/sahi/bin/sahi.sh
+    - export HOST="behat.local"
+    - export DATABASE="behat"
+    - export BROWSER="phantomjs"
+    - export WEB_DIRECTORY="./web"
+    - sh -e .travis/scripts/apt-get.sh
+    - sh -e .travis/scripts/apache2-vhost.sh $HOST $(readlink -f $WEB_DIRECTORY)
+    - sh -e .travis/scripts/apache2-configure.sh $HOST
+    - sh -e .travis/scripts/mysql.sh "test_$DATABASE"
+    - sh -e .travis/scripts/sahi-install.sh
 
 before_script:
-    - sed s/%database_name%/myapp_test/ app/config/parameters.ini-dist | sed s/%database_login%/root/ | sed s/%database_password%// | sed s/%secret%/ThisTokenIsNotSoSecret/ > app/config/parameters.ini
-    - sed 's/%hostname%/behat.local/' behat.yml-dist | sed s/%behat_viewer_domain%/behat-viewer-ci.jubianchi.fr/ > behat.yml
-    - sed 's?%basedir%?'`pwd`'?' browsers.xml-dist > ~/sahi/userdata/config/browser_types.xml
-    - bin/vendors install
-    - app/console --env=test doctrine:schema:create
-    - sudo chmod -R 777 app/cache app/logs
-    - cd ~/sahi/bin
-    - ./sahi.sh &
-    - sleep 3
-    - "cd -"
+    - sh -e .travis/scripts/sf2-configure.sh $DATABASE
+    - sh -e .travis/scripts/behat-configure.sh $HOST $BROWSER "" "" $(readlink -f behat.yml-dist)
+    - sh -e .travis/scripts/sahi-configure.sh
+    - sh -e .travis/scripts/sf2-init.sh
+    - sh -e .travis/scripts/sahi-start.sh
 
 script: 
     - php behat.phar --profile=travis @BehatViewerBundle
