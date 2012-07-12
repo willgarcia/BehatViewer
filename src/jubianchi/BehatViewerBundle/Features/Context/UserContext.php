@@ -13,7 +13,7 @@ class UserContext extends BehatViewerContext
     {
         $driver = $this->getMainContext()->getSubcontext('browser')->getSession()->getDriver();
 
-        if($driver instanceof Behat\Mink\Driver\GoutteDriver) {
+        if ($driver instanceof Behat\Mink\Driver\GoutteDriver) {
             return array(
                 new Step\Given('I load the "user.sql" fixture'),
                 new Step\Given('I am on "/login"'),

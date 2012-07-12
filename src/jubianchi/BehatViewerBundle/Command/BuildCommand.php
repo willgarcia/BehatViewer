@@ -61,7 +61,7 @@ class BuildCommand extends ContainerAwareCommand
             $cmd .= ' ' . escapeshellarg($feature->getFile());
         }
 
-        if(file_exists('build.sh')) {
+        if (file_exists('build.sh')) {
             unlink('build.sh');
         }
         $fp = fopen('build.sh', 'w+');
@@ -78,7 +78,7 @@ class BuildCommand extends ContainerAwareCommand
             }
         });
 
-        if(file_exists('build.sh')) {
+        if (file_exists('build.sh')) {
             unlink('build.sh');
         }
 

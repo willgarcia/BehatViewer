@@ -55,7 +55,7 @@ class UserRemoveCommand extends ContainerAwareCommand
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:User');
         $user = $repository->findOneByUsername($username);
 
-        if(null !== $user) {
+        if (null !== $user) {
             $this->getEntityManager()->remove($user);
             $this->getEntityManager()->flush();
 

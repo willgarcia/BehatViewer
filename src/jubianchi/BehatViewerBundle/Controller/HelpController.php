@@ -56,7 +56,7 @@ class HelpController extends BehatViewerController
                     '/[a-z]*.md$/i'
                 );
 
-                foreach($iterator as $file) {
+                foreach ($iterator as $file) {
                     $file = basename($file, '.md');
                     $label = preg_replace('/\d+[\.|\-]/', '', $file);
                     $label = str_replace('-', ' ', $label);

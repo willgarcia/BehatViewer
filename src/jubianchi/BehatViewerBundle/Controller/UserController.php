@@ -9,7 +9,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     JMS\SecurityExtraBundle\Annotation\Secure,
     \jubianchi\BehatViewerBundle\Form\Type\ProjectType;
 
-
 class UserController extends BehatViewerController
 {
     /**
@@ -50,14 +49,14 @@ class UserController extends BehatViewerController
      */
     public function profileAction()
     {
-        if('POST' === $this->getRequest()->getMethod()) {
+        if ('POST' === $this->getRequest()->getMethod()) {
             $user = $this->get('security.context')->getToken()->getUser();
 
             $user->setUsername($this->getRequest()->get('_username'));
             $user->setEmail($this->getRequest()->get('_email'));
 
-            if(($password = $this->getRequest()->get('_password'))) {
-                if($password === $this->getRequest()->get('_confirm')) {
+            if (($password = $this->getRequest()->get('_password'))) {
+                if ($password === $this->getRequest()->get('_confirm')) {
                     $factory = $this->get('security.encoder_factory');
                     $encoder = $factory->getEncoder($user);
 

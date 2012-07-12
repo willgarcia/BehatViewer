@@ -56,24 +56,24 @@ class UserAddCommand extends ContainerAwareCommand
         $error = null;
         $user->setUsername(
             $this->getHelper('dialog')->ask(
-                $output, 
+                $output,
                 'Please enter a <info>username</info>: '
             )
         );
-        
+
         do {
             $error = null;
             $password = $this->getHelper('dialog')->ask($output, 'Please enter a <info>password</info>: ');
             $password = $this->getHelper('dialog')->askAndValidate(
-                $output, 
+                $output,
                 'Please <info>confirm</info> the password: ',
                 function($value) use($password, &$error, $output, $self) {
-                    if($value !== $password) {
+                    if ($value !== $password) {
                         $error = new \Exception('Passwords are not identical');
 
                         $output->writeln(
                             $self->getHelper('formatter')->formatBlock(
-                                $error->getMessage(), 
+                                $error->getMessage(),
                                 'error',
                                 true
                             )
@@ -82,14 +82,14 @@ class UserAddCommand extends ContainerAwareCommand
 
                     return $value;
                 }
-            );    
-        } while($error !== null);
-        
+            );
+        } while ($error !== null);
+
         $user->setPassword(
             $encoder->encodePassword(
-                $password, 
+                $password,
                 $user->getSalt()
-            )   
+            )
         );
 
         $user->setEmail($this->getHelper('dialog')->ask($output, 'Please enter an <info>email</info>: '));

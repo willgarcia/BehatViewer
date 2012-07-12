@@ -54,7 +54,7 @@ class FixtureContext extends BehatViewerContext
     public function BeforeScenarioFixture(\Behat\Behat\Event\EventInterface $event)
     {
         $tags = array();
-        switch(true) {
+        switch (true) {
             case ($event instanceof \Behat\Behat\Event\ScenarioEvent):
                 $tags = $event->getScenario()->getTags();
                 break;
@@ -63,8 +63,8 @@ class FixtureContext extends BehatViewerContext
                 break;
         }
 
-        foreach($tags as $tag) {
-            if(preg_match('/^fixture:(.*)$/', $tag, $match)) {
+        foreach ($tags as $tag) {
+            if (preg_match('/^fixture:(.*)$/', $tag, $match)) {
                 $this->iLoadTheFixture($match[1]);
             }
         }
