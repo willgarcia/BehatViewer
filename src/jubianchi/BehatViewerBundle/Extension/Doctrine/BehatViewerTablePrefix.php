@@ -1,8 +1,8 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Extension\Doctrine;
 
-use \Doctrine\ORM\Event\LoadClassMetadataEventArgs,
-    \Doctrine\ORM\Mapping\ClassMetadataInfo;
+use Doctrine\ORM\Event\LoadClassMetadataEventArgs,
+    Doctrine\ORM\Mapping\ClassMetadataInfo;
 
 /**
  *

@@ -11,7 +11,6 @@ var HelpController;
 
             this.cls = 'HelpController';
 
-            this.actions = ['navig'];
             this.navigationController = new NavigationController('#help');
         };
 
@@ -26,12 +25,6 @@ var HelpController;
 
         HelpController.prototype.complete = function () {
             window.prettyPrint();
-        };
-
-        HelpController.prototype.navigAction = function (elem, e) {
-            this.navigationController.navigationAction(elem, e);
-            $(elem).parents('ul').find('.active').removeClass('active');
-            $(elem).parents('li').addClass('active');
         };
     }
   );

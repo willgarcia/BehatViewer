@@ -12,28 +12,28 @@
             </div>
             <div class="modal-body">
                 <div class="control-group">
-                    <label class="control-label" for="username">Username:</label>
+                    <label class="control-label" for="username">Username</label>
                     <div class="controls">
                         <input type="text" id="username" name="_username" value="{{ app.user.username }}" class="input-xlarge" />
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="email">E-mail:</label>
+                    <label class="control-label" for="email">E-mail</label>
                     <div class="controls">
                         <input type="text" id="email" name="_email" value="{{ app.user.email }}" class="input-xlarge" />
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="password">Password:</label>
+                    <label class="control-label" for="password">Password</label>
                     <div class="controls">
                         <input type="password" id="password" name="_password" value="" class="input-xlarge" />
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="confirm">Confirm:</label>
+                    <label class="control-label" for="confirm">Confirm</label>
                     <div class="controls">
                         <input type="password" id="confirm" name="_confirm" class="input-xlarge" />
                     </div>
@@ -41,7 +41,7 @@
 
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Save" data-action="submit" />
+                <input type="submit" class="btn btn-primary" value="Save" />
             </div>
         </div>
     </div>
@@ -49,14 +49,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                ['behat-viewer/profile'],
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            ['behat-viewer/profile'],
+            function() {
+                $(function() {
                     app.controller.current(new ProfileController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+                });
+            }
+        );
+    </script>
 {% endblock %}

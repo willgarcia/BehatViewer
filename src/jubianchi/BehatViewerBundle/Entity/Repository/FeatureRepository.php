@@ -2,9 +2,9 @@
 
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
 
-use \Doctrine\ORM\EntityRepository,
-    \Doctrine\ORM\Query\Expr,
-    \jubianchi\BehatViewerBundle\Entity;
+use Doctrine\ORM\EntityRepository,
+    Doctrine\ORM\Query\Expr,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  * FeatureRepository

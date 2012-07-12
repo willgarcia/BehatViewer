@@ -1,10 +1,10 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Analyzer;
 
-use \Symfony\Component\EventDispatcher\EventDispatcher,
-    \Symfony\Component\DependencyInjection\ContainerAwareInterface,
-    \Symfony\Component\DependencyInjection\ContainerInterface,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Component\EventDispatcher\EventDispatcher,
+    Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    Symfony\Component\DependencyInjection\ContainerInterface,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  *

@@ -1,11 +1,10 @@
 <?php
-
 namespace jubianchi\BehatViewerBundle\DependencyInjection;
 
-use \Symfony\Component\DependencyInjection\ContainerBuilder,
-    \Symfony\Component\Config\FileLocator,
-    \Symfony\Component\HttpKernel\DependencyInjection\Extension,
-    \Symfony\Component\DependencyInjection\Loader;
+use Symfony\Component\DependencyInjection\ContainerBuilder,
+    Symfony\Component\Config\FileLocator,
+    Symfony\Component\HttpKernel\DependencyInjection\Extension,
+    Symfony\Component\DependencyInjection\Loader;
 
 /**
  *

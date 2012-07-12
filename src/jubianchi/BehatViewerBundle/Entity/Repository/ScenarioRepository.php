@@ -3,8 +3,8 @@
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
 
 use Doctrine\ORM\EntityRepository,
-    \Doctrine\ORM\Query\Expr,
-    \jubianchi\BehatViewerBundle\Entity;
+    Doctrine\ORM\Query\Expr,
+    jubianchi\BehatViewerBundle\Entity;
 
 class ScenarioRepository extends EntityRepository
 {

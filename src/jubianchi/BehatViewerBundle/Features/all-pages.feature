@@ -14,8 +14,6 @@ Feature: All pages
             | /stats                | 200    |
             | /definitions          | 200    |
             | /config               | 200    |
-            | /feature/5/foo        | 200    |
-            | /feature/5/foo/source | 200    |
             | /thumb                | 200    |
             | /list                 | 200    |
 

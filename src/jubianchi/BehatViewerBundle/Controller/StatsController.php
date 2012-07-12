@@ -2,10 +2,10 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \jubianchi\BehatViewerBundle\Form\Type\ProjectType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    jubianchi\BehatViewerBundle\Form\Type\ProjectType;
 
 /**
  * @Route("/stats")
@@ -20,11 +20,9 @@ class StatsController extends BehatViewerController
      */
     public function indexAction()
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $project = $this->getSession()->getProject();
+		$project = $this->getSession()->getProject();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Build');
         $builds = $repository->findLastBuildsForProject($project, 10);
 

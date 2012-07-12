@@ -2,9 +2,9 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 
 /**
  * @Route("/definitions")
@@ -19,11 +19,9 @@ class DefinitionsController extends BehatViewerController
      */
     public function indexAction()
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $definitions = array();
+		$definitions = array();
         $contexts = array();
         $project = $this->getSession()->getProject();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Definition');

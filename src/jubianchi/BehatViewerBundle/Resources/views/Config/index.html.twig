@@ -1,5 +1,9 @@
 {% extends 'BehatViewerBundle::layout.html.twig' %}
 
+{% block notification %}
+<div data-rel="notification" data-type="success">Settings were successfully saved.</div>
+{% endblock %}
+
 {% block container %}
 <div class="row-fluid">
     <form class="form-horizontal" method="post" action="{{ path('behatviewer.config') }}" id="configuration">
@@ -9,7 +13,7 @@
                     <h3>Project configuration</h3>
                 </div>
                 <div class="modal-body" style="max-height: inherit;">
-                    {% if not project.id %}
+                    {% if project.id is null %}
                         <div class="alert alert-block alert-info">
                             <h4 class="alert-heading">No project configured</h4>
 
@@ -47,8 +51,7 @@
                         <label for="Project_root_path" class="control-label">Root path</label>
 
                         <div class="controls">
-                            {{ form_widget(form.root_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}})
-                            }}
+                            {{ form_widget(form.root_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}}) }}
                         </div>
                     </div>
 
@@ -74,7 +77,7 @@
                 </div>
 
                 <div class="modal-footer">
-                    <input class="btn btn-primary" type="submit" data-action="submit" value="Save changes"/>
+                    <input class="btn btn-primary" type="submit" value="Save changes"/>
                     <input class="btn" type="reset" value="Cancel"/>
                 </div>
             </div>
@@ -84,14 +87,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                ['behat-viewer/config'],
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            ['behat-viewer/config'],
+            function() {
+                $(function() {
                     app.controller.current(new ConfigController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+                });
+            }
+        );
+    </script>
 {% endblock %}

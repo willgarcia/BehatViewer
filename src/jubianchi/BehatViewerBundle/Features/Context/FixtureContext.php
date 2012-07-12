@@ -2,7 +2,7 @@
 
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 class FixtureContext extends BehatViewerContext
 {

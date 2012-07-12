@@ -1,12 +1,12 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Method,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  *
@@ -21,11 +21,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexAction()
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        if ($this->get('session')->get('listview', false)) {
+		if ($this->getSession()->get('listview', false)) {
             return $this->forward('BehatViewerBundle:History:entrylist', array('build' => $this->getSession()->getBuild()));
         } else {
             return $this->forward('BehatViewerBundle:History:entry', array('build' => $this->getSession()->getBuild()));
@@ -40,8 +38,6 @@ class DefaultController extends BehatViewerController
      */
     public function analyzeAction()
     {
-        //ini_set('memory_limit', '512M');
-
         $data = json_decode($this->getRequest()->getContent(), true);
 
         $project = $this->get('doctrine')
@@ -62,11 +58,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexlistAction()
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $this->get('session')->set('listview', true);
+		$this->get('session')->set('listview', true);
 
         return $this->forward(
             'BehatViewerBundle:History:entrylist',
@@ -84,11 +78,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexthumbAction()
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $this->get('session')->set('listview', false);
+		$this->get('session')->set('listview', false);
 
         return $this->forward(
             'BehatViewerBundle:Default:index',

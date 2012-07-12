@@ -2,14 +2,14 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 
 /**
  *
  */
 abstract class BehatViewerController extends Controller
 {
-    /**
+	/**
      * @return \jubianchi\BehatViewerBundle\Session\BehatViewerSession
      */
     public function getSession()
@@ -17,37 +17,32 @@ abstract class BehatViewerController extends Controller
         return $this->get('behat_viewer.session');
     }
 
+	protected function beforeAction() {
+		if(null === $this->getSession()->getProject()) {
+			throw new \jubianchi\BehatViewerBundle\Exception\NoProjectConfiguredException();
+		}
+	}
+
     /**
      * @return array
      */
     public function getResponse(array $variables = array())
     {
-        return array_merge(
-            array(
-                'xhr' => $this->getRequest()->isXmlHttpRequest(),
-                'project' => $this->getSession()->getProject(),
-                'build' => $this->getSession()->getBuild(),
-                'lastbuild' => null !== ($build = $this->getLastBuild()) ? $build->getId() : 0
-            ),
-            $variables
-        );
+		return array_merge(
+			array(
+				'xhr' => $this->getRequest()->isXmlHttpRequest(),
+				'project' => $this->getSession()->getProject(),
+				'build' => $this->getSession()->getBuild(),
+				'lastbuild' => null !== ($build = $this->getLastBuild()) ? $build->getId() : 0
+			),
+			$variables
+		);
     }
 
-    /**
-     * @return \Symfony\Component\HttpFoundation\Response
-     */
-    protected function beforeAction()
-    {
-        if ($this->getSession()->getProject() === null) {
-            if (false === $this->get('security.context')->isGranted('ROLE_USER')) {
-                return $this->forward('BehatViewerBundle:User:index');
-            }
-
-            return $this->forward('BehatViewerBundle:Config:index');
-        }
-    }
-
-    protected function getLastBuild()
+	/**
+	 * @return \jubianchi\BehatViewerBundle\Entity\Build
+	 */
+	protected function getLastBuild()
     {
         $project = $this->getSession()->getProject();
         $build = null;

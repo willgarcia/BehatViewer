@@ -1,9 +1,9 @@
 <?php
 namespace jubianchi\BehatViewerBundle\DataCollector;
 
-use \Symfony\Component\HttpKernel\DataCollector\DataCollector,
-    \Symfony\Component\HttpFoundation\Request,
-    \Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\DataCollector\DataCollector,
+    Symfony\Component\HttpFoundation\Request,
+    Symfony\Component\HttpFoundation\Response;
 
 /**
  *

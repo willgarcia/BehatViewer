@@ -1,104 +1,79 @@
-{% if not xhr %}
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        {% if not xhr %}
-        <meta charset="utf-8">
-        <title>Behat Viewer</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <meta name="description" content="Behat Viewer, from PMSIpilot">
-        <meta name="author" content="Julien Bianchi <contact@jubianchi.fr>">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% if not xhr %}
+    <meta charset="utf-8">
+    <title>Behat Viewer</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Behat Viewer, from PMSIpilot">
+    <meta name="author" content="Julien Bianchi <contact@jubianchi.fr>">
 
 
-        <link href="{{ asset('bundles/behatviewer/css/bootstrap.css') }}" type="text/css" rel="stylesheet"/>
-        <style type="text/css">
-            body {
-                padding-top: 60px;
-                padding-bottom: 40px;
-            }
+    <link href="{{ asset('bundles/behatviewer/css/bootstrap.css') }}" type="text/css" rel="stylesheet"/>
+    <style type="text/css">
+        body {
+            padding-top: 60px;
+            padding-bottom: 40px;
+        }
 
-            .sidebar-nav {
-                padding: 9px 0;
-            }
-        </style>
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/font-awesome.css') }}">
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/chosen.css') }}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/jquery.noty.css') }}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/noty_theme_twitter.css') }}" type="text/css" rel="stylesheet"/>
-        <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/behat.css') }}" type="text/css" rel="stylesheet"/>
-        {% block stylesheet %}{% endblock %}
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+    </style>
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/bootstrap-responsive.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/font-awesome.css') }}">
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/chosen.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/jquery.noty.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/noty_theme_twitter.css') }}" type="text/css" rel="stylesheet"/>
+    <link rel="stylesheet" href="{{ asset('bundles/behatviewer/css/behat.css') }}" type="text/css" rel="stylesheet"/>
+    {% block stylesheet %}{% endblock %}
 
-        <!--[if lt IE 9]>
-        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
-        <![endif]-->
-        {% endif %}
-    </head>
+    <!--[if lt IE 9]>
+    <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    {% endif %}
+</head>
 
-    <body>
-{% endif %}
+<body>
 
-{% if not xhr %}
-    {% block header %}
-        {% include 'BehatViewerBundle::header.html.twig' %}
-    {% endblock %}
 
-    <div id="notification"></div>
-{% endif %}
+{% block header %}
+    {% include 'BehatViewerBundle::header.html.twig' %}
+{% endblock %}
+
+<div id="notification">
+    {% block notification %}{% endblock %}
+</div>
 
 <div class="container-fluid" id="container">
     {% block container %}{% endblock %}
 </div>
 
-{% if not xhr %}
-    {% block footer %}
-        {% include 'BehatViewerBundle::footer.html.twig' %}
-    {% endblock %}
-{% endif %}
+{% block footer %}
+    {% include 'BehatViewerBundle::footer.html.twig' %}
+{% endblock %}
 
-{% if not xhr %}
-    <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
-    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jsc/JSC.js') }}"></script>
-    <script type="text/javascript">
-        JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
-        JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
+<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jquery.js') }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+<script type="text/javascript" src="{{ asset('bundles/behatviewer/js/jsc/JSC.js') }}"></script>
+<script type="text/javascript">
+    JSC.base = 'http://{{ domain }}/bundles/behatviewer/js';
+    JSC.debug = {% if app.debug %}true{% else %}false{% endif %}
 
-        JSC.require(
-            [
-                'bootstrap',
-                'bootstrap.fixed-table',
-                'jquery.noty',
-                'jquery.promise',
-                'behat-viewer/app'
-            ]
-        );
-    </script>
-{% else %}
-    <script type="text/javascript">
-        {% if lastbuild %}
-            {% if lastbuild != build.id %}
-                $(window).trigger('showLastBuild', [{{ lastbuild }}]);
-            {% else %}
-                $(window).trigger('hideLastBuild');
-            {% endif %}
-        {% else %}
-            $(window).trigger('hideLastBuild');
-        {% endif %}
-
-        {% if is_granted('ROLE_USER') %}
-            app.setUser({
-                username: '{{ app.user.username }}',
-                email: '{{ app.user.email }}'
-            });
-        {% endif %}
-    </script>
-{% endif %}
+    JSC.require(
+        [
+            'bootstrap',
+            'bootstrap.fixed-table',
+            'jquery.noty',
+            'jquery.promise',
+            'behat-viewer/app'
+        ]
+    );
+</script>
 
 {% block javascript %}{% endblock %}
 
-{% if not xhr %}
-    </body>
-    </html>
-{% endif %}
+</body>
+</html>
+

@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     Symfony\Component\Security\Core\SecurityContext,
     JMS\SecurityExtraBundle\Annotation\Secure,
-    \jubianchi\BehatViewerBundle\Form\Type\ProjectType;
+    jubianchi\BehatViewerBundle\Form\Type\ProjectType;
 
 class UserController extends BehatViewerController
 {
@@ -17,6 +17,10 @@ class UserController extends BehatViewerController
      */
     public function indexAction()
     {
+		if(true === $this->get('security.context')->isGranted('ROLE_USER')) {
+			return $this->forward('BehatViewerBundle:User:profile');
+		}
+
         $request = $this->getRequest();
         $session = $request->getSession();
 

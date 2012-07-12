@@ -2,12 +2,12 @@
 
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Behat\MinkExtension\Context\MinkContext,
-    \Behat\Mink\Exception\ExpectationException,
-    \Behat\Gherkin\Node\PyStringNode,
-    \Behat\Symfony2Extension\Context\KernelAwareInterface,
-    \Symfony\Component\HttpKernel\KernelInterface,
-    \Behat\Behat\Context\Step;
+use Behat\MinkExtension\Context\MinkContext,
+    Behat\Mink\Exception\ExpectationException,
+    Behat\Gherkin\Node\PyStringNode,
+    Behat\Symfony2Extension\Context\KernelAwareInterface,
+    Symfony\Component\HttpKernel\KernelInterface,
+    Behat\Behat\Context\Step;
 
 class BrowserContext extends MinkContext implements KernelAwareInterface
 {
@@ -49,7 +49,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
      */
     public function closeBrowser()
     {
-        $this->getSession()->stop();
+        //$this->getSession()->stop();
     }
 
     /**

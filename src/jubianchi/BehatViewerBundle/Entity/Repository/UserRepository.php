@@ -2,7 +2,7 @@
 
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
 
-use \Doctrine\ORM\EntityRepository;
+use Doctrine\ORM\EntityRepository;
 
 /**
  * UserRepository

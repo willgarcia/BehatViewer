@@ -99,7 +99,7 @@
     <ul class="nav nav-list">
         <li class="nav-header">Features</li>
         {% for feature in features %}
-        <li><a data-action="navig" href="{{ path('behatviewer.feature', {'id': feature.id, 'slug': feature.slug}) }}">{{ feature.name }}</a></li>
+        <li><a href="{{ path('behatviewer.feature', {'id': feature.id, 'slug': feature.slug}) }}">{{ feature.name }}</a></li>
         {% endfor %}
     </ul>
 </div>

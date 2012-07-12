@@ -2,8 +2,8 @@
 
 namespace jubianchi\BehatViewerBundle\Form\Type;
 
-use \Symfony\Component\Form\AbstractType,
-    \Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\AbstractType,
+    Symfony\Component\Form\FormBuilder;
 
 /**
  *

@@ -54,14 +54,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-          JSC.require(
-              ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/definitions'],
-              function() {
+    <script type="text/javascript">
+      JSC.require(
+          ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/definitions'],
+          function() {
+              $(function() {
                   app.controller.current(new DefinitionsController('#container'));
-              }
-          );
-        </script>
-    {% endif %}
+              });
+          }
+      );
+    </script>
 {% endblock %}

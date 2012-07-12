@@ -17,13 +17,13 @@
 {% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
 {% endif %}
 
-<tr class="navig" data-action="details">
+<tr class="navig">
     <td>
         <strong>{{ feature.name }}</strong>
         {% if feature.tags|count > 0 %}
             <br/>
             {% for tag in feature.tags %}
-                <a data-action="details" href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>&nbsp;
+                <a href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>&nbsp;
             {% endfor %}
         {% endif %}
     </td>
@@ -73,7 +73,6 @@
         </ul>
     </td>
     <td class="action">
-        <a data-action="details" class="btn" href="{{ path('behatviewer.feature', {'id': feature.id, 'slug':feature.slug}) }}"
-           data-action="details">Details &raquo;</a>
+        <a class="btn" href="{{ path('behatviewer.feature', {'id': feature.id, 'slug':feature.slug}) }}">Details &raquo;</a>
     </td>
 </tr>

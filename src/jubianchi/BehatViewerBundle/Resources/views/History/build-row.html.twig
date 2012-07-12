@@ -15,14 +15,14 @@
 {% set pending = build.getStepsHavingStatusCount('pending') %}
 {% set pendingpcnt = ((pending / steps) * 100)|round(3) %}
 
-<tr data-action="navig" class="navig">
+<tr class="navig">
     {% if is_granted('ROLE_USER') %}
         <td style="width: 15px">
             <input type="checkbox" value="{{ build.id }}" name="delete[]" id="Build_delete_{{ build.id }}"/>
         </td>
     {% endif %}
     <td style="width: 5%"><strong>{{ build.id }}</strong></td>
-    <td rel="moment">
+    <td data-rel="moment">
         {{ build.date|date("Y-m-d H:i:s") }}
     </td>
     <td style="width: 10%">{{ passedpcnt|round }}%</td>
@@ -68,10 +68,9 @@
     </td>
     <td class="action" style="min-width: 150px; width: 10%">
         <div class="btn-group" id="toolbar">
-            <a href="{{ path('behatviewer.historyentry', {"id": build.id}) }}" class="btn"
-               data-action="navig">Details</a>
+            <a href="{{ path('behatviewer.historyentry', {"id": build.id}) }}" class="btn">Details</a>
             {% if is_granted('ROLE_USER') %}
-                <a href="{{ path('behatviewer.historydelete', {"id": build.id}) }}" class="btn btn-danger" data-action="delete">Delete</a>
+                <a href="{{ path('behatviewer.historydelete', {"id": build.id}) }}" class="btn btn-danger">Delete</a>
             {% endif %}
         </div>
     </td>

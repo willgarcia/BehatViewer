@@ -13,7 +13,7 @@
     {% endif %}
 
     {% if build %}
-        <small>(#{{ build.id }} Built <span rel="moment">{{ build.date|date("Y-m-d \\a\\t H:i:s")}}</span>)</small>
+        <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d H:i:s")}}</span>)</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Default/switcher.html.twig' %}
@@ -45,14 +45,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                'behat-viewer/home',
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            'behat-viewer/home',
+            function() {
+                $(function() {
                     app.controller.current(new HomeController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+                });
+            }
+        );
+    </script>
 {% endblock %}

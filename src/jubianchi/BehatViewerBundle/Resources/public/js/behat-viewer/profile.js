@@ -10,8 +10,6 @@ var ProfileController;
             NavigationController.call(this, master);
 
             this.cls = 'ProfileController';
-
-            this.actions = ['submit'];
         };
 
         ProfileController.prototype = new NavigationController();
@@ -21,17 +19,6 @@ var ProfileController;
             NavigationController.prototype.init.call(this);
 
             return this;
-        };
-
-        ProfileController.prototype.submitAction = function (elem, e) {
-            e.preventDefault();
-
-            this.navigate(
-                $(elem).parents('form').attr('action'),
-                'html',
-                'POST',
-                $(elem).parents('form').serialize()
-            );
         };
     }
   );

@@ -21,12 +21,12 @@ Feature: Login
           And I fill in "password" with "behat"
           And I press "Log in"
          Then I should not see "Bad credentials"
-          And I should be on "/"
+          And I should be on "/config/"
           And I should see "Logged in as behat"
           And I should see "Profile"
           And I should see "Logout"
 
-    Scenario: Login with existing credentials
+    Scenario: Logout
         Given I am on the homepage
           And I follow "Logout"
          Then I should be on "/"

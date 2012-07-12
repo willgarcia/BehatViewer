@@ -16,9 +16,9 @@ var HomeListController;
         HomeListController.prototype.constructor = HomeListController;
 
         HomeListController.prototype.init = function () {
-            Controller.prototype.init.call(this);
+            HomeController.prototype.init.call(this);
 
-          return this;
+            return this;
         };
 
         HomeListController.prototype.complete = function () {

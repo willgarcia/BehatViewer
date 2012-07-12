@@ -1,22 +1,22 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \jubianchi\BehatViewerBundle\Entity,
-    \Symfony\Component\HttpFoundation\Response;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    jubianchi\BehatViewerBundle\Entity,
+    Symfony\Component\HttpFoundation\Response;
 
 /**
- *
+ * @Route("/help")
  */
 class HelpController extends BehatViewerController
 {
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/help/{section}/{page}", name="behatviewer.help", defaults={"section" = "", "page" = "home"})
+     * @Route("/{section}/{page}", name="behatviewer.help", defaults={"section" = "", "page" = "home"})
      * @Template()
      */
     public function indexAction($section, $page)

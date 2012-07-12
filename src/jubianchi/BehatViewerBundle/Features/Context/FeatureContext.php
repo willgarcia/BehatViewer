@@ -1,9 +1,9 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand,
-    \Behat\Behat\Event\SuiteEvent,
-    \Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Bundle\FrameworkBundle\Command\CacheClearCommand,
+    Behat\Behat\Event\SuiteEvent,
+    Symfony\Component\HttpKernel\KernelInterface;
 
 class FeatureContext extends BehatViewerContext
 {

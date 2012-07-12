@@ -10,6 +10,7 @@
         <parameter key="behat_viewer.collector.class">jubianchi\BehatViewerBundle\DataCollector\BehatViewerDataCollector</parameter>
         <parameter key="behat_viewer.session.class">jubianchi\BehatViewerBundle\Session\BehatViewerSession</parameter>
         <parameter key="behat_viewer.markdown_parser.class">jubianchi\BehatViewerBundle\Markdown\MarkdownParser</parameter>
+        <parameter key="behat_viewer.listener.configuration.class">jubianchi\BehatViewerBundle\Listener\ConfigurationListener</parameter>
 
         <parameter key="behat_viewer.db.table_prefix_subscriber.class">jubianchi\BehatViewerBundle\Extension\Doctrine\BehatViewerTablePrefix</parameter>
         <parameter key="behat_viewer.db.table_prefix">behatviewer_</parameter>
@@ -18,6 +19,13 @@
     <services>
         <service id="behat_viewer.twig.extension" class="%behat_viewer.twig.extension.class%">
             <tag name="twig.extension"/>
+            <call method="setContainer">
+                <argument type="service" id="service_container"/>
+            </call>
+        </service>
+
+        <service id="behat_viewer.listener.configuration" class="%behat_viewer.listener.configuration.class%">
+            <tag name="kernel.event_listener" event="kernel.exception" method="onKernelException"/>
             <call method="setContainer">
                 <argument type="service" id="service_container"/>
             </call>

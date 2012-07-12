@@ -10,7 +10,7 @@
 
                     {% for link, page in section['links'] %}
                         <li>
-                            <a data-action="navig" href="{{ path('behatviewer.help', {'section': url, 'page': page }) }}">
+                            <a href="{{ path('behatviewer.help', {'section': url, 'page': page }) }}">
                                 {{ link }}
                             </a>
                         </li>
@@ -27,14 +27,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                    'behat-viewer/help',
-                    function() {
-                        app.controller.current(new HelpController('#container'));
-                    }
-            );
-        </script>
-    {% endif %}
+    <script type="text/javascript">
+        JSC.require(
+            'behat-viewer/help',
+            function() {
+                $(function() {
+                    app.controller.current(new HelpController('#container'));
+                });
+            }
+        );
+    </script>
 {% endblock %}

@@ -16,10 +16,10 @@ security:
         secured_area:
             pattern:    ^/
             anonymous: ~
+
             form_login:
                 login_path:  /login
                 check_path:  /login/check
-                use_forward: true
 
             logout:
                 path:   /logout

@@ -2,11 +2,11 @@
 
 namespace jubianchi\BehatViewerBundle\Controller;
 
-use \Symfony\Bundle\FrameworkBundle\Controller\Controller,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
-    \Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Route,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter,
+    Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  * @Route("/tag")
@@ -23,11 +23,9 @@ class TagController extends BehatViewerController
      */
     public function indexAction(Entity\Tag $tag)
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $build = $this->getSession()->getBuild();
+		$build = $this->getSession()->getBuild();
 
         $features = $this->getDoctrine()->getRepository('BehatViewerBundle:Feature')->findByTagAndBuild($tag, $build);
         $scenarios = $this->getDoctrine()->getRepository('BehatViewerBundle:Scenario')->findByTagAndBuild($tag, $build);

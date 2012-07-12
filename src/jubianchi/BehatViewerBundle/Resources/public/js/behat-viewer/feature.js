@@ -4,14 +4,14 @@ var FeatureController;
   "use strict";
 
   JSC.require(
-    ['prettify', 'prettify.feature', 'jsc/NavigationController'],
+    ['prettify', 'prettify.feature', 'jsc/NavigationController', 'jsc/MomentController'],
     function () {
         FeatureController = function (master) {
             NavigationController.call(this, master);
 
             this.cls = 'FeatureController';
 
-            this.actions = ['snippet', 'screenshot', 'switch', 'navig'];
+            this.actions = ['snippet', 'screenshot'];
         };
 
         FeatureController.prototype = new NavigationController();
@@ -23,20 +23,14 @@ var FeatureController;
           return this;
         };
 
-        FeatureController.prototype.switchAction = function (elem, e) {
-            app.controller.navigationAction(elem, e)
-        };
+        FeatureController.prototype.complete = function () {
+            MomentController.prototype.complete.call(this, ' <small style="font-size: 0.7em">on %s</small>');
 
-        FeatureController.prototype.navigAction = function (elem, e) {
-            app.controller.navigationAction(elem, e)
+            window.prettyPrint();
         };
 
         FeatureController.prototype.snippetAction = function (elem, e) {
             $('#' + $(e.target).attr('data-toggle')).toggle()
-        };
-
-        FeatureController.prototype.complete = function () {
-            window.prettyPrint();
         };
 
         FeatureController.prototype.screenshotAction = function (elem, e) {

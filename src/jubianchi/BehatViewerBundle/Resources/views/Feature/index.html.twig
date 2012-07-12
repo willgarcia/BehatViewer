@@ -12,7 +12,7 @@
 <h1 class="page-header">
     {{ feature.name }}
     {% if build %}
-        <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+        <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d H:i:s")}}</span>)</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Feature/switcher.html.twig' %}
@@ -20,7 +20,7 @@
     {% if feature.tags|count %}
         <br/>
         {% for tag in feature.tags %}
-            <a data-action="navig" href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
+            <a href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
         {% endfor %}
     {% endif %}
 </h1>
@@ -39,14 +39,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                'behat-viewer/feature',
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            'behat-viewer/feature',
+            function() {
+                $(function() {
                     app.controller.current(new FeatureController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+                });
+            }
+        );
+    </script>
 {% endblock %}

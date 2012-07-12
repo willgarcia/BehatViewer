@@ -2,8 +2,8 @@
 
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Behat\Mink\Exception,
-    \Behat\Gherkin\Node\TableNode;
+use Behat\Mink\Exception,
+    Behat\Gherkin\Node\TableNode;
 
 class TableContext extends BehatViewerContext
 {

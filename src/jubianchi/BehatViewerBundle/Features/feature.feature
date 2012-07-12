@@ -5,7 +5,7 @@ Feature: Feature page
     Scenario: Navigation in features details
         Given I am on the homepage
           And I follow the 1st "Details" link
-         Then I should see "Passed (#1 Built on 1970-01-01 at 00:00:00)"
+         Then I should see "Passed (#1 Built 43 years ago on 1970-01-01 00:00:00)"
           And I should see:
             """
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mollis quam sed rhoncus. Lorem ipsum dolor sit amet, consectetur.
@@ -14,7 +14,7 @@ Feature: Feature page
           And I should see 3 ".alert-success" elements
 
         Given I follow "Failed"
-         Then I should see "Failed (#1 Built on 1970-01-01 at 00:00:00)"
+         Then I should see "Failed (#1 Built 43 years ago on 1970-01-01 00:00:00)"
           And I should see:
             """
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc posuere mollis quam sed rhoncus. Lorem ipsum dolor sit amet, consectetur.
@@ -27,7 +27,7 @@ Feature: Feature page
     Scenario: All step statuses
         Given I am on the homepage
           And I follow the 1st "Details" link
-         Then I should see "All statuses (#3 Built on 1970-01-01 at 00:00:00)"
+         Then I should see "All statuses (#3 Built 43 years ago on 1970-01-01 00:00:00)"
           And I should see "Scenario 5 step(s) / Passed: 1/5 (20%) / Failed: 1/5 (20%) / Skipped: 1/5 (20%) / Pending: 1/5 (20%) / Undefined: 1/5 (20%)"
           And I should see 1 ".alert-success" elements
           And I should see 2 ".alert-info" elements

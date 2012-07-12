@@ -1,15 +1,15 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Command;
 
-use \Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
-    \Symfony\Component\Console\Input\InputInterface,
-    \Symfony\Component\Console\Output\OutputInterface,
-    \Symfony\Component\Console\Input\InputArgument,
-    \Symfony\Component\EventDispatcher\EventSubscriberInterface,
-    \Symfony\Component\EventDispatcher\Event,
-    \Symfony\Component\Console\Formatter\OutputFormatterStyle,
-    \Symfony\Component\Console\Input\InputOption,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
+    Symfony\Component\Console\Input\InputInterface,
+    Symfony\Component\Console\Output\OutputInterface,
+    Symfony\Component\Console\Input\InputArgument,
+    Symfony\Component\EventDispatcher\EventSubscriberInterface,
+    Symfony\Component\EventDispatcher\Event,
+    Symfony\Component\Console\Formatter\OutputFormatterStyle,
+    Symfony\Component\Console\Input\InputOption,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  *

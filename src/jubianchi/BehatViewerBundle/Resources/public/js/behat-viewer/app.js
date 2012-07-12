@@ -38,9 +38,6 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                         Toolbar.call(this, master, controller);
 
                         var self = this;
-                        this.controller.on('navigate', function (e) {
-                            self.setActiveItem(self.getItemByHref(e.href));
-                        });
                     };
 
                     Navbar.prototype = new Toolbar();
@@ -48,15 +45,6 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
 
                     Navbar.prototype.init = function () {
                         Toolbar.prototype.init.call(this);
-
-                        $(window).bind('showLastBuild', function(e, id) {
-                            $('#lastBuild').attr('href', Routing.generate('behatviewer.historyentry', {'id': id}));
-                            $('#lastBuild').show();
-                        });
-
-                        $(window).bind('hideLastBuild', function() {
-                            $('#lastBuild').hide();
-                        });
 
                         return this;
                     }
@@ -67,12 +55,6 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
 
                     Navbar.prototype.setActiveItem = function (item) {
                         $(item).parent().addClass('active');
-                    };
-
-                    Navbar.prototype.menuAction = function (elem, e) {
-                        $('.active', this.master).removeClass('active');
-
-                        Toolbar.prototype.menuAction.call(this, elem, e);
                     };
 
                     Navbar.prototype.setTitle = function(title) {
@@ -139,6 +121,17 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                         });
 
                         this.toolbar.refresh();
+                    };
+
+                    BehatViewer.prototype.complete = function () {
+                        Controller.prototype.complete.call(this);
+
+                        $('[data-rel="notification"]').each(function() {
+                            app.notifier.notify($(this).html(), $(this).attr('data-type'));
+                            $(this).remove();
+                        });
+
+                        return this;
                     };
 
                     app = new BehatViewer('#application').init();

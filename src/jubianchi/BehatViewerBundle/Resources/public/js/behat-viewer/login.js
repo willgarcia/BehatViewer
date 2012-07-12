@@ -10,8 +10,6 @@ var LoginController;
             NavigationController.call(this, master);
 
             this.cls = 'LoginController';
-
-            this.actions = ['submit'];
         };
 
         LoginController.prototype = new NavigationController();
@@ -21,17 +19,6 @@ var LoginController;
             NavigationController.prototype.init.call(this);
 
             return this;
-        };
-
-        LoginController.prototype.submitAction = function (elem, e) {
-            e.preventDefault();
-
-            this.navigate(
-                $(elem).parents('form').attr('action'),
-                'html',
-                'POST',
-                $(elem).parents('form').serialize()
-            );
         };
     }
   );

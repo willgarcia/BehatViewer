@@ -10,35 +10,40 @@
 
             <div class="nav-collapse">
                 <ul class="nav">
-                    <li><a data-action="menu" href="{{ path('behatviewer.homepage') }}">Home</a></li>
-                    <li><a data-action="menu" href="{{ path('behatviewer.history') }}">History</a></li>
-                    <li><a data-action="menu" href="{{ path('behatviewer.stats') }}">Stats</a></li>
-                    <li><a data-action="menu" href="{{ path('behatviewer.definitions') }}">Definitions</a></li>
+                    <li><a href="{{ path('behatviewer.homepage') }}">Home</a></li>
+                    <li><a href="{{ path('behatviewer.history') }}">History</a></li>
+                    <li><a href="{{ path('behatviewer.stats') }}">Stats</a></li>
+                    <li><a href="{{ path('behatviewer.definitions') }}">Definitions</a></li>
                     {% if is_granted('ROLE_USER') %}
-                        <li><a data-action="menu" href="{{ path('behatviewer.config') }}">Config</a></li>
+                        <li><a href="{{ path('behatviewer.config') }}">Config</a></li>
                     {% endif %}
-                    <li><a data-action="menu" href="{{ path('behatviewer.help') }}">Help</a></li>
+                    <li><a href="{{ path('behatviewer.help') }}">Help</a></li>
                     <li>
                         <div id="loader"></div>
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    <li>
-                        <button data-action="menu" id="lastBuild" href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary"{% if not lastbuild or lastbuild == build.id %} style="display: none"{% endif %}>Last build &raquo;</button>
-                    </li>
-                    <li class="dropdown" {% if not is_granted('ROLE_USER') %}style="display: none"{% endif %} data-rel="usermenu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            Logged in as <span data-rel="username">{% if app.user %}{{ app.user.username }}{% endif %}</span>
-                            <img data-rel="avatar" data-size="24" class="gravatar" src="{% if app.user %}{{ app.user.email|gravatar(24)}}{% endif %}" />
-                        </a>
-                        <ul class="dropdown-menu">
-                          <li><a data-action="menu" href="{{ path('behatviewer.profile') }}">Profile</a></li>
-                          <li><a href="{{ path('behatviewer.logout') }}">Logout</a></li>
-                        </ul>
-                    </li>
-                    <li data-rel="login" {% if is_granted('ROLE_USER') %}style="display: none"{% endif %}>
-                        <a data-action="menu" href="{{ path('behatviewer.login') }}">Log in</a>
-                    </li>
+                    {% if lastbuild and lastbuild != build.id %}
+                        <li>
+                            <button href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary">Last build &raquo;</button>
+                        </li>
+                    {% endif %}
+                    {% if is_granted('ROLE_USER') %}
+                        <li class="dropdown" data-rel="usermenu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                Logged in as <span data-rel="username">{% if app.user %}{{ app.user.username }}{% endif %}</span>
+                                <img data-rel="avatar" data-size="24" class="gravatar" src="{% if app.user %}{{ app.user.email|gravatar(24)}}{% endif %}" />
+                            </a>
+                            <ul class="dropdown-menu">
+                              <li><a href="{{ path('behatviewer.profile') }}">Profile</a></li>
+                              <li><a href="{{ path('behatviewer.logout') }}">Logout</a></li>
+                            </ul>
+                        </li>
+                    {% else %}
+                        <li data-rel="login">
+                            <a href="{{ path('behatviewer.login') }}">Log in</a>
+                        </li>
+                    {% endif %}
                 </ul>
             </div>
         </div>

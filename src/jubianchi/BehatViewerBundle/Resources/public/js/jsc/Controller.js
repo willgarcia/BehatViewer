@@ -26,6 +26,7 @@ var Controller;
 
         var complete = function (e) { self.complete.call(self); $(window).unbind(e); };
         $(window).bind('loaded', complete);
+        $(document).bind('ready', complete);
 
 		return this;
 	};

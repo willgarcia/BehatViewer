@@ -10,7 +10,7 @@ abstract class Base
 
         foreach ($values as $field => $value) {
             $setter = 'set' . ucfirst($field);
-            $this->$setter($value);
+			$instance->$setter($value);
         }
 
         return $instance;

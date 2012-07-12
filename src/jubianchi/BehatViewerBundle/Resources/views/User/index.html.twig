@@ -13,14 +13,14 @@
                 {% endif %}
 
                 <div class="control-group">
-                    <label class="control-label" for="username">Username:</label>
+                    <label class="control-label" for="username">Username</label>
                     <div class="controls">
                         <input type="text" id="username" name="_username" value="{{ last_username }}" class="input-xlarge" />
                     </div>
                 </div>
 
                 <div class="control-group">
-                    <label class="control-label" for="password">Password:</label>
+                    <label class="control-label" for="password">Password</label>
                     <div class="controls">
                         <input type="password" id="password" name="_password" class="input-xlarge" />
                     </div>
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="submit" class="btn btn-primary" value="Log in" data-action="submit" />
+                <input type="submit" class="btn btn-primary" value="Log in" />
             </div>
         </div>
     </div>
@@ -42,14 +42,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                ['behat-viewer/login'],
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            ['behat-viewer/login'],
+            function() {
+                $(function() {
                     app.controller.current(new LoginController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+                });
+            }
+        );
+    </script>
 {% endblock %}

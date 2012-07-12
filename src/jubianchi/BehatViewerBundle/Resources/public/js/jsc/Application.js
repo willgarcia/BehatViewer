@@ -21,12 +21,6 @@ var Application;
 			Application.prototype.init = function () {
 				Controller.prototype.init.call(this);
 
-				if (document.location.hash.indexOf('!') !== -1) {
-					this.controller.navigate(document.location.hash.substring(2));
-				} else {
-					this.controller.navigate(this.home);
-				}
-
                 return this;
 			};
 		}

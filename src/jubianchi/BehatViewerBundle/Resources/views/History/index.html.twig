@@ -11,6 +11,10 @@
             </h1>
 
             {% if builds|count > 0 %}
+                {% if is_granted('ROLE_USER') %}
+                    <form method="post" action="{{ path('behatviewer.historydeletesel') }}">
+                {% endif %}
+
                 <table id="definitions" class="table table-bordered table-striped tablesorter {sortlist: [[1,1]]}">
                     <thead>
                     <tr>
@@ -34,17 +38,20 @@
 
                 {% if is_granted('ROLE_USER') %}
                     <div class="btn-group">
-                        <a href="{{ path('behatviewer.historydeletesel') }}" class="btn btn-danger" data-action="delselected">Delete selected</a>
+                        <input type="submit" class="btn btn-danger" value="Delete selected"/>
                     </div>
                 {% endif %}
 
+                {% if is_granted('ROLE_USER') %}
+                    </form>
+                {% endif %}
                 {% if pages > 1 %}
                     <div id="content-nav" class="pagination pagination-centered menu">
                         <ul>
 
                             <li class="prev{% if current == 1 %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current - 1}) }}" title="Previous">«</a></li>
                             {% for i in range(1, pages) %}
-                                <li{% if i == current %} class="active"{% endif %}><a data-action="navig" href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
+                                <li{% if i == current %} class="active"{% endif %}><a href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
                             {% endfor %}
                             <li class="next{% if current == pages %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current + 1}) }}" title="Next">»</a></li>
                         </ul>
@@ -64,14 +71,14 @@
 {% endblock %}
 
 {% block javascript %}
-    {% if xhr %}
-        <script type="text/javascript">
-            JSC.require(
-                ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/build'],
-                function() {
+    <script type="text/javascript">
+        JSC.require(
+            ['jquery.metadata', 'jquery.tablesorter', 'behat-viewer/build'],
+            function() {
+              $(function() {
                   app.controller.current(new BuildController('#container'));
-                }
-            );
-        </script>
-    {% endif %}
+              });
+            }
+        );
+    </script>
 {% endblock %}

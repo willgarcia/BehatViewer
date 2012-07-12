@@ -2,11 +2,11 @@
 
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Behat\Mink\Exception,
-    \Behat\MinkExtension\Context\MinkContext,
-    \Behat\Mink\Exception\ExpectationException,
-    \jubianchi\BehatViewerBundle\Features\Context\BrowserContext,
-    \Behat\Behat\Context\Step;
+use Behat\Mink\Exception,
+    Behat\MinkExtension\Context\MinkContext,
+    Behat\Mink\Exception\ExpectationException,
+    jubianchi\BehatViewerBundle\Features\Context\BrowserContext,
+    Behat\Behat\Context\Step;
 
 class BootstrapMessageContext extends BehatViewerContext
 {
@@ -31,7 +31,10 @@ class BootstrapMessageContext extends BehatViewerContext
         $alerts = $this->getMinkContext()->getSession()->getPage()->findAll('css', '.alert');
 
         if (count($alerts) < 1) {
-            throw new Exception\ExpectationException('No alert message found');
+            throw new Exception\ExpectationException(
+				'No alert message found',
+				$this->getMinkContext()->getSession()
+			);
         }
 
         foreach ($alerts as $alert) {

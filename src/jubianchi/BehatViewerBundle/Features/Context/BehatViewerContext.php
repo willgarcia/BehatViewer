@@ -1,9 +1,9 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Features\Context;
 
-use \Behat\Behat\Context\BehatContext,
-    \Behat\Symfony2Extension\Context\KernelAwareInterface,
-    \Symfony\Component\HttpKernel\KernelInterface;
+use Behat\Behat\Context\BehatContext,
+    Behat\Symfony2Extension\Context\KernelAwareInterface,
+    Symfony\Component\HttpKernel\KernelInterface;
 
 class BehatViewerContext extends BehatContext implements KernelAwareInterface
 {

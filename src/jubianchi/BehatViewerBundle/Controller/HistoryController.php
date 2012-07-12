@@ -26,20 +26,24 @@ class HistoryController extends BehatViewerController
      */
     public function indexAction($page = 1)
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $builds = array();
         $project = $this->getSession()->getproject();
-        $pages = ceil(sizeof($this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(array())) / 10);
 
-        $page = $page - 1;
-        $page = $page < 0 ? 0 : $page;
-        $page = $page >= $pages ? $pages : $page;
-
+		$builds = array();
+		$pages = 1;
         if ($project !== null) {
-            $builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
+			$total = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
+				array(
+					'project' => $project->getId()
+				)
+			);
+			$pages = ceil(sizeof($total) / 10);
+
+			$page = $page < 1 ? 1 : $page;
+			$page = $page > $pages ? $pages : $page;
+
+			$builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
                 array(
                     'project' => $project->getId()
                 ),
@@ -47,13 +51,13 @@ class HistoryController extends BehatViewerController
                     'id' => 'DESC'
                 ),
                 10,
-                10 * $page
+                10 * (($page - 1) < 0 ? 0 : ($page - 1))
             );
         }
 
         return $this->getResponse(array(
             'builds' => $builds,
-            'current' => $page + 1,
+            'current' => $page,
             'pages' => $pages
         ));
     }
@@ -68,11 +72,9 @@ class HistoryController extends BehatViewerController
      */
     public function entryAction(Entity\Build $build = null)
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        if ($build !== null) {
+		if ($build !== null) {
             $this->getSession()->setBuild($build);
         }
 
@@ -81,7 +83,7 @@ class HistoryController extends BehatViewerController
             'features' => null
         ));
 
-        if ($this->get('session')->get('listview', false)) {
+        if ($this->getSession()->get('listview', false)) {
             $template = 'BehatViewerBundle:Default:list.html.twig';
         } else {
             $template = 'BehatViewerBundle:Default:index.html.twig';
@@ -114,28 +116,13 @@ class HistoryController extends BehatViewerController
      */
     public function deleteAction(Entity\Build $build)
     {
-        if ($response = $this->beforeAction()) {
-            return $response;
-        }
+		$this->beforeAction();
 
-        $manager = $this->getDoctrine()->getEntityManager();
-
-        $project = $this->getSession()->getproject();
-        $pages = ceil(sizeof($this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(array())) / 10);
-
+		$manager = $this->getDoctrine()->getEntityManager();
         $manager->remove($build);
         $manager->flush();
 
-        $builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findByProject($project->getId());
-
-        if ($this->getRequest()->isXmlHttpRequest()) {
-            return new \Symfony\Component\HttpFoundation\Response();
-        } else {
-            return $this->getResponse(array(
-                'builds' => $builds,
-                'pages' => $pages
-            ));
-        }
+		return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     /**
@@ -148,7 +135,9 @@ class HistoryController extends BehatViewerController
      */
     public function deleteSelectedAction()
     {
-        $manager = $this->getDoctrine()->getEntityManager();
+		$this->beforeAction();
+
+		$manager = $this->getDoctrine()->getEntityManager();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Build');
 
         foreach ($this->getRequest()->get('delete') as $id) {
@@ -157,6 +146,6 @@ class HistoryController extends BehatViewerController
             $manager->flush();
         }
 
-        return $this->indexAction();
+		return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 }

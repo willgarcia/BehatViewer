@@ -1,8 +1,8 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Extension\Twig;
 
-use \Symfony\Component\DependencyInjection\ContainerAwareInterface,
-    \Symfony\Component\DependencyInjection\ContainerInterface;;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface,
+    Symfony\Component\DependencyInjection\ContainerInterface;;
 
 /**
  *

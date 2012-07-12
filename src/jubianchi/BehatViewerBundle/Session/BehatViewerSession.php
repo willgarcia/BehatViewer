@@ -2,8 +2,8 @@
 
 namespace jubianchi\BehatViewerBundle\Session;
 
-use \Symfony\Component\DependencyInjection\ContainerAware,
-    \jubianchi\BehatViewerBundle\Entity;
+use Symfony\Component\DependencyInjection\ContainerAware,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  *
@@ -73,4 +73,14 @@ class BehatViewerSession extends ContainerAware
 
         return $this;
     }
+
+	/**
+	 * @param string $name
+	 * @param mixed $default
+	 *
+	 * @return mixed
+	 */
+	public function get($name, $default = null) {
+		return $this->container->get('session')->get($name, $default);
+	}
 }
