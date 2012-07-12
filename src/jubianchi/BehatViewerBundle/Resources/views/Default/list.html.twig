@@ -13,7 +13,7 @@
     {% endif %}
 
     {% if build %}
-        <small>(#{{ build.id }} Built on {{ build.date|date("Y-m-d \\a\\t H:i:s")}})</small>
+        <small>(#{{ build.id }} Built <span rel="moment">{{ build.date|date("Y-m-d \\a\\t H:i:s")}}</span>)</small>
     {% endif %}
 
     {% include 'BehatViewerBundle::Default/switcher.html.twig' %}

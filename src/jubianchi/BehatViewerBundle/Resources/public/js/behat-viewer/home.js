@@ -4,7 +4,7 @@ var HomeController;
   "use strict";
 
   JSC.require(
-    ['jsc/NavigationController'],
+    ['jsc/NavigationController', 'moment'],
     function () {
         HomeController = function (master) {
             NavigationController.call(this, master);
@@ -34,6 +34,15 @@ var HomeController;
 
             app.controller.navigationAction(elem, e)
         };
+
+        HomeController.prototype.complete = function() {
+            NavigationController.prototype.complete.call(this);
+
+            $('[rel="moment"]').each(function() {
+                var text = $(this).text().trim();
+                $(this).html(moment(text, "YYYY-MM-DD h:mm:ss").fromNow());
+            });
+        }
     }
   );
 }(window.jQuery, window.JSC));

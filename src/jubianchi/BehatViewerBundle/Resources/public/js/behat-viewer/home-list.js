@@ -21,7 +21,9 @@ var HomeListController;
           return this;
         };
 
-        HomeController.prototype.complete = function () {
+        HomeListController.prototype.complete = function () {
+            HomeController.prototype.complete.call(this);
+
             if ($.fn.tablesorter) {
                 $('.tablesorter').tablesorter({
                     textExtraction:{
