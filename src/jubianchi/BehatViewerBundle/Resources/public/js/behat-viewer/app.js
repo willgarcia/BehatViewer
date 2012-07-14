@@ -131,6 +131,10 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                             $(this).remove();
                         });
 
+                        $('#last-build').click(function() {
+                            document.location.href = $(this).attr('href');
+                        })
+
                         return this;
                     };
 

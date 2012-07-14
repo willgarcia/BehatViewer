@@ -1,7 +1,7 @@
 @project
 Feature: Definitions
 
-    @reset @javascript @fixture:single-project.sql
+    @reset @fixture:single-project.sql
     Scenario: Single project and no definition
         Given I am on the homepage
           And I follow "Definitions"

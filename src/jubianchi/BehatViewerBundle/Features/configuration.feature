@@ -1,7 +1,7 @@
 @project
 Feature: Configuration
 
-    @reset @javascript
+    @reset
     Scenario: First project
         Given I am a logged in user
           And I am on the homepage

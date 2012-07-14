@@ -1,7 +1,7 @@
 @navigation
 Feature: Main menu
 
-    @reset @javascript
+    @reset
     Scenario: Main menu links
         Given I am on the homepage
          Then I should see "Behat Viewer"
@@ -11,7 +11,6 @@ Feature: Main menu
           And I should not see "Config"
           And I should see "Help"
 
-    @javascript
     Scenario Outline: Navigation without data
         Given I am on the homepage
           And I follow "<link>"

@@ -1,7 +1,7 @@
 @user
 Feature: Login
 
-    @reset @javascript @fixture:user.sql
+    @reset @fixture:user.sql
     Scenario: Login with bad credentials
         Given I am on the homepage
           And I follow "Log in"
@@ -15,7 +15,8 @@ Feature: Login
 
     @javascript
     Scenario: Login with existing credentials
-        Given I am on the homepage
+        Given I am not logged in
+          And I am on the homepage
           And I follow "Log in"
           And I fill in "username" with "behat"
           And I fill in "password" with "behat"
@@ -30,6 +31,7 @@ Feature: Login
     @javascript
     Scenario: Logout
         Given I am on the homepage
+          And I follow "Logged in as behat"
           And I follow "Logout"
          Then I should be on "/login"
 
@@ -37,5 +39,6 @@ Feature: Login
     Scenario: Logout
         Given I am a logged in user
           And I am on the homepage
+          And I follow "Logged in as behat"
           And I follow "Logout"
          Then I should be on "/"

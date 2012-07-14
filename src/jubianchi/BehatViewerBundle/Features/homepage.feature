@@ -1,7 +1,7 @@
 @build @feature @project
 Feature: Homepage
 
-    @reset @javascript @fixture:single-project.sql
+    @reset @fixture:single-project.sql
     Scenario: Single project and no build
         Given I am on the homepage
          Then I should see "Behat Viewer [Foo Bar]"
@@ -9,7 +9,7 @@ Feature: Homepage
           And I should see "No feature"
           And I should see "This project has not been built yet. Click on the build button to launch test suite."
 
-    @javascript @fixture @fixture:single-build.sql
+    @fixture @fixture:single-build.sql
     Scenario: Homepage with some features
         Given I am on the homepage
          Then I should see "Features for Foo Bar"

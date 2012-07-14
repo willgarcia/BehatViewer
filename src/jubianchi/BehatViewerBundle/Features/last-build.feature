@@ -1,7 +1,7 @@
 @build
 Feature: Last build notification
 
-    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
+    @reset @fixture:single-project.sql @fixture:single-build.sql
     Scenario: Last build notification
         Given I am on the homepage
          Then I should not see "Last build"

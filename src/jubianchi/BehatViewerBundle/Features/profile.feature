@@ -1,7 +1,7 @@
 @user
 Feature: Profile
 
-    @reset @javascript
+    @reset
     Scenario: Login with bad credentials
         Given I am a logged in user
           And I am on the homepage

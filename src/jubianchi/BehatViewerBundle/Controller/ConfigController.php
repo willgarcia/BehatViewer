@@ -24,6 +24,7 @@ class ConfigController extends BehatViewerController
     {
         $request = $this->getRequest();
         $project = $this->getSession()->getProject();
+        $success = false;
 
         if ($project === null) {
             $project = new \jubianchi\BehatViewerBundle\Entity\Project();
@@ -43,11 +44,13 @@ class ConfigController extends BehatViewerController
             }
 
             $this->getSession()->setProject($project);
+            $success = true;
         }
 
         return $this->getResponse(array(
             'project' => $project,
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'success' => $success
         ));
     }
 }

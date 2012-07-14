@@ -1,7 +1,7 @@
 @build
 Feature: History
 
-    @reset @javascript @fixture:single-project.sql
+    @reset @fixture:single-project.sql
     Scenario: Single project and no build
         Given I am on the homepage
           And I follow "History"
@@ -41,7 +41,7 @@ Feature: History
             | 1 | 43 years ago (1970-01-01 00:00:00) | 87.5%           |          | Passed: 7/8 (87.5%) Failed: 1/8 (12.5%) | Details |
           And I should not see a "Delete selected" button
 
-    @javascript
+    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql @fixture:second-build.sql
     Scenario: Builds list as a logged in user
         Given I am a logged in user
           And I am on the homepage
@@ -56,7 +56,7 @@ Feature: History
             |  | 1 | 43 years ago (1970-01-01 00:00:00) | 87.5%           |          | Passed: 7/8 (87.5%) Failed: 1/8 (12.5%) | DetailsDelete |
           And I should see a "Delete selected" button
 
-    @javascript @reset @fixture:single-project.sql @fixture:many-builds.sql
+    @reset @fixture:single-project.sql @fixture:many-builds.sql
     Scenario: Pagination
         Given I am on the homepage
           And I follow "History"

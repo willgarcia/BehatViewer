@@ -1,7 +1,10 @@
 {% extends 'BehatViewerBundle::layout.html.twig' %}
 
+
 {% block notification %}
-<div data-rel="notification" data-type="success">Settings were successfully saved.</div>
+    {% if success %}
+        <div class="alert alert-block alert-success" data-rel="notification" data-type="success">Settings were successfully saved.</div>
+    {% endif %}
 {% endblock %}
 
 {% block container %}

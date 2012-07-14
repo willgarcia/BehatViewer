@@ -25,7 +25,7 @@
                 <ul class="nav pull-right">
                     {% if lastbuild and lastbuild != build.id %}
                         <li>
-                            <button href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary">Last build &raquo;</button>
+                            <button id="last-build" href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary">Last build &raquo;</button>
                         </li>
                     {% endif %}
                     {% if is_granted('ROLE_USER') %}
