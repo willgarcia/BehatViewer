@@ -28,3 +28,4 @@ app/config/parameters.yml
 # BehatViewer
 behat.yml
 behat-viewer.json
+build.sh

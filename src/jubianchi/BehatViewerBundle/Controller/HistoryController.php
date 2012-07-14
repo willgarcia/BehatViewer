@@ -26,24 +26,24 @@ class HistoryController extends BehatViewerController
      */
     public function indexAction($page = 1)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
         $project = $this->getSession()->getproject();
 
-		$builds = array();
-		$pages = 1;
+        $builds = array();
+        $pages = 1;
         if ($project !== null) {
-			$total = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
-				array(
-					'project' => $project->getId()
-				)
-			);
-			$pages = ceil(sizeof($total) / 10);
+            $total = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
+                array(
+                    'project' => $project->getId()
+                )
+            );
+            $pages = ceil(sizeof($total) / 10);
 
-			$page = $page < 1 ? 1 : $page;
-			$page = $page > $pages ? $pages : $page;
+            $page = $page < 1 ? 1 : $page;
+            $page = $page > $pages ? $pages : $page;
 
-			$builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
+            $builds = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
                 array(
                     'project' => $project->getId()
                 ),
@@ -72,9 +72,9 @@ class HistoryController extends BehatViewerController
      */
     public function entryAction(Entity\Build $build = null)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		if ($build !== null) {
+        if ($build !== null) {
             $this->getSession()->setBuild($build);
         }
 
@@ -116,13 +116,13 @@ class HistoryController extends BehatViewerController
      */
     public function deleteAction(Entity\Build $build)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$manager = $this->getDoctrine()->getEntityManager();
+        $manager = $this->getDoctrine()->getEntityManager();
         $manager->remove($build);
         $manager->flush();
 
-		return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 
     /**
@@ -135,9 +135,9 @@ class HistoryController extends BehatViewerController
      */
     public function deleteSelectedAction()
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$manager = $this->getDoctrine()->getEntityManager();
+        $manager = $this->getDoctrine()->getEntityManager();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Build');
 
         foreach ($this->getRequest()->get('delete') as $id) {
@@ -146,6 +146,6 @@ class HistoryController extends BehatViewerController
             $manager->flush();
         }
 
-		return $this->redirect($this->getRequest()->headers->get('referer'));
+        return $this->redirect($this->getRequest()->headers->get('referer'));
     }
 }

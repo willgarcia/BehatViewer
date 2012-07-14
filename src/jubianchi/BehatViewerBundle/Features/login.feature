@@ -1,7 +1,7 @@
 @user
 Feature: Login
 
-    @reset
+    @reset @javascript @fixture:user.sql
     Scenario: Login with bad credentials
         Given I am on the homepage
           And I follow "Log in"
@@ -13,21 +13,29 @@ Feature: Login
           And I press "Log in"
          Then I should see "Bad credentials"
 
-    @fixture @fixture:user.sql
+    @javascript
     Scenario: Login with existing credentials
         Given I am on the homepage
           And I follow "Log in"
-         Then I fill in "username" with "behat"
+          And I fill in "username" with "behat"
           And I fill in "password" with "behat"
           And I press "Log in"
-         Then I should not see "Bad credentials"
-          And I should be on "/config/"
+         Then I should be on "/config/"
           And I should see "Logged in as behat"
-          And I should see "Profile"
+
+        Given I follow "Logged in as behat"
+         Then I should see "Profile"
           And I should see "Logout"
 
+    @javascript
     Scenario: Logout
         Given I am on the homepage
           And I follow "Logout"
+         Then I should be on "/login"
+
+    @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
+    Scenario: Logout
+        Given I am a logged in user
+          And I am on the homepage
+          And I follow "Logout"
          Then I should be on "/"
-          And I should see "Login"

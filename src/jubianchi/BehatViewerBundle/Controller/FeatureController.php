@@ -21,7 +21,7 @@ class FeatureController extends BehatViewerController
      */
     public function indexAction(Entity\Feature $feature)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
         return $this->getResponse(array(
             'feature' => $feature,
@@ -38,7 +38,7 @@ class FeatureController extends BehatViewerController
      */
     public function sourceAction(Entity\Feature $feature)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
         return $this->getResponse(array(
             'feature' => $feature,

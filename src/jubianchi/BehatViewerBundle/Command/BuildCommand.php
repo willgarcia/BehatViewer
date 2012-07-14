@@ -70,7 +70,7 @@ class BuildCommand extends ContainerAwareCommand
 
         $process = new \jubianchi\BehatViewerBundle\Process\UnbefferedProcess('sh -e build.sh', $project->getRootPath());
         $process->setTimeout(600);
-        $process->run(function ($type, $buffer) use($output) {
+        $process->run(function ($type, $buffer) use ($output) {
             if ('err' === $type) {
                 $output->writeln('<error>' . $buffer . '</error>');
             } else {

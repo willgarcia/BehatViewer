@@ -21,9 +21,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexAction()
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		if ($this->getSession()->get('listview', false)) {
+        if ($this->getSession()->get('listview', false)) {
             return $this->forward('BehatViewerBundle:History:entrylist', array('build' => $this->getSession()->getBuild()));
         } else {
             return $this->forward('BehatViewerBundle:History:entry', array('build' => $this->getSession()->getBuild()));
@@ -58,9 +58,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexlistAction()
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$this->get('session')->set('listview', true);
+        $this->get('session')->set('listview', true);
 
         return $this->forward(
             'BehatViewerBundle:History:entrylist',
@@ -78,9 +78,9 @@ class DefaultController extends BehatViewerController
      */
     public function indexthumbAction()
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$this->get('session')->set('listview', false);
+        $this->get('session')->set('listview', false);
 
         return $this->forward(
             'BehatViewerBundle:Default:index',

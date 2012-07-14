@@ -4,7 +4,7 @@ Feature: Feature page
     @reset @javascript @fixture:single-project.sql @fixture:single-build.sql
     Scenario: Navigation in features details
         Given I am on the homepage
-          And I follow the 1st "Details" link
+          And I follow the 2nd "Details" link
          Then I should see "Passed (#1 Built 43 years ago on 1970-01-01 00:00:00)"
           And I should see:
             """

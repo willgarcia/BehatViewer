@@ -23,9 +23,9 @@ class TagController extends BehatViewerController
      */
     public function indexAction(Entity\Tag $tag)
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$build = $this->getSession()->getBuild();
+        $build = $this->getSession()->getBuild();
 
         $features = $this->getDoctrine()->getRepository('BehatViewerBundle:Feature')->findByTagAndBuild($tag, $build);
         $scenarios = $this->getDoctrine()->getRepository('BehatViewerBundle:Scenario')->findByTagAndBuild($tag, $build);

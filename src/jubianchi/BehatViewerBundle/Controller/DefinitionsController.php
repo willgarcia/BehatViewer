@@ -19,9 +19,9 @@ class DefinitionsController extends BehatViewerController
      */
     public function indexAction()
     {
-		$this->beforeAction();
+        $this->beforeAction();
 
-		$definitions = array();
+        $definitions = array();
         $contexts = array();
         $project = $this->getSession()->getProject();
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Definition');

@@ -13,7 +13,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
 
 class UserAddCommand extends ContainerAwareCommand
 {
-	protected function configure()
+    protected function configure()
     {
         $this->setName('behat-viewer:user:add');
     }
@@ -38,7 +38,7 @@ class UserAddCommand extends ContainerAwareCommand
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      */
-	protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output)
     {
         $self = $this;
         $user = new Entity\User();
@@ -59,7 +59,7 @@ class UserAddCommand extends ContainerAwareCommand
             $password = $this->getHelper('dialog')->askAndValidate(
                 $output,
                 'Please <info>confirm</info> the password: ',
-                function($value) use($password, &$error, $output, $self) {
+                function($value) use ($password, &$error, $output, $self) {
                     if ($value !== $password) {
                         $error = new \Exception('Passwords are not identical');
 

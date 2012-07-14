@@ -45,19 +45,10 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
-     * @AfterScenario
-     */
-    public function closeBrowser()
-    {
-        //$this->getSession()->stop();
-    }
-
-    /**
      * @Given /^I (?:do not|don't) follow (?:|the )(?:redirects?|redirections?)$/
      */
     public function iDoNotFollowRedirects()
     {
-        $this->canIntercept();
         $client = $this->getSession()->getDriver()->getClient();
         $client->followRedirects(false);
     }
@@ -67,7 +58,6 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
      */
     public function iFollowRedirects()
     {
-        $this->canIntercept();
         $client = $this->getSession()->getDriver()->getClient();
         $client->followRedirects(true);
         $client->followRedirect();
@@ -113,6 +103,25 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     public function iShouldSee(PyStringNode $string)
     {
         $this->assertPageContainsText((string) $string);
+    }
+
+    /**
+     * @Then /^I should see a "(?P<button>[^"]*)" button$/
+     */
+    public function iShouldSeeButton($button)
+    {
+        $this->getSession()->getPage()->findButton($button);
+    }
+
+    /**
+     * @Then /^I should not see a "(?P<button>[^"]*)" button$/
+     */
+    public function iShouldNotSeeButton($button)
+    {
+        try {
+            $this->getSession()->getPage()->findButton($button);
+            throw new ExpectationException('Button ' . $button . 'was found on page', $this->getSession());
+        } catch (\Exception $e) {}
     }
 
     /**

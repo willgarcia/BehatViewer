@@ -32,9 +32,9 @@ class BootstrapMessageContext extends BehatViewerContext
 
         if (count($alerts) < 1) {
             throw new Exception\ExpectationException(
-				'No alert message found',
-				$this->getMinkContext()->getSession()
-			);
+                'No alert message found',
+                $this->getMinkContext()->getSession()
+            );
         }
 
         foreach ($alerts as $alert) {

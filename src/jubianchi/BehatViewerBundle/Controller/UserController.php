@@ -17,9 +17,9 @@ class UserController extends BehatViewerController
      */
     public function indexAction()
     {
-		if(true === $this->get('security.context')->isGranted('ROLE_USER')) {
-			return $this->forward('BehatViewerBundle:User:profile');
-		}
+        if (true === $this->get('security.context')->isGranted('ROLE_USER')) {
+            return $this->redirect($this->generateUrl('behatviewer.profile'));
+        }
 
         $request = $this->getRequest();
         $session = $request->getSession();

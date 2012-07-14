@@ -11,26 +11,19 @@ class UserContext extends BehatViewerContext
      */
     public function iAmALoggedInUser()
     {
-        $driver = $this->getMainContext()->getSubcontext('browser')->getSession()->getDriver();
+        /** @var $browser \jubianchi\BehatViewerBundle\Features\Context\BrowserContext */
+        $browser = $this->getMainContext()->getSubcontext('browser');
 
-        if ($driver instanceof Behat\Mink\Driver\GoutteDriver) {
+        try {
+            $browser->clickLink('Log in');
+
             return array(
                 new Step\Given('I load the "user.sql" fixture'),
-                new Step\Given('I am on "/login"'),
-                new Step\Then('I fill in "username" with "behat"'),
-                new Step\Then('I fill in "password" with "behat"'),
-                new Step\Then('I press "Log in"')
-            );
-        } else {
-            return array(
-                new Step\Given('I load the "user.sql" fixture'),
-                new Step\Given('I am on the homepage'),
-                new Step\Given('I follow "Log in"'),
                 new Step\Then('I fill in "username" with "behat"'),
                 new Step\Then('I fill in "password" with "behat"'),
                 new Step\Then('I press "Log in"'),
-                new Step\Then('I wait 1 second')
+                new Step\Then('I should see "Logged in as behat"')
             );
-        }
+        } catch (\Exception $e) {}
     }
 }
