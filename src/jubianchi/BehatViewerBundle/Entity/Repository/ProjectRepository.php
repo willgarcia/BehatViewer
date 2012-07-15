@@ -2,8 +2,6 @@
 
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
 
-use Doctrine\ORM\EntityRepository;
-
 /**
  * ProjectRepository
  *

@@ -180,9 +180,6 @@ a [class^="icon-"]:before {
     color: #333333;
 }
 
-.btn-icon { font-size: 20px; }
-.btn-icon span { font-size: 15px; }
-
 .dropdown-menu { font-size: 13px; }
 
 form label[for]::selection, label.checkbox::selection {

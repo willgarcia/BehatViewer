@@ -1,0 +1,32 @@
+{% extends 'BehatViewerBundle::layout.form.html.twig' %}
+
+{% block notification %}
+    {% if success %}
+        <div class="alert alert-block alert-success" data-rel="notification" data-type="success">User profile was successfully saved.</div>
+    {% endif %}
+{% endblock %}
+
+{% block width %}30%{% endblock %}
+{% block action %}{{ path('behatviewer.useredit', {'id': user.id}) }}{% endblock %}
+
+{%block title %}
+    <img data-rel="avatar" data-size="48" class="gravatar" src="{{ user.email|gravatar(48)}}" />
+    Edit user <span data-rel="username">{{ user.username }}</span>
+{% endblock %}
+
+{% block extrabuttons %}
+    <a class="pull-left btn" href="{{ path('behatviewer.users') }}">&laquo; Back to users list</a>
+{% endblock %}
+
+{% block javascript %}
+    <script type="text/javascript">
+        JSC.require(
+            ['behat-viewer/profile'],
+            function() {
+                $(function() {
+                    app.controller.current(new ProfileController('#container'));
+                });
+            }
+        );
+    </script>
+{% endblock %}

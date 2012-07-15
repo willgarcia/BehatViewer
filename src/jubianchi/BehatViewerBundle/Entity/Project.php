@@ -3,7 +3,7 @@
 namespace jubianchi\BehatViewerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
-jubianchi\BehatViewerWorkerBundle\Entity\Job;
+    Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * jubianchi\BehatViewerBundle\Entity\Project
@@ -25,6 +25,7 @@ class Project extends Base
     /**
      * @var string $name
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="name", type="string", length=50)
      */
     private $name;
@@ -32,6 +33,7 @@ class Project extends Base
     /**
      * @var string $slug
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="slug", type="string", length=50)
      */
     private $slug;
@@ -39,6 +41,8 @@ class Project extends Base
     /**
      * @var string $base_url
      *
+     * @Assert\NotBlank()
+     * @Assert\Url()
      * @ORM\Column(name="base_url", type="string", length=255)
      */
     private $base_url;
@@ -46,6 +50,7 @@ class Project extends Base
     /**
      * @var string $output_path
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="output_path", type="string", length=255)
      */
     private $output_path;
@@ -53,6 +58,7 @@ class Project extends Base
     /**
      * @var string $root_path
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="root_path", type="string", length=255)
      */
     private $root_path;
@@ -60,6 +66,7 @@ class Project extends Base
     /**
      * @var string $test_command
      *
+     * @Assert\NotBlank()
      * @ORM\Column(name="test_command", type="text", length=255)
      */
     private $test_command;

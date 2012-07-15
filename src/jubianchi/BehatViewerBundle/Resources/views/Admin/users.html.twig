@@ -1,0 +1,62 @@
+{% extends 'BehatViewerBundle::layout.table.html.twig' %}
+
+{% if not items and build %}
+    {% set items = build.features %}
+{% endif %}
+
+{% block title %}
+    <h1 class="page-header">
+        Manage users
+
+        <div class="pull-right">
+            <div class="btn-group">
+                <a class="btn" href="{{ path('behatviewer.usercreate') }}">
+                    <i class="icon-plus"></i> <span>Add user</span>
+                </a>
+            </div>
+        </div>
+    </h1>
+{% endblock %}
+
+{% block sort %}{sortlist: [[0,0]]}{% endblock %}
+
+{% block thead %}
+    <tr>
+        <th>Username</th>
+        <th>Email</th>
+        <th>Active</th>
+        <th class="{sorter: false}">Action</th>
+    </tr>
+{% endblock %}
+
+{% block tbody %}
+    {% for user in items %}
+        <tr>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>
+                {{ user.isActive ? 'Yes' : 'No' }}
+            </td>
+            <td>
+                <div class="btn-group" id="toolbar">
+                    <a href="{{ path('behatviewer.useredit', {"id": user.id}) }}" class="btn">Edit</a>
+                    {% if user.id != app.user.id %}
+                        {% if user.isActive %}
+                            <a href="{{ path('behatviewer.userdisable', {"id": user.id}) }}" class="btn btn-danger">Disable</a>
+                        {% else %}
+                            <a href="{{ path('behatviewer.userenable', {"id": user.id}) }}" class="btn btn-success">Enable</a>
+                        {% endif %}
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}
+
+{% block alert %}
+    <div class="alert alert-block alert-info">
+        <h4 class="alert-heading">No feature</h4>
+
+        <p>This project has not been built yet. Click on the build button to launch test suite.</p>
+    </div>
+{% endblock %}

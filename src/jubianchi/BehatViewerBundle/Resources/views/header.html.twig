@@ -14,9 +14,6 @@
                     <li><a href="{{ path('behatviewer.history') }}">History</a></li>
                     <li><a href="{{ path('behatviewer.stats') }}">Stats</a></li>
                     <li><a href="{{ path('behatviewer.definitions') }}">Definitions</a></li>
-                    {% if is_granted('ROLE_USER') %}
-                        <li><a href="{{ path('behatviewer.config') }}">Config</a></li>
-                    {% endif %}
                     <li><a href="{{ path('behatviewer.help') }}">Help</a></li>
                     <li>
                         <div id="loader"></div>
@@ -35,8 +32,13 @@
                                 <img data-rel="avatar" data-size="24" class="gravatar" src="{% if app.user %}{{ app.user.email|gravatar(24)}}{% endif %}" />
                             </a>
                             <ul class="dropdown-menu">
-                              <li><a href="{{ path('behatviewer.profile') }}">Profile</a></li>
-                              <li><a href="{{ path('behatviewer.logout') }}">Logout</a></li>
+                                {% if is_granted('ROLE_ADMIN') %}
+                                    <li><a href="{{ path('behatviewer.users') }}">Admin</a></li>
+                                {% endif %}
+                                <li><a href="{{ path('behatviewer.config') }}">Config</a></li>
+                                <li class="divider"></li>
+                                <li><a href="{{ path('behatviewer.profile') }}">Profile</a></li>
+                                <li><a href="{{ path('behatviewer.logout') }}">Logout</a></li>
                             </ul>
                         </li>
                     {% else %}

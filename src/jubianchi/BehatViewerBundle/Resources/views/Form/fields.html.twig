@@ -1,0 +1,22 @@
+{% block field_row %}
+    <div class="control-group{% if errors|count > 0 %} error{% endif %}">
+        {{ form_label(form) }}
+
+        <div class="controls">
+            {{ form_widget(form) }}
+
+            {{ form_errors(form) }}
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block field_label %}
+    <label for="{{ id }}" class="control-label">{{ label }}</label>
+{% endblock %}
+
+{% block field_errors %}
+    {% for error in errors %}
+        <br/><span class="help-inline">{{ error.getMessageTemplate()|trans(error.getMessageParameters(), 'validators') }}</span>
+    {% endfor %}
+{% endblock %}

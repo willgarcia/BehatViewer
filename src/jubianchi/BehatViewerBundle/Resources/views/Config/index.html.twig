@@ -1,4 +1,4 @@
-{% extends 'BehatViewerBundle::layout.html.twig' %}
+{% extends 'BehatViewerBundle::layout.form.html.twig' %}
 
 
 {% block notification %}
@@ -7,86 +7,22 @@
     {% endif %}
 {% endblock %}
 
-{% block container %}
-<div class="row-fluid">
-    <form class="form-horizontal" method="post" action="{{ path('behatviewer.config') }}" id="configuration">
-        <div style="background-color: #888; border: none;" class="well modal-example">
-            <div style="width: 60%; position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1; max-width: 100%;" class="modal">
-                <div class="modal-header">
-                    <h3>Project configuration</h3>
-                </div>
-                <div class="modal-body" style="max-height: inherit;">
-                    {% if project.id is null %}
-                        <div class="alert alert-block alert-info">
-                            <h4 class="alert-heading">No project configured</h4>
+{% block action %}{{ path('behatviewer.config') }}{% endblock %}
 
-                            <p>Before using Behat Viewer, you should configure your project.</p>
-                        </div>
-                    {% endif %}
+{% block title %}Project configuration{% endblock %}
 
-                    <div class="control-group">
-                        <label for="Project_name" class="control-label">Project name</label>
+{% block before %}
+    {% if project.id is null %}
+        <div class="alert alert-block alert-info">
+            <h4 class="alert-heading">No project configured</h4>
 
-                        <div class="controls">
-                            {{ form_widget(form.name, {'attr': {'class': 'input-xlarge', 'placeholder': 'My Project'}}) }}
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="Project_slug" class="control-label">Identifier</label>
-
-                        <div class="controls">
-                            {{ form_widget(form.slug, {'attr': {'class': 'input-xlarge', 'placeholder': 'my-project'}}) }}
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="Project_base_url" class="control-label">Base URL</label>
-
-                        <div class="controls">
-                            <div class="input-prepend">
-                                <span class="add-on">http://</span>{{ form_widget(form.base_url, {'attr': {'class': 'input-xlarge', 'placeholder': 'myproject/app_test.php'}}) }}
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="Project_root_path" class="control-label">Root path</label>
-
-                        <div class="controls">
-                            {{ form_widget(form.root_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}}) }}
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="Project_output_path" class="control-label">Output path</label>
-
-                        <div class="controls">
-                            <div class="input-append">
-                                {{ form_widget(form.output_path, {'attr': {'class': 'input-xlarge', 'placeholder': '/my/project'}}) }}<span class="add-on">/behat-viewer.json</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="control-group">
-                        <label for="Project_test_command" class="control-label">Test command</label>
-
-                        <div class="controls">
-                            {{ form_widget(form.test_command, {'attr': {'class': 'input-xlarge', 'placeholder': 'app/console --env=test behat @AcmeBundle', 'style': 'width: 100%', 'rows': 5}}) }}
-                        </div>
-                    </div>
-
-                    {{ form_rest(form) }}
-                </div>
-
-                <div class="modal-footer">
-                    <input class="btn btn-primary" type="submit" value="Save changes"/>
-                    <input class="btn" type="reset" value="Cancel"/>
-                </div>
-            </div>
+            <p>Before using Behat Viewer, you should configure your project.</p>
         </div>
-    </form>
-</div>
+    {% endif %}
+{% endblock %}
+
+{% block extrabuttons %}
+    <input class="btn" type="reset" value="Cancel"/>
 {% endblock %}
 
 {% block javascript %}

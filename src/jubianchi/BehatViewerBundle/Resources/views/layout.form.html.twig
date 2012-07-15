@@ -1,0 +1,29 @@
+{% extends 'BehatViewerBundle::layout.html.twig' %}
+
+{% block container %}
+<div class="row-fluid">
+    <form class="form-horizontal" method="post" action="{% block action %}{% endblock %}" id="configuration">
+        <div style="background-color: #888; border: none;" class="well modal-example">
+            <div style="width: {% block width %}60%{% endblock %}; position: relative; top: auto; left: auto; margin: 0 auto; z-index: 1; max-width: 100%;" class="modal">
+                <div class="modal-header">
+                    <h3>{% block title %}{% endblock %}</h3>
+                </div>
+                <div class="modal-body" style="max-height: inherit;">
+                    {% block before %}{% endblock %}
+
+                    {{ form_errors(form) }}
+
+                    {{ form_rest(form) }}
+
+                    {% block after %}{% endblock %}
+                </div>
+                <div class="modal-footer">
+                    <input class="btn btn-primary" type="submit" value="{% block submit %}Save changes{% endblock %}"/>
+
+                    {% block extrabuttons %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+{% endblock %}

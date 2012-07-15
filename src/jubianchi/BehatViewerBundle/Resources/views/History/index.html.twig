@@ -40,7 +40,7 @@
 {% block after %}
     {% if is_granted('ROLE_USER') %}
         <div class="btn-group">
-            <input type="submit" class="btn btn-danger" value="Delete selected"/>
+            <button type="submit" class="btn btn-danger"><i class="icon-trash"></i> Delete selected</button>
         </div>
     {% endif %}
 

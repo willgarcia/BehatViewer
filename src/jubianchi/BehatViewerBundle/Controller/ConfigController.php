@@ -41,10 +41,10 @@ class ConfigController extends BehatViewerController
                 $manager = $this->getDoctrine()->getEntityManager();
                 $manager->persist($project);
                 $manager->flush();
-            }
 
-            $this->getSession()->setProject($project);
-            $success = true;
+                $this->getSession()->setProject($project);
+                $success = true;
+            }
         }
 
         return $this->getResponse(array(
