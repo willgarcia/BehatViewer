@@ -32,7 +32,7 @@ class ConfigController extends BehatViewerController
 
         $form = $this->get('form.factory')->create(new ProjectType(), $project);
 
-        if ($request->getMethod() === 'POST') {
+        if ('POST' === $request->getMethod()) {
             $form->bindRequest($request);
 
             if ($form->isValid()) {

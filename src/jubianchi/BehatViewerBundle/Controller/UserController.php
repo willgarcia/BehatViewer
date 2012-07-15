@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller,
     Sensio\Bundle\FrameworkExtraBundle\Configuration\Template,
     Symfony\Component\Security\Core\SecurityContext,
     JMS\SecurityExtraBundle\Annotation\Secure,
-    jubianchi\BehatViewerBundle\Form\Type\ProjectType;
+    jubianchi\BehatViewerBundle\Form\Type\UserType;
 
 class UserController extends BehatViewerController
 {
@@ -53,20 +53,28 @@ class UserController extends BehatViewerController
      */
     public function profileAction()
     {
-        if ('POST' === $this->getRequest()->getMethod()) {
-            $user = $this->get('security.context')->getToken()->getUser();
+        $request = $this->getRequest();
+        $success = false;
+        $user = $this->get('security.context')->getToken()->getUser();
 
-            $user->setUsername($this->getRequest()->get('_username'));
-            $user->setEmail($this->getRequest()->get('_email'));
+        $type = new UserType();
+        $type->setPasswordRequired(false);
+        $form = $this->get('form.factory')->create($type, $user);
 
-            if (($password = $this->getRequest()->get('_password'))) {
-                if ($password === $this->getRequest()->get('_confirm')) {
+        if ('POST' === $request->getMethod()) {
+            $form->bindRequest($request);
+
+            $user->setUsername($form->getData()->getUsername());
+            $user->setEmail($form->getData()->getEmail());
+
+            if (($password = $form->getData()->getPassword())) {
+                if ($password === $request->get('confirm')) {
                     $factory = $this->get('security.encoder_factory');
                     $encoder = $factory->getEncoder($user);
 
                     $user->setPassword(
                         $encoder->encodePassword(
-                            $password,
+                            $form->getData()->getPassword(),
                             $user->getSalt()
                         )
                     );
@@ -76,9 +84,14 @@ class UserController extends BehatViewerController
             $this->getDoctrine()->getEntityManager()->persist($user);
             $this->getDoctrine()->getEntityManager()->flush();
             $this->getDoctrine()->getEntityManager()->refresh($user);
+
+            $success = true;
         }
 
-        return $this->getResponse(array());
+        return $this->getResponse(array(
+            'success' => $success,
+            'form' => $form->createView(),
+        ));
     }
 
     /**
