@@ -1,7 +1,7 @@
 {% extends 'BehatViewerBundle::layout.html.twig' %}
 
-{% if not features and build %}
-    {% set features = build.features %}
+{% if not items and build %}
+    {% set items = build.features %}
 {% endif %}
 
 {% block container %}
@@ -22,7 +22,7 @@
 <div class="row-fluid">
     <div class="span12">
         <div class="row-fluid">
-            {% for feature in features %}
+            {% for feature in items %}
                 {% include 'BehatViewerBundle::Default/feature.html.twig' %}
 
                 {% if loop.index is divisibleby(3) %}
