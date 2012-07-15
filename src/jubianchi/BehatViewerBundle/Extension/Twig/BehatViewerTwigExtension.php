@@ -97,6 +97,8 @@ class BehatViewerTwigExtension extends \Twig_Extension implements ContainerAware
     public function clean($text)
     {
         $text = str_replace(array('?P'), '', $text);
+        $text = preg_replace('/\\\\\w/', '', $text);
+        $text = str_replace('|', ' ', $text);
         $text = preg_replace('/[^\s\w]+/u', '', $text);
         $text = preg_replace('/\s+/', ' ', $text);
         $text = trim($text);

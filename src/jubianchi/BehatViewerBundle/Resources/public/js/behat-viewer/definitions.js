@@ -15,20 +15,6 @@ var DefinitionsController;
         DefinitionsController.prototype = new NavigationController();
         DefinitionsController.prototype.constructor = DefinitionsController;
 
-        DefinitionsController.prototype.init = function () {
-            NavigationController.prototype.init.call(this);
-
-            return this;
-        };
-
-        DefinitionsController.prototype.deinit = function () {
-            NavigationController.prototype.deinit.call(this);
-
-            $(document).delegate('#search', 'keyup');
-
-            return this;
-        };
-
         DefinitionsController.prototype.complete = function () {
             if ($.fn.tablesorter) {
                 $('.tablesorter').tablesorter();
@@ -46,7 +32,7 @@ var DefinitionsController;
                     };
 
                 if (!vals) {
-                    $('#definitions tr').css('display', '');
+                    $('.table tr').css('display', '');
                 } else {
                     $('td.context').each(function () {
                       if (v($(this))) {
@@ -59,7 +45,7 @@ var DefinitionsController;
             });
 
             $(document).delegate('#search', 'keyup', function () {
-                var list = $('#definitions');
+                var list = $('.table');
 
                 if ($(this).val()) {
                     $('td.snippet:not([data-search*="' + $(this).val().toString().toLowerCase().clean() + '"])', list).parent().css('display', 'none');
