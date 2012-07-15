@@ -15,20 +15,6 @@ var BuildController;
         BuildController.prototype = new NavigationController();
         BuildController.prototype.constructor = BuildController;
 
-        BuildController.prototype.init = function () {
-            NavigationController.prototype.init.call(this);
-
-            return this;
-        };
-
-        BuildController.prototype.deinit = function () {
-            NavigationController.prototype.deinit.call(this);
-
-            $(document).undelegate('thead [type=checkbox]', 'click');
-
-            return this;
-        };
-
         BuildController.prototype.complete = function () {
             NavigationController.prototype.complete.call(this);
             MomentController.prototype.complete.call(this, ' <small>(%s)</small>');

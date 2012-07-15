@@ -37,39 +37,11 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                     Navbar = function (master, controller) {
                         Toolbar.call(this, master, controller);
 
-                        var self = this;
+                        this.cls = 'NavBar';
                     };
 
                     Navbar.prototype = new Toolbar();
                     Navbar.prototype.constructor = Navbar;
-
-                    Navbar.prototype.init = function () {
-                        Toolbar.prototype.init.call(this);
-
-                        return this;
-                    }
-
-                    Navbar.prototype.getItemByHref = function (href) {
-                        return $('[href=\'' + href + '\']', this.master);
-                    };
-
-                    Navbar.prototype.setActiveItem = function (item) {
-                        $(item).parent().addClass('active');
-                    };
-
-                    Navbar.prototype.setTitle = function(title) {
-                        $('.title', this.master).text(title);
-                    };
-
-                    Navbar.prototype.refresh = function() {
-                        if(app.user) {
-                            $('[data-rel=login]').hide();
-                            $('[data-rel=usermenu]').show();
-                        } else {
-                            $('[data-rel=login]').show();
-                            $('[data-rel=usermenu]').hide();
-                        }
-                    };
                 }
             )
             .require(
@@ -77,6 +49,8 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                 function () {
                     MainController = function (master) {
                         NavigationController.call(this, master);
+
+                        this.cls = 'MainController';
                     };
 
                     MainController.prototype = new NavigationController();
@@ -89,39 +63,13 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                     BehatViewer = function (master) {
                         Application.call(this, master, Routing.generate('behatviewer.homepage'), new MainController('#container'));
 
+                        this.cls = 'BehatViewer';
                         this.toolbar = new Navbar('#toolbar', this.controller).init();
                         this.user = null;
                     };
 
                     BehatViewer.prototype = new Application();
                     BehatViewer.prototype.constructor = BehatViewer;
-
-                    BehatViewer.prototype.setUser = function(user) {
-                        this.user = $.extend(
-                            {
-                                username: null,
-                                email: null
-                            },
-                            user
-                        );
-
-                        user = this.user;
-                        $('[data-rel*=username]').text(this.user.username);
-                        $('[data-rel*=avatar]').each(function() {
-                            $(this).attr(
-                                'src',
-                                Routing.generate(
-                                    'behatviewer.profileavatar',
-                                    {
-                                        email: user.email,
-                                        size: $(this).attr('data-size')
-                                    }
-                                )
-                            );
-                        });
-
-                        this.toolbar.refresh();
-                    };
 
                     BehatViewer.prototype.complete = function () {
                         Controller.prototype.complete.call(this);
@@ -141,7 +89,6 @@ var Navbar, Toolbar, MainController, BehatViewer, app;
                     app = new BehatViewer('#application').init();
                 }
             )
-            .require(['behat-viewer/home'])
         ;
     });
 }(jQuery));

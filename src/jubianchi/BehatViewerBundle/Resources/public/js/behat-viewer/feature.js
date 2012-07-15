@@ -17,12 +17,6 @@ var FeatureController;
         FeatureController.prototype = new NavigationController();
         FeatureController.prototype.constructor = FeatureController;
 
-        FeatureController.prototype.init = function () {
-          NavigationController.prototype.init.call(this);
-
-          return this;
-        };
-
         FeatureController.prototype.complete = function () {
             MomentController.prototype.complete.call(this, ' <small style="font-size: 0.7em">on %s</small>');
 

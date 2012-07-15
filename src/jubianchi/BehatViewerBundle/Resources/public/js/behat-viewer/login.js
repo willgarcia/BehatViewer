@@ -14,12 +14,6 @@ var LoginController;
 
         LoginController.prototype = new NavigationController();
         LoginController.prototype.constructor = LoginController;
-
-        LoginController.prototype.init = function () {
-            NavigationController.prototype.init.call(this);
-
-            return this;
-        };
     }
   );
 }(jQuery));

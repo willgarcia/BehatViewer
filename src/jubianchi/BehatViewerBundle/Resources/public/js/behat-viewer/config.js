@@ -14,11 +14,6 @@ var ConfigController;
 
         ConfigController.prototype = new Controller();
         ConfigController.prototype.constructor = ConfigController;
-
-        ConfigController.prototype.init = function () {
-            Controller.prototype.init.call(this);
-            return this;
-        };
     }
   );
 }(jQuery));

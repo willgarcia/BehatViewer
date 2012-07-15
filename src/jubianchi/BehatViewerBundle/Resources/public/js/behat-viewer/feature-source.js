@@ -14,12 +14,6 @@ var FeatureSourceController;
 
         FeatureSourceController.prototype = new FeatureController();
         FeatureSourceController.prototype.constructor = FeatureSourceController;
-
-        FeatureSourceController.prototype.init = function () {
-          FeatureController.prototype.init.call(this);
-
-            return this;
-        };
     }
   );
 }(jQuery));

@@ -15,12 +15,6 @@ var HomeController;
         HomeController.prototype = new NavigationController();
         HomeController.prototype.constructor = HomeController;
 
-        HomeController.prototype.init = function () {
-          NavigationController.prototype.init.call(this);
-
-          return this;
-        };
-
         HomeController.prototype.complete = function() {
             NavigationController.prototype.complete.call(this);
             MomentController.prototype.complete.call(this, ' <small style="font-size: 0.7em">on %s</small>');

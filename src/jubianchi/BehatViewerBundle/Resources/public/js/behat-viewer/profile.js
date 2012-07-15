@@ -14,12 +14,6 @@ var ProfileController;
 
         ProfileController.prototype = new NavigationController();
         ProfileController.prototype.constructor = ProfileController;
-
-        ProfileController.prototype.init = function () {
-            NavigationController.prototype.init.call(this);
-
-            return this;
-        };
     }
   );
 }(jQuery));
