@@ -1,4 +1,4 @@
-{% extends 'BehatViewerBundle::layout.html.twig' %}
+{% extends 'BehatViewerBundle::layout.sidebar.html.twig' %}
 
 {% set scenarios = feature.getScenariosCount %}
 
@@ -8,34 +8,32 @@
 {% set failed = feature.getFailedScenariosCount %}
 {% set failedpcnt = ((failed / scenarios) * 100)|round %}
 
-{% block container %}
-<h1 class="page-header">
-    {{ feature.name }}
-    {% if build %}
-        <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d H:i:s")}}</span>)</small>
-    {% endif %}
+{% block title %}
+    <h1 class="page-header">
+        {{ feature.name }}
+        {% if build %}
+            <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d H:i:s")}}</span>)</small>
+        {% endif %}
 
-    {% include 'BehatViewerBundle::Feature/switcher.html.twig' %}
+        {% include 'BehatViewerBundle::Feature/switcher.html.twig' %}
 
-    {% if feature.tags|count %}
-        <br/>
-        {% for tag in feature.tags %}
-            <a href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
-        {% endfor %}
-    {% endif %}
-</h1>
-<div class="row-fluid">
-    <div class="fix-scroll span3">
-        {% block sidebar %}
-            {% include "BehatViewerBundle::Feature/sidebar.html.twig" %}
-        {% endblock %}
-    </div>
-    <div class="span9">
-        {% for scenario in feature.scenarios %}
-            {% include "BehatViewerBundle::Feature/scenario.html.twig" %}
-        {% endfor %}
-    </div>
-</div>
+        {% if feature.tags|count %}
+            <br/>
+            {% for tag in feature.tags %}
+                <a href="{{ path("behatviewer.tag", {slug: tag.slug}) }}" class="label label-info"> {{ tag.name }} </a>
+            {% endfor %}
+        {% endif %}
+    </h1>
+{% endblock %}
+
+{% block sidebar %}
+    {% include "BehatViewerBundle::Feature/sidebar.html.twig" %}
+{% endblock %}
+
+{% block content %}
+    {% for scenario in feature.scenarios %}
+        {% include "BehatViewerBundle::Feature/scenario.html.twig" %}
+    {% endfor %}
 {% endblock %}
 
 {% block javascript %}

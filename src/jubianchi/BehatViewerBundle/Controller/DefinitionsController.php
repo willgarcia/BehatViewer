@@ -32,7 +32,7 @@ class DefinitionsController extends BehatViewerController
         }
 
         return $this->getResponse(array(
-            'definitions' => $definitions,
+            'items' => $definitions,
             'contexts' => $contexts
         ));
     }

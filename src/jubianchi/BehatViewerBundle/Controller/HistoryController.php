@@ -31,7 +31,7 @@ class HistoryController extends BehatViewerController
         $project = $this->getSession()->getproject();
 
         $builds = array();
-        $pages = 1;
+        $pages = $page <= 0 ? 1 : $page;
         if ($project !== null) {
             $total = $this->getDoctrine()->getRepository('BehatViewerBundle:Build')->findBy(
                 array(
@@ -56,7 +56,7 @@ class HistoryController extends BehatViewerController
         }
 
         return $this->getResponse(array(
-            'builds' => $builds,
+            'items' => $builds,
             'current' => $page,
             'pages' => $pages
         ));
@@ -80,7 +80,7 @@ class HistoryController extends BehatViewerController
 
         $variables = $this->getResponse(array(
             'build' => $build,
-            'features' => null
+            'items' => null
         ));
 
         if ($this->getSession()->get('listview', false)) {

@@ -1,73 +1,76 @@
-{% extends 'BehatViewerBundle::layout.html.twig' %}
+{% extends 'BehatViewerBundle::layout.table.html.twig' %}
 
-{% block container %}
-    <div class="row-fluid">
-        <div class="span12">
-            <h1 class="page-header">
-                Builds for {{ project.name }}
-                {% if pages > 1 %}
-                    <small>Page {{ current }}/{{ pages }}</small>
-                {% endif %}
-            </h1>
+{% block title %}
+    <h1 class="page-header">
+        Builds for {{ project.name }}
+        {% if pages > 1 %}
+            <small>Page {{ current }}/{{ pages }}</small>
+        {% endif %}
+    </h1>
+{% endblock %}
 
-            {% if builds|count > 0 %}
-                {% if is_granted('ROLE_USER') %}
-                    <form method="post" action="{{ path('behatviewer.historydeletesel') }}">
-                {% endif %}
+{% block before %}
+    {% if is_granted('ROLE_USER') %}
+        <form method="post" action="{{ path('behatviewer.historydeletesel') }}">
+    {% endif %}
+{% endblock %}
 
-                <table id="definitions" class="table table-bordered table-striped tablesorter {sortlist: [[1,1]]}">
-                    <thead>
-                    <tr>
-                        {% if is_granted('ROLE_USER') %}
-                            <th class="{sorter: false}"><input type="checkbox" /></th>
-                        {% endif %}
-                        <th>#</th>
-                        <th>Date</th>
-                        <th>Completion</th>
-                        <th>Progress</th>
-                        <th>Details</th>
-                        <th class="{sorter: false}">Action</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                        {% for build in builds %}
-                            {% include 'BehatViewerBundle::History/build-row.html.twig' %}
-                        {% endfor %}
-                    </tbody>
-                </table>
+{% block sort %}{sortlist: [[1,1]]}{% endblock %}
 
-                {% if is_granted('ROLE_USER') %}
-                    <div class="btn-group">
-                        <input type="submit" class="btn btn-danger" value="Delete selected"/>
-                    </div>
-                {% endif %}
+{% block thead %}
+    <tr>
+        {% if is_granted('ROLE_USER') %}
+            <th class="{sorter: false}"><input type="checkbox" /></th>
+        {% endif %}
+        <th>#</th>
+        <th>Date</th>
+        <th>Completion</th>
+        <th>Progress</th>
+        <th>Details</th>
+        <th class="{sorter: false}">Action</th>
+    </tr>
+{% endblock %}
 
-                {% if is_granted('ROLE_USER') %}
-                    </form>
-                {% endif %}
-                {% if pages > 1 %}
-                    <div id="content-nav" class="pagination pagination-centered menu">
-                        <ul>
+{% block tbody %}
+    {% for build in items %}
+        {% include 'BehatViewerBundle::History/build-row.html.twig' %}
+    {% endfor %}
+{% endblock %}
 
-                            <li class="prev{% if current == 1 %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current - 1}) }}" title="Previous">«</a></li>
-                            {% for i in range(1, pages) %}
-                                <li{% if i == current %} class="active"{% endif %}><a href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
-                            {% endfor %}
-                            <li class="next{% if current == pages %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current + 1}) }}" title="Next">»</a></li>
-                        </ul>
-                    </div>
-                {% endif %}
-            {% else %}
-                <div class="alert alert-info alert-block">
-                    <h4 class="alert-heading">No build</h4>
-
-                    <p>This project has not been built yet. To build it, please run <code>app/console
-                        behat-viewer:build {{ project.slug }}</code>.</p>
-                </div>
-            {% endif %}
+{% block after %}
+    {% if is_granted('ROLE_USER') %}
+        <div class="btn-group">
+            <input type="submit" class="btn btn-danger" value="Delete selected"/>
         </div>
-    </div>
+    {% endif %}
 
+    {% if is_granted('ROLE_USER') %}
+        </form>
+    {% endif %}
+
+    {% if pages > 1 %}
+        <div id="content-nav" class="pagination pagination-centered menu">
+            <ul>
+
+                <li class="prev{% if current == 1 %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current - 1}) }}" title="Previous">«</a></li>
+                {% for i in range(1, pages) %}
+                <li{% if i == current %} class="active"{% endif %}><a href="{{ path("behatviewer.historypage", {page: i}) }}">{{ i }}</a></li>
+                {% endfor %}
+                <li class="next{% if current == pages %} disabled{% endif %}"><a href="{{ path("behatviewer.historypage", {page: current + 1}) }}" title="Next">»</a></li>
+            </ul>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block alert %}
+    <div class="alert alert-info alert-block">
+        <h4 class="alert-heading">No build</h4>
+
+        <p>
+            This project has not been built yet.
+            To build it, please run <code>app/console behat-viewer:build {{ project.slug }}</code>.
+        </p>
+    </div>
 {% endblock %}
 
 {% block javascript %}

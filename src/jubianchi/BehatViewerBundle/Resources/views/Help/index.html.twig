@@ -1,29 +1,25 @@
-{% extends 'BehatViewerBundle::layout.html.twig' %}
+{% extends 'BehatViewerBundle::layout.sidebar.html.twig' %}
 
-{% block container %}
-<div class="row-fluid">
-    <div class="span3">
-        <div class="well sidebar-nav">
-            <ul class="nav nav-list">
-                {% for url, section in sections %}
-                    <li class="nav-header">{{ section['label'] }}</li>
+{% block sidebar %}
+    <div class="well sidebar-nav">
+        <ul class="nav nav-list">
+            {% for url, section in sections %}
+                <li class="nav-header">{{ section['label'] }}</li>
 
-                    {% for link, page in section['links'] %}
-                        <li>
-                            <a href="{{ path('behatviewer.help', {'section': url, 'page': page }) }}">
-                                {{ link }}
-                            </a>
-                        </li>
-                    {% endfor %}
+                {% for link, page in section['links'] %}
+                    <li>
+                        <a href="{{ path('behatviewer.help', {'section': url, 'page': page }) }}">
+                            {{ link }}
+                        </a>
+                    </li>
                 {% endfor %}
-            </ul>
-        </div>
+            {% endfor %}
+        </ul>
     </div>
+{% endblock %}
 
-    <div id="help" class="span9">
-        {{ help|markdown }}
-    </div>
-</div>
+{% block content %}
+    {{ help|markdown }}
 {% endblock %}
 
 {% block javascript %}

@@ -1,7 +1,7 @@
 {% extends 'BehatViewerBundle::layout.html.twig' %}
 
 {% if not features and build %}
-{% set features = build.features %}
+    {% set features = build.features %}
 {% endif %}
 
 {% block container %}
@@ -23,21 +23,19 @@
     <div class="span12">
         <div class="row-fluid">
             {% for feature in features %}
-            {% include 'BehatViewerBundle::Default/feature.html.twig' %}
+                {% include 'BehatViewerBundle::Default/feature.html.twig' %}
 
-            {% if loop.index is divisibleby(3) %}
-        </div>
-
-        <br/>
-
-        <div class="row-fluid">
-            {% endif %}
+                {% if loop.index is divisibleby(3) %}
+                    </div>
+                    <br/>
+                    <div class="row-fluid">
+                {% endif %}
             {% else %}
-            <div class="alert alert-block alert-info">
-                <h4 class="alert-heading">No feature</h4>
+                <div class="alert alert-block alert-info">
+                    <h4 class="alert-heading">No feature</h4>
 
-                <p>This project has not been built yet. Click on the build button to launch test suite.</p>
-            </div>
+                    <p>This project has not been built yet. Click on the build button to launch test suite.</p>
+                </div>
             {% endfor %}
         </div>
     </div>
