@@ -24,16 +24,3 @@
 {% block extrabuttons %}
     <input class="btn" type="reset" value="Cancel"/>
 {% endblock %}
-
-{% block javascript %}
-    <script type="text/javascript">
-        JSC.require(
-            ['behat-viewer/config'],
-            function() {
-                $(function() {
-                    app.controller.current(new ConfigController('#container'));
-                });
-            }
-        );
-    </script>
-{% endblock %}

@@ -145,18 +145,4 @@ class UserController extends BehatViewerController
             'form' => $form->createView(),
         ));
     }
-
-    /**
-     * @Route("/profile/avatar/{email}/{size}/{rating}", name="behatviewer.profileavatar", options={"expose"=true}, defaults={"page" = 24, "rating"= "G"})
-     * @Template()
-     */
-    public function avatarAction($email, $size, $rating)
-    {
-        $url = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($email))) . "&s=" . $size . '&r=' . $rating;
-
-        $response = new \Symfony\Component\HttpFoundation\Response();
-        $response->headers->set('Location', $url);
-
-        return $response;
-    }
 }

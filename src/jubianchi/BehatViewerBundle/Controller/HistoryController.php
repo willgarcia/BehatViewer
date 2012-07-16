@@ -67,7 +67,7 @@ class HistoryController extends BehatViewerController
      *
      * @return \Symfony\Component\HttpFoundation\Response
      *
-     * @Route("/{id}", requirements={"id" = "\d+"}, name="behatviewer.historyentry", options={"expose"=true})
+     * @Route("/{id}", requirements={"id" = "\d+"}, name="behatviewer.historyentry")
      * @Template("BehatViewerBundle:Default:index.html.twig")
      */
     public function entryAction(Entity\Build $build = null)

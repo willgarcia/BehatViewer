@@ -40,16 +40,3 @@
     </div>
 </form>
 {% endblock %}
-
-{% block javascript %}
-    <script type="text/javascript">
-        JSC.require(
-            ['behat-viewer/login'],
-            function() {
-                $(function() {
-                    app.controller.current(new LoginController('#container'));
-                });
-            }
-        );
-    </script>
-{% endblock %}

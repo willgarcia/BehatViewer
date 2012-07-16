@@ -22,16 +22,3 @@
         </div>
     </div>
 {% endblock %}
-
-{% block javascript %}
-    <script type="text/javascript">
-        JSC.require(
-            ['behat-viewer/profile'],
-            function() {
-                $(function() {
-                    app.controller.current(new ProfileController('#container'));
-                });
-            }
-        );
-    </script>
-{% endblock %}
