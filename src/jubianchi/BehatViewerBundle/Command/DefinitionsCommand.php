@@ -1,8 +1,7 @@
 <?php
 namespace jubianchi\BehatViewerBundle\Command;
 
-use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
-    Symfony\Component\Console\Input\InputInterface,
+use Symfony\Component\Console\Input\InputInterface,
     Symfony\Component\Console\Output\OutputInterface,
     Symfony\Component\Console\Input\InputArgument,
     Symfony\Component\Console\Input\InputOption,
@@ -11,38 +10,17 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
 /**
  *
  */
-class DefinitionsCommand extends ContainerAwareCommand
+class DefinitionsCommand extends ProjectCommand
 {
-    /**
-     *
-     */
     protected function configure()
     {
+        parent::configure();
+
         $this
             ->setName('behat-viewer:definitions')
             ->setDescription('Reload project\'s definitions')
-            ->setDefinition(
-                array(
-                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to reload'),
-                    new InputOption('clean', null, InputOption::VALUE_NONE, 'Removes all step definitions')
-                )
-            );
-    }
-
-    /**
-     * @return \Symfony\Bundle\DoctrineBundle\Registry
-     */
-    public function getDoctrine()
-    {
-        return $this->getContainer()->get('doctrine');
-    }
-
-    /**
-     * @return \Doctrine\ORM\EntityManager
-     */
-    public function getEntityManager()
-    {
-        return $this->getDoctrine()->getEntityManager();
+            ->addOption('clean', null, InputOption::VALUE_NONE, 'Removes all step definitions')
+        ;
     }
 
     /**
@@ -53,39 +31,22 @@ class DefinitionsCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        if ($input->getOption('clean')) {
-            $this->manager = $this->getDoctrine()->getEntityManager();
-            $this->connection = $this->manager->getConnection();
-            $this->platform = $this->connection->getDatabasePlatform();
+        parent::execute($input, $output);
 
-            $this->connection->executeUpdate(
-                $this->platform->getTruncateTableSQL(
-                    $this->manager->getClassMetadata('BehatViewerBundle:Definition')->getTableName(),
-                    true
-                )
-            );
+        $project = $this->getProject();
 
-            return;
-        }
-
-        $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Project');
-        $project = $repository->findOneById(1);
-
-        if ($project === null) {
-            throw new \RuntimeException(sprintf('Project %s does not exist', $input->getArgument('project')));
-        }
 
         $this->getDoctrine()->getRepository('BehatViewerBundle:Definition')->truncateForProject($project);
 
-        $cmd = sprintf('php behat.phar -di');
+        if (true === $input->getOption('clean')) {
+            return 0;
+        }
 
-        exec($cmd, $data);
+        exec(sprintf('php behat.phar -di'), $data);
 
         $this->saveProjectDefinitionsFromData($project, $data, $output);
 
-        $this->log($output, '|/');
-
-        $this->getEntityManager()->flush();
+        $this->getDoctrine()->getEntityManager()->flush();
     }
 
     protected function saveProjectDefinitionsFromData(Entity\Project $project, $data, $output)
@@ -115,26 +76,11 @@ class DefinitionsCommand extends ContainerAwareCommand
                     $definition->setContext($infos['context']);
                     $definition->setMethod($infos['method']);
 
-                    $this->getEntityManager()->persist($definition);
+                    $this->getDoctrine()->getEntityManager()->persist($definition);
                     $definition = null;
-
-                    $this->log($output, '|-/');
                 }
             }
         }
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string                                            $message
-     * @param int                                               $level
-     */
-    protected function log($output, $message, $level = 0)
-    {
-        $prefix = str_repeat('|-', $level) . ($level ? '+' : '');
-        $prefix = '' !== $prefix ? $prefix . ' ' : '';
-
-        $output->writeln(sprintf('<info>[INFO]</info> %s%s', $prefix, $message));
     }
 
     /**
@@ -153,6 +99,46 @@ class DefinitionsCommand extends ContainerAwareCommand
             'context' => $context,
             'method' => $method
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string $message
+     * @param string|null $status
+     * @param int $level
+     */
+    protected function log(OutputInterface $output, $message, $level = 0)
+    {
+        if (OutputInterface::VERBOSITY_VERBOSE === $output->getVerbosity()) {
+            $output->writeln($this->formatLog($message, $level));
+        }
+    }
+
+    /**
+     * @param $message
+     * @param string|null $status
+     * @param int $level
+     * @return string
+     */
+    protected function formatLog($message, $level = 0) {
+        return sprintf(
+            '<info>[INFO]</info> %s %s',
+            $this->formatLevel($level),
+            $message
+        );
+    }
+
+    protected function formatLevel($level = 0)
+    {
+        $level = $level < 0 ? 0 : $level;
+
+        if (0 === $level) {
+            $level = '+-';
+        } else {
+            $level = str_repeat('|-', $level) . '+';
+        }
+
+        return $level;
     }
 
     /**
