@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 abstract class BehatViewerController extends Controller
 {
     /**
-     * @return \jubianchi\BehatViewerBundle\Session\BehatViewerSession
+     * @return \jubianchi\BehatViewerBundle\Session
      */
     public function getSession()
     {

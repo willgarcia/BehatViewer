@@ -1,6 +1,6 @@
 <?php
 
-namespace jubianchi\BehatViewerBundle\Session;
+namespace jubianchi\BehatViewerBundle;
 
 use Symfony\Component\DependencyInjection\ContainerAware,
     jubianchi\BehatViewerBundle\Entity;
@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerAware,
 /**
  *
  */
-class BehatViewerSession extends ContainerAware
+class Session extends ContainerAware
 {
     /**
      * @return \jubianchi\BehatViewerBundle\Entity\Project
@@ -24,7 +24,7 @@ class BehatViewerSession extends ContainerAware
         }
 
         if ($project === null) {
-            $project = $repository->find(1);
+            $project = $repository->findOneBy(array());
         }
 
         return $project;
@@ -83,5 +83,18 @@ class BehatViewerSession extends ContainerAware
     public function get($name, $default = null)
     {
         return $this->container->get('session')->get($name, $default);
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $value
+     *
+     * @return \jubianchi\BehatViewerBundle\Session
+     */
+    public function set($name, $value)
+    {
+        $this->container->get('session')->set($name, $value);
+
+        return $this;
     }
 }

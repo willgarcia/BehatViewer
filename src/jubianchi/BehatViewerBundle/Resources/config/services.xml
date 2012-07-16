@@ -8,7 +8,7 @@
         <parameter key="behat_viewer.twig.extension.class">jubianchi\BehatViewerBundle\Extension\Twig\BehatViewerTwigExtension</parameter>
         <parameter key="behat_viewer.analyzer.class">jubianchi\BehatViewerBundle\Analyzer\BehatViewerAnalyzer</parameter>
         <parameter key="behat_viewer.collector.class">jubianchi\BehatViewerBundle\DataCollector\BehatViewerDataCollector</parameter>
-        <parameter key="behat_viewer.session.class">jubianchi\BehatViewerBundle\Session\BehatViewerSession</parameter>
+        <parameter key="behat_viewer.session.class">jubianchi\BehatViewerBundle\Session</parameter>
         <parameter key="behat_viewer.markdown_parser.class">jubianchi\BehatViewerBundle\Markdown\MarkdownParser</parameter>
         <parameter key="behat_viewer.listener.configuration.class">jubianchi\BehatViewerBundle\Listener\ConfigurationListener</parameter>
 
