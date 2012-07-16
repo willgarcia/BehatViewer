@@ -23,7 +23,6 @@ class BuildCommand extends ContainerAwareCommand
             ->setDefinition(
                 array(
                     new InputArgument('project', InputArgument::OPTIONAL, 'The project to build'),
-                    new InputOption('feature', null, InputOption::VALUE_REQUIRED, 'Rebuilds a feature'),
                     new InputOption('definitions', null, InputOption::VALUE_NONE, 'Updates definition list'),
                 )
             )
@@ -52,14 +51,6 @@ class BuildCommand extends ContainerAwareCommand
 
         $cmd = $project->getTestCommand();
         $cmd = str_replace("\r", PHP_EOL, $cmd);
-
-        if (($feature = $input->getOption('feature'))) {
-            $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
-            $feature = $repository->findOneById($feature);
-
-            $cmd = preg_replace('/@[\w]+/', '', $cmd);
-            $cmd .= ' ' . escapeshellarg($feature->getFile());
-        }
 
         if (file_exists('build.sh')) {
             unlink('build.sh');

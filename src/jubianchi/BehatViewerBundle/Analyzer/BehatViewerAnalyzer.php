@@ -17,14 +17,12 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      * @param \jubianchi\BehatViewerBundle\Entity\Project $project
      * @param array                                       $data
      */
-    public function analyze(Entity\Project $project, array $data, Entity\Feature $feature = null)
+    public function analyze(Entity\Project $project, array $data)
     {
-        $build = $this->getBuildFromData($data, $feature);
+        $build = $this->getBuildFromData($data);
 
-        if (null === $feature) {
-            $build->setProject($project);
-            $project->addBuild($build);
-        }
+        $build->setProject($project);
+        $project->addBuild($build);
 
         $this->getEntityManager()->persist($build);
         $this->getEntityManager()->persist($project);
@@ -84,18 +82,14 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      *
      * @return \jubianchi\BehatViewerBundle\Entity\Build
      */
-    public function getBuildFromData(array $data, Entity\Feature $feature = null)
+    public function getBuildFromData(array $data)
     {
-        if (null !== $feature) {
-            $build = $feature->getBuild();
-        } else {
-            $build = new Entity\Build();
-        }
+        $build = new Entity\Build();
 
         $build->setDate(new \DateTime('now'));
 
         foreach ($data as $featureData) {
-            $myFeature = $this->getFeatureFromData($featureData, $feature);
+            $feature = $this->getFeatureFromData($featureData);
 
             $this->dispatchEvent('foundFeature', $featureData);
 
@@ -113,15 +107,14 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
                     $scenario->addStep($step);
                 }
 
-                $scenario->setFeature($myFeature);
-                $myFeature->addScenario($scenario);
+                $scenario->setFeature($feature);
+                $feature->addScenario($scenario);
 
                 $this->getEntityManager()->persist($scenario);
             }
 
-            $myFeature->setBuild($build);
-
-            $this->getEntityManager()->persist($myFeature);
+            $feature->setBuild($build);
+            $this->getEntityManager()->persist($feature);
         }
 
         return $build;
@@ -132,17 +125,9 @@ class BehatViewerAnalyzer extends EventDispatcher implements ContainerAwareInter
      *
      * @return \jubianchi\BehatViewerBundle\Entity\Feature
      */
-    protected function getFeatureFromData(array $data, Entity\Feature $feature = null)
+    protected function getFeatureFromData(array $data)
     {
-        if (null !== $feature) {
-            $this->getDoctrine()
-              ->getRepository('BehatViewerBundle:Scenario')
-              ->removeForFeature($feature);
-
-            $this->getEntityManager()->refresh($feature);
-        } else {
-            $feature = new Entity\Feature();
-        }
+        $feature = new Entity\Feature();
 
         $feature->setName($data['name']);
         $feature->setSlug($this->slugify($data['name']));

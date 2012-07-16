@@ -30,8 +30,7 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             ->setDescription('Analyzes a project\'s report file')
             ->setDefinition(
                 array(
-                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to analyze'),
-                    new InputOption('feature', null, InputOption::VALUE_REQUIRED, 'Rebuilds a feature')
+                    new InputArgument('project', InputArgument::OPTIONAL, 'The project to analyze')
                 )
             )
         ;
@@ -115,55 +114,6 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     * @param string|null $status
-     * @param int $level
-     */
-    protected function log(OutputInterface $output, $message, $status = null, $level = 0)
-    {
-        if ($output->getVerbosity() == OutputInterface::VERBOSITY_VERBOSE) {
-            $output->writeln($this->format($message, $status, $level));
-        }
-    }
-
-    /**
-     * @param $message
-     * @param string|null $status
-     * @param int $level
-     * @return string
-     */
-    protected function format($message, $status = null, $level = 0) {
-        $status = $status ? sprintf('<%1$s> %1$-10s </%1$s>', $status) : '            ';
-
-        if (0 === $level) {
-            $level = '+-';
-        } else {
-            $level = str_repeat('|-', $level) . '+';
-        }
-
-        return sprintf('<info>[INFO]</info> %s %s %s', $status, $level, $message);
-    }
-
-    /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output
-     *
-     * @return \Symfony\Component\Console\Output\OutputInterface
-     */
-    protected function style(OutputInterface $output)
-    {
-        if ($output->getVerbosity() == OutputInterface::VERBOSITY_VERBOSE) {
-            $output->getFormatter()->setStyle('passed', new OutputFormatterStyle('white', 'green'));
-            $output->getFormatter()->setStyle('failed', new OutputFormatterStyle('white', 'red'));
-            $output->getFormatter()->setStyle('skipped', new OutputFormatterStyle('white', 'blue'));
-            $output->getFormatter()->setStyle('pending', new OutputFormatterStyle('white', 'blue'));
-            $output->getFormatter()->setStyle('undefined', new OutputFormatterStyle('white', 'yellow'));
-        }
-
-        return $output;
-    }
-
-    /**
      * @param \Symfony\Component\Console\Input\InputInterface   $input
      * @param \Symfony\Component\Console\Output\OutputInterface $output
      *
@@ -182,16 +132,10 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
             throw new \RuntimeException(sprintf('File not found : %s', $report));
         }
 
-        $feature = null;
-        if (($feature = $input->getOption('feature'))) {
-            $repository = $this->getContainer()->get('doctrine')->getRepository('BehatViewerBundle:Feature');
-            $feature = $repository->findOneById($feature);
-        }
-
         $data = json_decode(file_get_contents($report), true);
 
         $analyzer = $this->getContainer()->get('behat_viewer.analyzer');
         $analyzer->addSubscriber($this);
-        $analyzer->analyze($project, $data, $feature);
+        $analyzer->analyze($project, $data);
     }
 }
