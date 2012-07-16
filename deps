@@ -66,30 +66,41 @@
     git=git://github.com/FriendsOfSymfony/FOSJsRoutingBundle.git
     target=/bundles/FOS/JsRoutingBundle
 
+[KnpMarkdownBundle]
+    git=http://github.com/KnpLabs/KnpMarkdownBundle.git
+    target=/bundles/Knp/Bundle/MarkdownBundle
+
 [Behat]
     git=git://github.com/Behat/Behat.git
     version=v2.4.0
+    target=/Behat/Behat
 
 [Gherkin]
     git=git://github.com/Behat/Gherkin.git
     version=v2.2.1
+    target=/Behat/Gherkin
 
 [Mink]
     git=git://github.com/Behat/Mink.git
     version=v1.4.0
+    target=/Behat/Mink
 
 [MinkExtension]
     git=git://github.com/Behat/MinkExtension.git
+    target=/Behat/MinkExtension
 
 [MinkGoutteDriver]
     git=git://github.com/Behat/MinkGoutteDriver.git
+    target=/Behat/MinkGoutteDriver
 
 [MinkBrowserKitDriver]
     git=git://github.com/Behat/MinkBrowserKitDriver.git
+    target=/Behat/MinkBrowserKitDriver
 
 [Symfony2Extension]
     git=git://github.com/Behat/Symfony2Extension.git
+    target=/Behat/Symfony2Extension
 
-[KnpMarkdownBundle]
-    git=http://github.com/KnpLabs/KnpMarkdownBundle.git
-    target=/bundles/Knp/Bundle/MarkdownBundle
+[BehatViewerExtension]
+    git=git://github.com/jubianchi/BehatViewerExtension.git
+    target=/jubianchi/BehatViewerExtension

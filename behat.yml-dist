@@ -18,7 +18,7 @@ default:
             screen_id: 99
 
     extensions:
-        src/jubianchi/BehatViewerExtension/init.php: ~
+        vendor/jubianchi/BehatViewerExtension/init.php: ~
 
         symfony2_extension.phar:
             kernel:
