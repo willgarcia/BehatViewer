@@ -16,9 +16,9 @@ abstract class Command extends ContainerAwareCommand
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     * @param string|null $status
-     * @param int $level
+     * @param string                                            $message
+     * @param string|null                                       $status
+     * @param int                                               $level
      */
     protected function log(OutputInterface $output, $message)
     {
@@ -29,11 +29,12 @@ abstract class Command extends ContainerAwareCommand
 
     /**
      * @param $message
-     * @param string|null $status
-     * @param int $level
+     * @param  string|null $status
+     * @param  int         $level
      * @return string
      */
-    protected function formatLog($message) {
+    protected function formatLog($message)
+    {
         return sprintf(
             '<info>[INFO]</info> %s',
             $message

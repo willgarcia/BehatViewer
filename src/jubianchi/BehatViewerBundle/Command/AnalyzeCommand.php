@@ -107,9 +107,9 @@ class AnalyzeCommand extends ProjectCommand implements EventSubscriberInterface
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     * @param string|null $status
-     * @param int $level
+     * @param string                                            $message
+     * @param string|null                                       $status
+     * @param int                                               $level
      */
     protected function log(OutputInterface $output, $message, $status = null, $level = 0)
     {
@@ -120,11 +120,12 @@ class AnalyzeCommand extends ProjectCommand implements EventSubscriberInterface
 
     /**
      * @param $message
-     * @param string|null $status
-     * @param int $level
+     * @param  string|null $status
+     * @param  int         $level
      * @return string
      */
-    protected function formatLog($message, $status = null, $level = 0) {
+    protected function formatLog($message, $status = null, $level = 0)
+    {
         return sprintf(
             '<info>[INFO]</info> %s %s %s',
             $this->formatStatus($status),
@@ -146,7 +147,8 @@ class AnalyzeCommand extends ProjectCommand implements EventSubscriberInterface
         return $level;
     }
 
-    protected function formatStatus($status) {
+    protected function formatStatus($status)
+    {
         return $status ? sprintf('<%1$s> %1$-10s </%1$s>', $status) : '            ';
     }
 

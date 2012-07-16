@@ -35,7 +35,6 @@ class DefinitionsCommand extends ProjectCommand
 
         $project = $this->getProject();
 
-
         $this->getDoctrine()->getRepository('BehatViewerBundle:Definition')->truncateForProject($project);
 
         if (true === $input->getOption('clean')) {
@@ -103,9 +102,9 @@ class DefinitionsCommand extends ProjectCommand
 
     /**
      * @param \Symfony\Component\Console\Output\OutputInterface $output
-     * @param string $message
-     * @param string|null $status
-     * @param int $level
+     * @param string                                            $message
+     * @param string|null                                       $status
+     * @param int                                               $level
      */
     protected function log(OutputInterface $output, $message, $level = 0)
     {
@@ -116,11 +115,12 @@ class DefinitionsCommand extends ProjectCommand
 
     /**
      * @param $message
-     * @param string|null $status
-     * @param int $level
+     * @param  string|null $status
+     * @param  int         $level
      * @return string
      */
-    protected function formatLog($message, $level = 0) {
+    protected function formatLog($message, $level = 0)
+    {
         return sprintf(
             '<info>[INFO]</info> %s %s',
             $this->formatLevel($level),

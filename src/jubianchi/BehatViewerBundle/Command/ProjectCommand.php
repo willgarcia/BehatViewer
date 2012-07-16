@@ -22,12 +22,12 @@ abstract class ProjectCommand extends Command
     {
         $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Project');
         if (true === is_numeric($input->getArgument('project'))) {
-            $this->project = $repository->findOneById((int)$input->getArgument('project'));
+            $this->project = $repository->findOneById((int) $input->getArgument('project'));
         } else {
             $this->project = $repository->findOneBySlug($input->getArgument('project'));
         }
 
-        if(null === $this->project) {
+        if (null === $this->project) {
             throw new \InvalidArgumentException('Unknown project ' . $input->getArgument('project'));
         }
     }

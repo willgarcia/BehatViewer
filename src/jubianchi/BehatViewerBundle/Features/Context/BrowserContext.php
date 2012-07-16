@@ -136,7 +136,7 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     /**
      * @Then /^The value of the "(?P<field>(?:[^"]|\\")*)" field should be "(?P<value>(?:[^"]|\\")*)"$/
      */
-    function theFieldValueShouldBe($field, $value)
+    public function theFieldValueShouldBe($field, $value)
     {
         $field = $this->getSession()->getPage()->find('named', array(
             'field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)

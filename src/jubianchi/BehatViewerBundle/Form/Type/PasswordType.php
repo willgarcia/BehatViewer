@@ -55,7 +55,7 @@ class PasswordType extends UserType
             $password = $form->get('password');
             $confirm = $form->get('confirm');
 
-            if($confirm->getData() !== $password->getData()) {
+            if ($confirm->getData() !== $password->getData()) {
                 $password->addError(new \Symfony\Component\Form\FormError('Passwords are not identical'));
                 $confirm->addError(new \Symfony\Component\Form\FormError(''));
             }

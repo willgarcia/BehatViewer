@@ -14,7 +14,7 @@ class EditUserType extends UserType
     private $passwordRequired;
     private $allowActive;
 
-    function __construct($passwordRequired = true, $allowActive = true)
+    public function __construct($passwordRequired = true, $allowActive = true)
     {
         $this->passwordRequired = $passwordRequired;
         $this->allowActive = $allowActive;
@@ -63,7 +63,7 @@ class EditUserType extends UserType
             )
         ;
 
-        if(true === $this->allowActive) {
+        if (true === $this->allowActive) {
             $builder->add(
                 'isActive',
                 'choice',
@@ -82,7 +82,7 @@ class EditUserType extends UserType
             $password = $form->get('password');
             $confirm = $form->get('confirm');
 
-            if($confirm->getData() !== $password->getData()) {
+            if ($confirm->getData() !== $password->getData()) {
                 $password->addError(new \Symfony\Component\Form\FormError('Passwords are not identical'));
                 $confirm->addError(new \Symfony\Component\Form\FormError(''));
             }

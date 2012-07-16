@@ -101,7 +101,7 @@ class AdminController extends BehatViewerController
         $form = $this->get('form.factory')->create(new EditUserType(), $user);
 
         if ('POST' === $request->getMethod()) {
-            if($this->save($form, $user)) {
+            if ($this->save($form, $user)) {
                 return  $this->redirect($this->generateUrl('behatviewer.useredit', array('id' => $user->getId())));
             }
         }
