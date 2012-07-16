@@ -18,4 +18,4 @@ Feature: Profile
           And I fill in "Email" with "behat@viewer.com"
           And I press "Save changes"
          Then I should be on "/profile"
-          And I should see "behat@viewer.com"
+          And The value of the "Email" field should be "behat@viewer.com"

@@ -1,7 +1,7 @@
 @project
 Feature: Configuration
 
-    @reset
+    @reset @javascript
     Scenario: First project
         Given I am a logged in user
           And I am on the homepage
@@ -9,7 +9,7 @@ Feature: Configuration
 
         Given I fill in "Project name" with "Foo Bar"
           And I fill in "Identifier" with "foo-bar"
-          And I fill in "Base URL" with "http://foo/bar"
+          And I fill in "Base URL" with "http://foo.bar/baz"
           And I fill in "Root path" with "/foo/bar"
           And I fill in "Output path" with "/foo/bar"
           And I fill in "Test command" with "app/console foo bar"

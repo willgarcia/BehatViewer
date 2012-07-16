@@ -7,7 +7,8 @@ use Behat\MinkExtension\Context\MinkContext,
     Behat\Gherkin\Node\PyStringNode,
     Behat\Symfony2Extension\Context\KernelAwareInterface,
     Symfony\Component\HttpKernel\KernelInterface,
-    Behat\Behat\Context\Step;
+    Behat\Behat\Context\Step,
+    Behat\Mink\Exception\ElementNotFoundException;
 
 class BrowserContext extends MinkContext implements KernelAwareInterface
 {
@@ -130,5 +131,26 @@ class BrowserContext extends MinkContext implements KernelAwareInterface
     public function iAmOnTheHomepage()
     {
         return new Step\Given(sprintf('I am on "%s"', $this->parameters['base_url']));
+    }
+
+    /**
+     * @Then /^The value of the "(?P<field>(?:[^"]|\\")*)" field should be "(?P<value>(?:[^"]|\\")*)"$/
+     */
+    function theFieldValueShouldBe($field, $value)
+    {
+        $field = $this->getSession()->getPage()->find('named', array(
+            'field', $this->getSession()->getSelectorsHandler()->xpathLiteral($field)
+        ));
+
+        if (null === $field) {
+            throw new ElementNotFoundException(
+                $this->getSession(), 'form field', 'id|name|label|value', $field
+            );
+        }
+
+        if ($value !== $field->getValue()) {
+            $message = sprintf('Expected %s as the field value but got %s', $value, $field->getValue());
+            throw new ExpectationException($message, $this->getSession());
+        }
     }
 }
