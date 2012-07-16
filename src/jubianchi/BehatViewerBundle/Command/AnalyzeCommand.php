@@ -8,8 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand,
     Symfony\Component\EventDispatcher\EventSubscriberInterface,
     Symfony\Component\EventDispatcher\Event,
     Symfony\Component\Console\Formatter\OutputFormatterStyle,
-    Symfony\Component\Console\Input\InputOption,
-    jubianchi\BehatViewerBundle\Entity;
+    Symfony\Component\Console\Input\InputOption;
 
 /**
  *
@@ -60,9 +59,10 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
      */
     public function foundFeature(Event $event)
     {
-        $this->output->writeln(
+        $this->log(
+            $this->output,
             sprintf(
-                '<info>[INFO]</info>              +- Found feature <comment>%s</comment>',
+                'Found feature <comment>%s</comment>',
                 $event->data['name']
             )
         );
@@ -73,12 +73,14 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
      */
     public function foundScenario(Event $event)
     {
-        $this->output->writeln(
+        $this->log(
+            $this->output,
             sprintf(
-                '<info>[INFO]</info> <%2$s> %2$-10s </%2$s> |-+- Found scenario <comment>%1$-77s</comment>',
-                $event->data['name'],
-                $event->data['status']
-            )
+                'Found scenario <comment>%1$-77s</comment>',
+                $event->data['name']
+            ),
+            $event->data['status'],
+            1
         );
     }
 
@@ -87,12 +89,14 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
      */
     public function foundStep(Event $event)
     {
-        $this->output->writeln(
+        $this->log(
+            $this->output,
             sprintf(
-                '<info>[INFO]</info> <%2$s> %2$-10s </%2$s> |-|-+ Found step <comment>%1$-80s</comment>',
-                iconv('utf-8', 'us-ascii//TRANSLIT', $event->data['text']),
-                $event->data['status']
-            )
+                'Found step <comment>%1$-80s</comment>',
+                iconv('utf-8', 'us-ascii//TRANSLIT', $event->data['text'])
+            ),
+            $event->data['status'],
+            2
         );
     }
 
@@ -101,12 +105,62 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
      */
     public function foundTags(Event $event)
     {
-        $this->output->writeln(
+        $this->log(
+            $this->output,
             sprintf(
-                '<info>[INFO]</info>              |-+- Found tags <pending> %s </pending>',
+                'Found tags <pending> %s </pending>',
                 implode(' </pending> <pending> ', (array) $event->data)
             )
         );
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     * @param string $message
+     * @param string|null $status
+     * @param int $level
+     */
+    protected function log(OutputInterface $output, $message, $status = null, $level = 0)
+    {
+        if ($output->getVerbosity() == OutputInterface::VERBOSITY_VERBOSE) {
+            $output->writeln($this->format($message, $status, $level));
+        }
+    }
+
+    /**
+     * @param $message
+     * @param string|null $status
+     * @param int $level
+     * @return string
+     */
+    protected function format($message, $status = null, $level = 0) {
+        $status = $status ? sprintf('<%1$s> %1$-10s </%1$s>', $status) : '            ';
+
+        if (0 === $level) {
+            $level = '+-';
+        } else {
+            $level = str_repeat('|-', $level) . '+';
+        }
+
+        return sprintf('<info>[INFO]</info> %s %s %s', $status, $level, $message);
+    }
+
+    /**
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
+     *
+     * @return \Symfony\Component\Console\Output\OutputInterface
+     */
+    protected function style(OutputInterface $output)
+    {
+        if ($output->getVerbosity() == OutputInterface::VERBOSITY_VERBOSE) {
+            $output->getFormatter()->setStyle('passed', new OutputFormatterStyle('white', 'green'));
+            $output->getFormatter()->setStyle('failed', new OutputFormatterStyle('white', 'red'));
+            $output->getFormatter()->setStyle('skipped', new OutputFormatterStyle('white', 'blue'));
+            $output->getFormatter()->setStyle('pending', new OutputFormatterStyle('white', 'blue'));
+            $output->getFormatter()->setStyle('undefined', new OutputFormatterStyle('white', 'yellow'));
+        }
+
+        return $output;
     }
 
     /**
@@ -117,12 +171,7 @@ class AnalyzeCommand extends ContainerAwareCommand implements EventSubscriberInt
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        $output->getFormatter()->setStyle('passed', new OutputFormatterStyle('white', 'green'));
-        $output->getFormatter()->setStyle('failed', new OutputFormatterStyle('white', 'red'));
-        $output->getFormatter()->setStyle('skipped', new OutputFormatterStyle('white', 'blue'));
-        $output->getFormatter()->setStyle('pending', new OutputFormatterStyle('white', 'blue'));
-        $output->getFormatter()->setStyle('undefined', new OutputFormatterStyle('white', 'yellow'));
-        $this->output = $output;
+        $this->output = $this->style($output);
 
         $project = $this->getContainer()->get('doctrine')
             ->getRepository('BehatViewerBundle:Project')
