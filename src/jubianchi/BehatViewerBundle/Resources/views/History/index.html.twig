@@ -2,7 +2,7 @@
 
 {% block title %}
     <h1 class="page-header">
-        Builds for {{ project.name }}
+        Builds for {{ session.project.name }}
         {% if pages > 1 %}
             <small>Page {{ current }}/{{ pages }}</small>
         {% endif %}
@@ -68,7 +68,7 @@
 
         <p>
             This project has not been built yet.
-            To build it, please run <code>app/console behat-viewer:build {{ project.slug }}</code>.
+            To build it, please run <code>app/console behat-viewer:build {{ session.project.slug }}</code>.
         </p>
     </div>
 {% endblock %}

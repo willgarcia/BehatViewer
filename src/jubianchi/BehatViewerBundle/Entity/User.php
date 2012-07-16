@@ -52,6 +52,11 @@ class User extends Base implements UserInterface
      */
     private $isActive;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Project", mappedBy="user", cascade={"remove","persist"})
+     */
+    private $projects;
+
     public function __construct()
     {
         $this->isActive = true;

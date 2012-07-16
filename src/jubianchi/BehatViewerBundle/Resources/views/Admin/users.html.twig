@@ -1,9 +1,5 @@
 {% extends 'BehatViewerBundle::layout.table.html.twig' %}
 
-{% if not items and build %}
-    {% set items = build.features %}
-{% endif %}
-
 {% block title %}
     <h1 class="page-header">
         Manage users

@@ -50,13 +50,14 @@ class BuildCommand extends ContainerAwareCommand
         }
 
         $cmd = $project->getTestCommand();
-        $cmd = str_replace("\r", PHP_EOL, $cmd);
+        $cmd = str_replace("\r\n", PHP_EOL, $cmd);
 
         if (file_exists('build.sh')) {
             unlink('build.sh');
         }
         $fp = fopen('build.sh', 'w+');
-        fwrite($fp, '#!/bin/sh' . PHP_EOL . $cmd);
+        $script = '#!/bin/sh' . PHP_EOL . $cmd;
+        fwrite($fp, $script, strlen($script));
         fclose($fp);
 
         $process = new \jubianchi\BehatViewerBundle\Process\UnbefferedProcess('sh -e build.sh', $project->getRootPath());
@@ -70,7 +71,7 @@ class BuildCommand extends ContainerAwareCommand
         });
 
         if (file_exists('build.sh')) {
-            unlink('build.sh');
+            //unlink('build.sh');
         }
 
         $this->getApplication()->find('behat-viewer:analyze')->run($input, $output);

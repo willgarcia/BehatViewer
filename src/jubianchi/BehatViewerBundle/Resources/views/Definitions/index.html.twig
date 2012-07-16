@@ -2,7 +2,7 @@
 
 {% block title %}
     <h1 class="page-header">
-        Definitions for {{ project.name }}
+        Definitions for {{ session.project.name }}
     </h1>
 {% endblock %}
 
@@ -45,7 +45,7 @@
 
         <p>
             No step definition found. To load definitions from your context library, please run
-            <code>app/console behat-viewer:definitions {% if project.slug %}{{ project.slug }}{% else %}foo-bar{% endif %}</code>.
+            <code>app/console behat-viewer:definitions {% if session.project.slug %}{{ session.project.slug }}{% else %}foo-bar{% endif %}</code>.
         </p>
     </div>
 {% endblock %}

@@ -1,0 +1,49 @@
+{% extends 'BehatViewerBundle::layout.table.html.twig' %}
+
+{% block title %}
+    <h1 class="page-header">
+        Manage projects
+
+        <div class="pull-right">
+            <div class="btn-group">
+                <a class="btn" href="{{ path('behatviewer.projectcreate') }}">
+                    <i class="icon-plus"></i> <span>Add project</span>
+                </a>
+            </div>
+        </div>
+    </h1>
+{% endblock %}
+
+{% block sort %}{sortlist: [[1,0]]}{% endblock %}
+
+{% block thead %}
+    <tr>
+        <th>#</th>
+        <th>Name</th>
+        <th>Identifier</th>
+        <th>Root path</th>
+        <th>Output path</th>
+        <th class="{sorter: false}">Action</th>
+    </tr>
+{% endblock %}
+
+{% block tbody %}
+    {% for project in items %}
+        <tr>
+            <td>{{ project.id }}</td>
+            <td>{{ project.name }}</td>
+            <td>{{ project.slug }}</td>
+            <td>{{ project.rootpath }}</td>
+            <td>{{ project.outputpath }}</td>
+            <td>
+                <div class="btn-group" id="toolbar">
+                    <a href="{{ path('behatviewer.projectselect', {"id": project.id}) }}" class="btn">View</a>
+                    <a href="{{ path('behatviewer.projectedit', {"id": project.id}) }}" class="btn">Edit</a>
+                    {% if project.id != session.project.id %}
+                        <a href="" class="btn btn-danger">Delete</a>
+                    {% endif %}
+                </div>
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock %}

@@ -11,13 +11,12 @@ class UserContext extends BehatViewerContext
      */
     public function iAmALoggedInUser()
     {
-        $this->iAmNotLoggedIn();
-
         return array(
+            new Step\Given('I go to "/logout"'),
             new Step\Given('I load the "user.sql" fixture'),
             new Step\Given('I am on "/login"'),
-            new Step\Then('I fill in "username" with "behat"'),
-            new Step\Then('I fill in "password" with "behat"'),
+            new Step\Then('I fill in "Username" with "behat"'),
+            new Step\Then('I fill in "Password" with "behat"'),
             new Step\Then('I press "Log in"'),
             new Step\Then('I should see "Logged in as behat"')
         );
@@ -25,6 +24,8 @@ class UserContext extends BehatViewerContext
 
     /**
      * @Given /^I am not logged in$/
+     * @Then /^I logout$/
+     * @Then /^I log out$/
      */
     public function iAmNotLoggedIn()
     {

@@ -26,6 +26,8 @@ Feature: Login
 
         Given I follow "Logged in as behat"
          Then I should see "Profile"
+          And I should see "Projects"
+          And I should see "Config"
           And I should see "Logout"
 
     @javascript

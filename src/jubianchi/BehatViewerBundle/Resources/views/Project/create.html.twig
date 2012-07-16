@@ -1,0 +1,39 @@
+{% extends 'BehatViewerBundle::layout.form.html.twig' %}
+
+
+{% block notification %}
+    {% if success %}
+        <div class="alert alert-block alert-success" data-rel="notification" data-type="success">Settings were successfully saved.</div>
+    {% endif %}
+{% endblock %}
+
+{% block action %}{{ path('behatviewer.projectcreate') }}{% endblock %}
+
+{% block title %}
+    New project
+{% endblock %}
+
+{% block before %}
+    {% if not hasproject %}
+        <div class="alert alert-block alert-info">
+            <h4 class="alert-heading">No project configured</h4>
+
+            <p>Before using Behat Viewer, you should configure your project.</p>
+        </div>
+    {% endif %}
+{% endblock %}
+
+
+
+{% block javascript %}
+    <script type="text/javascript">
+        JSC.require(
+            ['behat-viewer/config'],
+            function() {
+                $(function() {
+                    app.controller.current(new ConfigController('#container'));
+                });
+            }
+        );
+    </script>
+{% endblock %}

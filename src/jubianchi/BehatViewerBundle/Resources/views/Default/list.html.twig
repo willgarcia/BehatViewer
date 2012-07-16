@@ -1,19 +1,19 @@
 {% extends 'BehatViewerBundle::layout.table.html.twig' %}
 
-{% if not items and build %}
-    {% set items = build.features %}
+{% if not items and session.build %}
+    {% set items = session.build.features %}
 {% endif %}
 
 {% block title %}
     <h1 class="page-header">
         {% if not tag is defined %}
-            Features for {{ project.name }}
+            Features for {{ session.project.name }}
         {% else %}
             Tag {{ tag.name }}
         {% endif %}
 
         {% if build %}
-            <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d \\a\\t H:i:s")}}</span>)</small>
+            <small>(#{{ build.id }} Built <span data-rel="moment">{{ build.date|date("Y-m-d H:i:s")}}</span>)</small>
         {% endif %}
 
         {% include 'BehatViewerBundle::Default/switcher.html.twig' %}
@@ -42,7 +42,10 @@
     <div class="alert alert-block alert-info">
         <h4 class="alert-heading">No feature</h4>
 
-        <p>This project has not been built yet. Click on the build button to launch test suite.</p>
+        <p>
+            This project has not been built yet.
+            To build it, please run <code>app/console behat-viewer:build {{ session.project.slug }}</code>.
+        </p>
     </div>
 {% endblock %}
 

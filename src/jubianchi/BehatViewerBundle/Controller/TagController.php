@@ -40,7 +40,7 @@ class TagController extends BehatViewerController
             array(
                 'tag' => $tag,
                 'build' => $build,
-                'features' => $features
+                'items' => $features
             )
         );
     }

@@ -1,6 +1,7 @@
 <?php
-
 namespace jubianchi\BehatViewerBundle\Entity\Repository;
+
+use jubianchi\BehatViewerBundle\Entity;
 
 /**
  * ProjectRepository
@@ -10,4 +11,12 @@ namespace jubianchi\BehatViewerBundle\Entity\Repository;
  */
 class ProjectRepository extends EntityRepository
 {
+    public function findByUser(Entity\User $user)
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.user = :user')
+            ->setParameter('user', $user)
+            ->getQuery()
+            ->getResult();
+    }
 }

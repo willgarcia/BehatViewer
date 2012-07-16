@@ -24,7 +24,10 @@ class DefaultController extends BehatViewerController
         $this->beforeAction();
 
         if ($this->getSession()->get('listview', false)) {
-            return $this->forward('BehatViewerBundle:History:entrylist', array('build' => $this->getSession()->getBuild()));
+            return $this->forward(
+                'BehatViewerBundle:History:entrylist',
+                array('build' => $this->getSession()->getBuild())
+            );
         } else {
             return $this->forward('BehatViewerBundle:History:entry', array('build' => $this->getSession()->getBuild()));
         }
@@ -40,10 +43,7 @@ class DefaultController extends BehatViewerController
     {
         $data = json_decode($this->getRequest()->getContent(), true);
 
-        $project = $this->get('doctrine')
-            ->getRepository('BehatViewerBundle:Project')
-            ->findOneById(1);
-
+        $project = $this->getSession()->getProject();
         $analyzer = $this->get('behat_viewer.analyzer');
         $analyzer->analyze($project, $data);
 

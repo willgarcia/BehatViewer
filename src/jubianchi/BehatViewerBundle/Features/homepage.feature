@@ -7,7 +7,7 @@ Feature: Homepage
          Then I should see "Behat Viewer [Foo Bar]"
           And I should see "Features"
           And I should see "No feature"
-          And I should see "This project has not been built yet. Click on the build button to launch test suite."
+          And I should see "This project has not been built yet. To build it, please run app/console behat-viewer:build foo-bar."
 
     @fixture @fixture:single-build.sql
     Scenario: Homepage with some features

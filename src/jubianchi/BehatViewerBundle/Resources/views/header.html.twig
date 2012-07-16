@@ -6,7 +6,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="{{ path('behatviewer.homepage') }}">Behat Viewer <span class="title">{% if project != '' and project.name %}[{{ project.name }}]{% endif %}</span></a>
+            <a class="brand" href="{{ path('behatviewer.homepage') }}">Behat Viewer <span class="title">{% if session.project != '' and session.project.name %}[{{ session.project.name }}]{% endif %}</span></a>
 
             <div class="nav-collapse">
                 <ul class="nav">
@@ -20,7 +20,7 @@
                     </li>
                 </ul>
                 <ul class="nav pull-right">
-                    {% if lastbuild and lastbuild != build.id %}
+                    {% if lastbuild and lastbuild != session.build.id %}
                         <li>
                             <button id="last-build" href="{{ path('behatviewer.historyentry', {'id': lastbuild}) }}" class="btn btn-primary">Last build &raquo;</button>
                         </li>
@@ -32,12 +32,14 @@
                                 <img data-rel="avatar" data-size="24" class="gravatar" src="{% if app.user %}{{ app.user.email|gravatar(24)}}{% endif %}" />
                             </a>
                             <ul class="dropdown-menu">
+                                <li><a href="{{ path('behatviewer.profile') }}">Profile</a></li>
+                                <li><a href="{{ path('behatviewer.projectslist') }}">Projects</a></li>
+                                <li class="divider"></li>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li><a href="{{ path('behatviewer.users') }}">Admin</a></li>
                                 {% endif %}
                                 <li><a href="{{ path('behatviewer.config') }}">Config</a></li>
                                 <li class="divider"></li>
-                                <li><a href="{{ path('behatviewer.profile') }}">Profile</a></li>
                                 <li><a href="{{ path('behatviewer.logout') }}">Logout</a></li>
                             </ul>
                         </li>

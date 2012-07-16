@@ -27,6 +27,10 @@ class Session extends ContainerAware
             $project = $repository->findOneBy(array());
         }
 
+        if (null !== $project) {
+            $this->setProject($project);
+        }
+
         return $project;
     }
 
@@ -55,8 +59,16 @@ class Session extends ContainerAware
             $build = $repository->find($buildId);
         }
 
+        if($build !== null && $build->getProject()->getId() !== $this->getProject()->getId()) {
+            $build = null;
+        }
+
         if ($build === null && $this->getProject() !== null) {
             $build = $repository->findLastForProject($this->getProject());
+        }
+
+        if (null !== $build) {
+            $this->setBuild($build);
         }
 
         return $build;

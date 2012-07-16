@@ -3,13 +3,17 @@
 namespace jubianchi\BehatViewerBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM,
-    Symfony\Component\Validator\Constraints as Assert;
+    Symfony\Component\Validator\Constraints as Assert,
+    Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity,
+    jubianchi\BehatViewerBundle\Entity;
 
 /**
  * jubianchi\BehatViewerBundle\Entity\Project
  *
  * @ORM\Table(name="project")
  * @ORM\Entity(repositoryClass="jubianchi\BehatViewerBundle\Entity\Repository\ProjectRepository")
+ * @UniqueEntity({"user", "name"})
+ * @UniqueEntity("slug")
  */
 class Project extends Base
 {
@@ -67,7 +71,7 @@ class Project extends Base
      * @var string $test_command
      *
      * @Assert\NotBlank()
-     * @ORM\Column(name="test_command", type="text", length=255)
+     * @ORM\Column(name="test_command", type="text")
      */
     private $test_command;
 
@@ -75,6 +79,14 @@ class Project extends Base
      * @ORM\OneToMany(targetEntity="Build", mappedBy="project", cascade={"remove","persist"})
      */
     private $builds;
+
+    /**
+     * @var \jubianchi\BehatViewerBundle\Entity\User $user
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="projects", cascade={"persist"})
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     */
+    private $user;
 
     /**
      * @ORM\OneToMany(targetEntity="Definition", mappedBy="project", cascade={"remove","persist"})
@@ -99,6 +111,26 @@ class Project extends Base
     public function setName($name)
     {
         $this->name = $name;
+    }
+
+    /**
+     * Get user
+     *
+     * @return integer
+     */
+    public function getUser()
+    {
+        return $this->id;
+    }
+
+    /**
+     * Set user
+     *
+     * @param string $name
+     */
+    public function setUser(Entity\user $user)
+    {
+        $this->user = $user;
     }
 
     /**

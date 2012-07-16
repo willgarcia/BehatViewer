@@ -29,12 +29,12 @@ abstract class BehatViewerController extends Controller
      */
     public function getResponse(array $variables = array())
     {
+        $lastbuild = $this->getLastBuild();
+
         return array_merge(
             array(
-                'xhr' => $this->getRequest()->isXmlHttpRequest(),
-                'project' => $this->getSession()->getProject(),
-                'build' => $this->getSession()->getBuild(),
-                'lastbuild' => null !== ($build = $this->getLastBuild()) ? $build->getId() : 0
+                'session' => $this->getSession(),
+                'lastbuild' => (null !== $lastbuild ? $lastbuild->getId() : 0)
             ),
             $variables
         );
@@ -48,9 +48,7 @@ abstract class BehatViewerController extends Controller
         $project = $this->getSession()->getProject();
         $build = null;
 
-        if (null === $project) {
-            $build = null;
-        } else {
+        if (null !== $project) {
             $current = $this->getSession()->getBuild();
 
             $repository = $this->getDoctrine()->getRepository('BehatViewerBundle:Build');

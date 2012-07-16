@@ -1,0 +1,13 @@
+{% extends 'BehatViewerBundle:Project:create.html.twig' %}
+
+{% block action %}{{ path('behatviewer.projectedit', {'id': project.id}) }}{% endblock %}
+
+{% block title %}
+    Project configuration
+{% endblock %}
+
+{% block extrabuttons %}
+    {% if hasproject %}
+        <a href="{{ path('behatviewer.projectslist') }}" class="pull-left btn">« Back to projects list</a>
+    {% endif %}
+{% endblock %}
